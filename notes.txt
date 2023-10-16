@@ -1,0 +1,3 @@
+--> ajouter un bouton qui permet de set.view sur chaque DROM/COM
+
+https://coggle.it/diagram/ZR59_ScP9MedOYYj/t/superposeur

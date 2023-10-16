@@ -1,0 +1,31 @@
+html, body, #IDsuperMap {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	font-family: 'Marianne-regular', Arial, Helvetica, sans-serif !important;
+}
+
+#sidebar {
+	position: absolute;
+}
+
+#goTo {
+	cursor: pointer;
+	margin-top:10px;
+	right:45px;
+	z-index: 1000;
+	display: block;
+	position: absolute;
+	font-family: 'abel-regular', Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+	border: none;
+	height: 30px;
+	border-color: transparent;
+	padding: 5px;
+	border-radius: 4px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.45);
+	outline: none;
+	transition: .2s ease-in-out;
+}
+
+

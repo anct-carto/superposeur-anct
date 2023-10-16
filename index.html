@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr"></html>
+<head>
+  <meta charset="utf-8" />
+
+  <title>Superposeur des dispositifs de l'ANCT</title>
+
+  <!--Leaflet-->
+  <link rel="stylesheet" href="lib/leaflet.css"/>
+  <link rel="stylesheet" href="lib/leaflet-sidebar.min.css"/>
+  <!--<link rel="stylesheet" href="lib/leaflet-sidebar.min.css"/> -->
+  <!--Line-awesome (picto)-->
+  <link rel="stylesheet" href= "lib/line-awesome-1.3.0/css/line-awesome.min.css">
+  <!-- bootstrap -->
+  <link href="lib/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!--Dépendances-->
+  <!--Leaflet-->
+  <script src="lib/leaflet.js"></script>
+  <script src="lib/leaflet-sidebar.min.js"></script>
+
+  <!--Leaflet extensions-->
+  <!-- <script src="lib/leaflet-sidebar.min.js"></script> -->
+
+  <!--Bootstrap-->
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
+
+  <!--Style sheets-->
+  <link rel="stylesheet" href="css/font.css">
+  <link rel="stylesheet" href="css/style.css" defer>
+</head>
+
+<body>
+  <!-- MAP-->
+  <div id="IDsuperMap"></div>
+
+  <!-- Bouton DROM-->
+  <select type="menu" id = "goTo">
+    <option value="">Zoomer sur un territoire :</option>
+    <option value="met">Métropole</option>
+    <option value="reu">La Réunion</option>
+    <option value="glp">Guadeloupe</option>
+    <option value="mtq">Martinique</option>
+    <option value="guf">Guyane</option>
+    <option value="myt">Mayotte</option>
+  </select>
+
+ 
+  <!--Sidebar-->
+  <!-- Bloc du sidebar -->
+  <div id="sidebar" class="leaflet-sidebar collapsed">
+    <!--Ici: les boutons du sidebar-->
+      <div class="leaflet-sidebar-tabs">
+        <ul role="tablist">
+          <li><a href="#home" role="tab"><i class="las la-home"></i></a></li>
+          <li><a href="#search-tab" role="tab"><i class="las la-search"></i></a></li>
+          <li><a href="#a-propos" role="tab"><i class="la la-question-circle"></i></a></li>
+      </ul>
+      </div>
+    <!-- Ici : le contenu du panneau latéral-->
+      <div class="leaflet-sidebar-content">
+        <div class="leaflet-sidebar-header"></div>
+  
+      <!--Panneau 1-->
+        <div class="leaflet-sidebar-pane" id="home">
+          <div class="leaflet-sidebar-header">
+            <h1 class="leaflet-sidebar-header" >Accueil</h1>         
+            <!--<img src="img/fabrique-prospective-picto-complet-v2_12.png" width="90%">-->
+            <span class="leaflet-sidebar-close" @click="sidebar.close()">
+              <i class="la la-step-backward"></i>
+            </span>
+          </div>
+          <div class="panel-content">    
+            <div id="legend">
+              <h3>Choisir le programme ANCT à représenter :</h3>
+              <br>
+              <label>
+                <input type="checkbox" id="acv-marker-checkbox" checked> Action Coeur de Ville
+              </label>
+              <br>
+              <label>
+                <input type="checkbox" id="ti-polygon-checkbox" checked> Territoires d'industrie
+              </label>
+              
+            </div>   
+            <br>     
+            <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
+              <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
+            </p>
+          </div>
+        </div>
+  
+      <!--Panneau 2-->
+        <div class="leaflet-sidebar-pane" id="search-tab">
+          <div class="leaflet-sidebar-header">
+            <h1 class="leaflet-sidebar-header">Recherche</h1> 
+          </div>
+          <div class="panel-content">
+            <p>Fiches territoires</p>
+          <!--Ajouter fiche explicative popup des fabriques-->>
+          </div>
+        </div>
+  
+      <!--Panneau 3-->
+        <div class="leaflet-sidebar-pane" id="a-propos">
+          <div class="leaflet-sidebar-header">
+            <h1 class="leaflet-sidebar-header" >A propos</h1> 
+          </div>
+          <div class="panel-content">
+            <p><b>Réalisation :</b>
+              ANCT, Pôle analyse & diagnostics territoriaux - <a href = 'https://cartotheque.anct.gouv.fr/cartes' target="_blank">Service cartographie</a>
+            </p>
+            <p><b>Technologies :</b>
+                Leaflet 1.9.4, Bootstrap 5.2, Line-awesome 1.3.0
+              </p>
+              <p>
+                Cette carte est alimentée par  ...........
+              </p>
+              <p>
+              <b>Contact : </b>
+                <a href="cartographie@anct.gouv.fr" target="_blank">blabla@anct.gouv.fr</a></p>
+              <p>
+                <b>En savoir plus sur le programme :</b>
+                <a href="blabla.anct.gouv.fr" target="_blank">blabla.anct.gouv.fr</a>
+              </p>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!--Lecture script js-->
+  <script src="src/app.js"></script>
+</body>
+</html>
+
