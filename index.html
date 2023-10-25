@@ -54,7 +54,7 @@
       <div class="leaflet-sidebar-tabs">
         <ul role="tablist">
           <li><a href="#home" role="tab"><i class="las la-home"></i></a></li>
-          <li><a href="#search-tab" role="tab"><i class="las la-search"></i></a></li>
+          <li><a href="#fiche-territoire" role="tab"><i class="las la-search"></i></a></li>
           <li><a href="#a-propos" role="tab"><i class="la la-question-circle"></i></a></li>
       </ul>
       </div>
@@ -92,13 +92,20 @@
         </div>
   
       <!--Panneau 2-->
-        <div class="leaflet-sidebar-pane" id="search-tab">
+        <div class="leaflet-sidebar-pane" id="fiche-territoire">
           <div class="leaflet-sidebar-header">
-            <h1 class="leaflet-sidebar-header">Recherche</h1> 
+            <span class="leaflet-sidebar-close" @click="sidebar.close()">
+              <i class="la la-step-backward"></i>
+            </span>
+            <p>Fiche territoire</p>
           </div>
           <div class="panel-content">
-            <p>Fiches territoires</p>
-          <!--Ajouter fiche explicative popup des fabriques-->>
+          <!--Ajouter fiche explicative popup des dispositifs-->
+            <div id="card"></div>
+            <p class="fiche-terr-1" id="lib-com"></p>
+            <p class="fiche-terr-1" id="insee-com"></p>
+            <p class="fiche-terr-2" id="lib-territoire"></p>
+            <p class="fiche-terr-2" id="id-territoire"></p>
           </div>
         </div>
   
