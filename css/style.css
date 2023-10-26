@@ -29,3 +29,33 @@ html, body, #IDsuperMap {
 }
 
 
+
+/* -------------------------------------------------------------------------- */
+/*                                LEGENDE                             	      */
+/* -------------------------------------------------------------------------- */
+
+
+
+#title-legend-1{
+	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
+	font-size: 20px; /* Taille de police 10 pixels */
+	color: #313778; /* Couleur de police bleue */
+}
+
+
+
+/* Personnalisation du style de l'élément rétractable */
+details {
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+	margin: 10px 0;
+}
+
+/* Personnalisation du style de l'étiquette de résumé */
+summary {
+cursor: pointer;
+font-weight: bold;
+}
+
+

@@ -73,16 +73,20 @@
           </div>
           <div class="panel-content">    
             <div id="legend">
-              <h3>Choisir le programme ANCT à représenter :</h3>
               <br>
-              <label>
-                <input type="checkbox" id="acv-marker-checkbox" checked> Action Coeur de Ville
-              </label>
-              <br>
-              <label>
-                <input type="checkbox" id="ti-polygon-checkbox" checked> Territoires d'industrie
-              </label>
-              
+              <h1 id="title-legend-1">Choisir le programme ANCT à représenter :</h1>
+              <details>
+                <summary>Villes, métropoles</summary>
+                <label class ="legend-symbol-acv">
+                  <input type="checkbox" id="acv-marker-checkbox" checked> Action Coeur de Ville
+                </label>
+              </details>
+              <details>
+                <summary>Activités économiques</summary>
+                <label>
+                  <input type="checkbox" id="ti-polygon-checkbox" checked> Territoires d'industrie
+                </label>
+              </details>
             </div>   
             <br>     
             <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
