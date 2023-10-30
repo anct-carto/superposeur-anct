@@ -128,9 +128,53 @@ function toggleLayer(layer, checkbox) {
 
 const map = new L.map('IDsuperMap',{zoomControl: false}).setView([46.603354, 1.888334],6);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-    attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
-}).addTo(map);
+
+// Fonds de cartes 
+const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+  attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
+});
+
+const basemapFond2 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',{
+  attribution: 'Fond cartographique &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',   
+});
+
+const basemapPhoto = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+// Ajout du fond de base
+map.addLayer(basemapFond1);
+
+//baseLayers est  une couche qui contient tous les fonds
+const baseLayers = {
+  'fond1' : basemapFond1,
+  'fond2': basemapFond2,
+  'photo satellite' : basemapPhoto
+};
+
+const overlays = {
+};
+
+//Ajout d'un control layer qui permet de sélectionner le fond souhaité
+const layerControl = L.control.layers(baseLayers, overlays);
+layerControl.addTo(map)
+
+
+// basemapPhoto() {
+//   return L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+//       attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+//   });
+// },
+// basemapFond() {
+//   return L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+//       attribution: 'Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
+//   })
+// },
+// basemapFond2() {
+//   return L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',{
+//       attribution: 'Fond cartographique &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+//   })
+// },
 
 L.control.scale({ position: 'bottomright', imperial:false }).addTo(map);
 L.control.zoom({ position: 'topright'}).addTo(map);
@@ -144,22 +188,33 @@ L.control.zoom({ position: 'topright'}).addTo(map);
 const acv = loadData("data/geom/geojson/acv_geom.geojson");
 const ti = loadData("data/geom/geojson/ti_geom.geojson");
 
-//const region= loadData("data/geom/reg_geom_4326.geojson");
+const region= loadData("data/geom/geojson/reg_geom_4326.geojson");
+const departement= loadData("data/geom/geojson/dep_geom_4326.geojson");
 
-// Promise.all([region]).then(([regPolygon])=>{
-//   new L.geoJSON(regPolygon,{
-//       style: {
-//         fillColor: null,
-//         fillOpacity:1,
-//         color:"#363636",
-//         lineWidth: 1,
-//       }, 
-//   }).addTo(map);
+Promise.all([region, departement]).then(([regPolygon, departementPolygon])=>{
+  const regPolygonLayer =new L.geoJSON(regPolygon,{
+      style: {
+        fillColor: "transparent",
+        fillOpacity:0,
+        color:"#363636",
+        weight: 0.35,
+      }, 
+  }).addTo(map);
 
-// });
+  const departementPolygonLayer =new L.geoJSON(departementPolygon,{
+    style: {
+      fillColor: "transparent",
+      fillOpacity:0,
+      color:"#363636",
+      weight: 0.15,
+    }, 
+  }).addTo(map);
+
+});
 
 //Attention à bien afficher les polygon en premier
 Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
+  
   
   //TI
   const tiPolygonLayer= new L.geoJSON(tiPolygon,{
@@ -206,6 +261,8 @@ Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
   toggleLayer(acvMarkerLayer, acvData, 'acv');
 
 });
+
+
 
 
 
