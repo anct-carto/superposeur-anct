@@ -64,6 +64,7 @@
   
       <!--Panneau 1-->
         <div class="leaflet-sidebar-pane" id="home">
+
           <div class="leaflet-sidebar-header">
             <h1 class="leaflet-sidebar-header" >Accueil</h1>         
             <!--<img src="img/fabrique-prospective-picto-complet-v2_12.png" width="90%">-->
@@ -71,20 +72,32 @@
               <i class="la la-step-backward"></i>
             </span>
           </div>
-          <div class="panel-content">    
+
+          <div class="panel-content">
+            <div id="background-tiles">
+              <h1 id="title-legend-1">Fonds cartographiques</h1>
+              <input type="radio" name="basemap" value="fond1" id="fond1-radio" checked>
+              <label for="fond1-radio">OSM ©Stadia Maps</label><br>
+              <input type="radio" name="basemap" value="fond2" id="fond2-radio">
+              <label for="fond2-radio">OSM ©CARTO</label><br>
+              <input type="radio" name="basemap" value="photo" id="photo-radio">
+              <label for="photo-radio">Photo satellite</label><br>
+            </div>
+   
+
             <div id="legend">
               <br>
               <h1 id="title-legend-1">Choisir le programme ANCT à représenter :</h1>
               <details>
                 <summary>Villes, métropoles</summary>
                 <label class ="legend-symbol-acv">
-                  <input type="checkbox" id="acv-marker-checkbox" checked> Action Coeur de Ville
+                  <input type="checkbox" id="acv-marker-checkbox" > Action Coeur de Ville
                 </label>
               </details>
               <details>
                 <summary>Activités économiques</summary>
                 <label>
-                  <input type="checkbox" id="ti-polygon-checkbox" checked> Territoires d'industrie
+                  <input type="checkbox" id="ti-polygon-checkbox" > Territoires d'industrie
                 </label>
               </details>
             </div>   
@@ -93,6 +106,7 @@
               <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
             </p>
           </div>
+
         </div>
   
       <!--Panneau 2-->

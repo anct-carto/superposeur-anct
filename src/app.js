@@ -128,6 +128,7 @@ function toggleLayer(layer, checkbox) {
 
 const map = new L.map('IDsuperMap',{zoomControl: false}).setView([46.603354, 1.888334],6);
 
+/* ---------------------Mise en place des fonds de carte--------------------- */
 
 // Fonds de cartes 
 const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
@@ -157,28 +158,70 @@ const overlays = {
 
 //Ajout d'un control layer qui permet de sélectionner le fond souhaité
 const layerControl = L.control.layers(baseLayers, overlays);
-layerControl.addTo(map)
+// layerControl.addTo(map)
 
 
-// basemapPhoto() {
-//   return L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-//       attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-//   });
-// },
-// basemapFond() {
-//   return L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-//       attribution: 'Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
-//   })
-// },
-// basemapFond2() {
-//   return L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',{
-//       attribution: 'Fond cartographique &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-//   })
-// },
 
+
+
+
+/* ----------------Mise en place des éléments habillage carte--------------------- */
+// Ajout de l'échelle
 L.control.scale({ position: 'bottomright', imperial:false }).addTo(map);
+
+//Ajout du zoom
 L.control.zoom({ position: 'topright'}).addTo(map);
 
+/* -------------------------------------------------------------------------- */
+/*                                   SIDEBAR                                  */
+/* -------------------------------------------------------------------------- */
+// Création du sidebar
+const sidebar = L.control.sidebar({
+  autopan: false,
+  closeButton: true,
+  container: 'sidebar',
+  position: 'left',
+});
+
+
+sidebar.on('content', function (ev) {
+  switch (ev.id) {
+      case 'home':
+        sidebar.options.autopan = true;
+        break;
+      case 'search-tab':
+        sidebar.options.autopan = true;
+        break;
+      case 'a-propos':
+      sidebar.options.autopan = true;
+      break;
+        default:
+        sidebar.options.autopan = true;
+  }
+});
+sidebar.addTo(map)
+
+sidebar.open('home');
+
+// Listen for changes in the background tile selection and update the map
+document.querySelectorAll('input[name="basemap"]').forEach(function (input) {
+  input.addEventListener("change", function () {
+    const selectedBasemap = this.value;
+    map.eachLayer(function (layer) {
+      if (layer instanceof L.TileLayer) {
+        map.removeLayer(layer);
+      }
+    });
+
+    if (selectedBasemap === "fond1") {
+      map.addLayer(basemapFond1);
+    } else if (selectedBasemap === "fond2") {
+      map.addLayer(basemapFond2);
+    } else if (selectedBasemap === "photo") {
+      map.addLayer(basemapPhoto);
+    }
+  });
+});
 
 
 
@@ -191,6 +234,7 @@ const ti = loadData("data/geom/geojson/ti_geom.geojson");
 const region= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departement= loadData("data/geom/geojson/dep_geom_4326.geojson");
 
+//Données d'habillage de la carte
 Promise.all([region, departement]).then(([regPolygon, departementPolygon])=>{
   const regPolygonLayer =new L.geoJSON(regPolygon,{
       style: {
@@ -212,7 +256,7 @@ Promise.all([region, departement]).then(([regPolygon, departementPolygon])=>{
 
 });
 
-//Attention à bien afficher les polygon en premier
+//Données des programmes ANCT
 Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
   
   
@@ -251,14 +295,15 @@ Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
     getInfo(e, 'acv');
   }) 
   .addTo(map);
-
-  
+  map.removeLayer(tiPolygonLayer);
+  map.removeLayer(acvMarkerLayer);
+ 
 //Appel à la fonction pour activier et désactiver les couches
   const tiData = document.getElementById('ti-polygon-checkbox')
   const acvData = document.getElementById('acv-marker-checkbox')
 
-  toggleLayer(tiPolygonLayer, tiData, 'ti');
-  toggleLayer(acvMarkerLayer, acvData, 'acv');
+  toggleLayer(tiPolygonLayer, tiData);
+  toggleLayer(acvMarkerLayer, acvData);
 
 });
 
@@ -266,44 +311,10 @@ Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
 
 
 
-/* -------------------------------------------------------------------------- */
-/*                                   SIDEBAR                                  */
-/* -------------------------------------------------------------------------- */
-// Création du sidebar
-const sidebar = L.control.sidebar({
-    autopan: false,
-    closeButton: true,
-    container: 'sidebar',
-    position: 'left',
-});
-  
-sidebar.on('content', function (ev) {
-    switch (ev.id) {
-        case 'home':
-          sidebar.options.autopan = true;
-          break;
-        case 'search-tab':
-          sidebar.options.autopan = true;
-          break;
-        case 'a-propos':
-        sidebar.options.autopan = true;
-        break;
-          default:
-          sidebar.options.autopan = true;
-    }
-});
-sidebar.addTo(map)
 
-sidebar.open('home');
 
-// map.on('click', function(){
-//   var cardContent = document.getElementById('card');
-//   console.log(cardContent)
-//   // if(card) {
-//   //   console.log("hello")
-//   // }
-// // //   sidebar.close()
-// })
+
+
   
 /* -------------------------------------------------------------------------- */
 /*                                ZOOM DROM                                   */

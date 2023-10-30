@@ -10,6 +10,11 @@ library(here)
 reg_geom <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
                     layer = "reg")
 
+dep_geom <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
+                    layer = "dep")
+
+#REGIONS
+
 reg_geom_4326<- st_transform(reg_geom, crs= 4326)
 
 
@@ -20,7 +25,17 @@ st_write(obj = reg_geom_4326,
          dsn = here(paste0("geom/geojson/reg_geom_4326.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
+#DEPARTEMENTS
 
+dep_geom_4326<- st_transform(dep_geom, crs= 4326)
+
+
+plot(dep_geom$geom)
+plot(dep_geom_4326$geom)
+
+st_write(obj = dep_geom_4326,
+         dsn = here(paste0("geom/geojson/dep_geom_4326.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
 
 
