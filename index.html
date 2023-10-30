@@ -61,7 +61,7 @@
     <!-- Ici : le contenu du panneau latéral-->
       <div class="leaflet-sidebar-content">
         <div class="leaflet-sidebar-header"></div>
-  
+
       <!--Panneau 1-->
         <div class="leaflet-sidebar-pane" id="home">
 
@@ -76,13 +76,23 @@
           <div class="panel-content">
             <div id="background-tiles">
               <h1 id="title-legend-1">Fonds cartographiques</h1>
-              <input type="radio" name="basemap" value="fond1" id="fond1-radio" checked>
-              <label for="fond1-radio">OSM ©Stadia Maps</label><br>
-              <input type="radio" name="basemap" value="fond2" id="fond2-radio">
-              <label for="fond2-radio">OSM ©CARTO</label><br>
-              <input type="radio" name="basemap" value="photo" id="photo-radio">
-              <label for="photo-radio">Photo satellite</label><br>
+            
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="fond1-checkbox" name="basemap" value="fond1" checked>
+                <label class="form-check-label" for="fond1-checkbox">OSM ©Stadia Maps</label>
+              </div>
+            
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="fond2-checkbox" name="basemap" value="fond2">
+                <label class="form-check-label" for="fond2-checkbox">OSM ©CARTO</label>
+              </div>
+            
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="photo-checkbox" name="basemap" value="photo">
+                <label class="form-check-label" for="photo-checkbox">Photo satellite</label>
+              </div>
             </div>
+            
    
 
             <div id="legend">
@@ -100,7 +110,8 @@
                   <input type="checkbox" id="ti-polygon-checkbox" > Territoires d'industrie
                 </label>
               </details>
-            </div>   
+            </div> 
+              
             <br>     
             <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
               <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>

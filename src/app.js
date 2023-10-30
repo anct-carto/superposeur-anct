@@ -222,6 +222,18 @@ document.querySelectorAll('input[name="basemap"]').forEach(function (input) {
     }
   });
 });
+//Un bouton à la fois
+const checkboxes = document.querySelectorAll('input[type="checkbox"].form-check-input');
+
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener('change', function () {
+    checkboxes.forEach((otherCheckbox) => {
+      if (otherCheckbox !== checkbox) {
+        otherCheckbox.checked = false;
+      }
+    });
+  });
+});
 
 
 

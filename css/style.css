@@ -33,38 +33,6 @@ html, body, #IDsuperMap {
 /* -------------------------------------------------------------------------- */
 
 
-/* Cible l'en-tête du layerControl */
-.leaflet-control-layers-list {
-	background-color: #fff;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
-}
-  
-/* Cible les labels des couches dans le layerControl */
-.leaflet-control-layers label {
-font-size: 14px;
-color: #333;
-margin-bottom: 5px;
-}
-  
-/* Cible les cases à cocher des couches dans le layerControl */
-.leaflet-control-layers input[type="checkbox"] {
-margin-right: 5px;
-}
-  
-/* Cible les boutons "Tout cocher" et "Tout décocher" dans le layerControl */
-.leaflet-control-layers-selector {
-font-size: 12px;
-color: #777;
-}
-  
-/* Cible les éléments des onglets si vous les avez personnalisés */
-.leaflet-sidebar-tabs li a {
-color: #555;
-font-weight: bold;
-}
-
 /* -------------------------------------------------------------------------- */
 /*                                LEGENDE                             	      */
 /* -------------------------------------------------------------------------- */
