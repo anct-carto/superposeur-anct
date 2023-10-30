@@ -20,8 +20,7 @@ geom_com_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/m
 acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville/liste-acv-com2023-20230802.csv", fileEncoding ="utf-8" )
 
 #ACV2
-#METTRE AU COG23
-#acv2_init <- st_read("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville-2/liste-acv2-com2023-20230922.csv")
+acv2_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville-2/liste-acv2-com2023-20230922.csv", fileEncoding ="utf-8" )
 
 #PVD
 pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petites-villes-de-demain/liste-pvd-com2023-20231005.csv", fileEncoding ="utf-8")
@@ -32,6 +31,16 @@ ti_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territo
 
 #France service
 fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2023-20230816.csv", fileEncoding ="utf-8")
+
+
+#Cité educatives
+cite_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-com2023-20230817.csv", fileEncoding ="utf-8")
+
+#FABRIQUE PROSPECTIVES
+fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8")
+fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20231005.csv", fileEncoding ="utf-8")
+
+
 
 #Avenir montagne mobilité
 amm_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-mobilites/liste-amm-com2023-20230810.csv", fileEncoding ="utf-8")
@@ -44,13 +53,6 @@ ami_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/a
 #CRTE
 crte_init<-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/contrats-de-relance-et-de-transition-ecologique/liste-crte-com2023-20230823.csv", fileEncoding ="utf-8")
 crte_init_list<-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/contrats-de-relance-et-de-transition-ecologique/liste-crte-20230823.csv", fileEncoding ="utf-8")
-
-
-#Cité educatives
-cite_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-com2023-20230817.csv", fileEncoding ="utf-8")
-
-#FABRIQUE PROSPECTIVES
-fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8")
 
 
 #Cité de l'emploi
@@ -83,6 +85,11 @@ ma_fonction<- function(data_init, type){
 acv_geom<-ma_fonction(acv_init, type="ctr")
 st_write(obj = acv_geom,
          dsn = here(paste0("geom/geojson/acv_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+acv2_geom<-ma_fonction(acv2_init, type="ctr")
+st_write(obj = acv2_geom,
+         dsn = here(paste0("geom/geojson/acv2_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
 pvd_geom<-ma_fonction(pvd_init, type="ctr")
@@ -133,7 +140,6 @@ crte_geom <- left_join(crte_geom, crte_init_list, by = "id_crte")
 st_write(obj = crte_geom,
          dsn = here(paste0("geom/geojson/crte_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
-
 
 
 
