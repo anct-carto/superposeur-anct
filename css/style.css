@@ -29,12 +29,20 @@ html, body, #IDsuperMap {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                LayerControl FONDS                             	      */
+/*                                    SIDEBAR                                 */
 /* -------------------------------------------------------------------------- */
 
 
+
+
 /* -------------------------------------------------------------------------- */
-/*                                LEGENDE                             	      */
+/*                                Fonds carto                                 */
+/* -------------------------------------------------------------------------- */
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                                  Legende                             	  */
 /* -------------------------------------------------------------------------- */
 
 #legend {
@@ -65,7 +73,7 @@ font-weight: bold;
 
 
 /* -------------------------------------------------------------------------- */
-/*                                CARD                             	          */
+/*                                   CARD                              		  */
 /* -------------------------------------------------------------------------- */
 
 #card {
@@ -73,6 +81,17 @@ font-weight: bold;
 
 }
 
+/* --------------------------------BOUTON------------------------------------ */
 
+#bnt-retour {
+	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
+	font-size: 10px; /* Taille de police 10 pixels */
+	border-radius: 5px; /* Bords arrondis */
+	background-color: #616DAF; /* Fond bleu */
+	color: white; /* Texte en blanc */
+	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
+	cursor: pointer; /* Curseur en main pour indiquer un bouton cliquable */
+
+}
 
 

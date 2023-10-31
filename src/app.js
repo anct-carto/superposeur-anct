@@ -54,13 +54,10 @@ function getInfo(e, layerName) {
   idTerr.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
   sidebar.open('home');
 
-  //Quand clic sur le bouton retour, retour à la légende
   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
   btnRetour.addEventListener('click', () => {
-  // Modifiez le style de la div de la légende pour l'ouvrir
     legend.style.display = 'block';
     card.style.display ="none";
-    
   });
 
   
@@ -211,7 +208,8 @@ document.querySelectorAll('input[name="basemap"]').forEach(function (input) {
     }
   });
 });
-//Un bouton à la fois
+
+// Sélectionnez les deux cases à cocher
 const checkboxes = document.querySelectorAll('input[type="checkbox"].form-check-input');
 
 checkboxes.forEach((checkbox) => {
@@ -221,8 +219,13 @@ checkboxes.forEach((checkbox) => {
         otherCheckbox.checked = false;
       }
     });
+
+    // Assurez-vous que la case cochée reste cochée
+    this.checked = true;
   });
 });
+
+
 
 
 
