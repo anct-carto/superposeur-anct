@@ -19,6 +19,8 @@ function getColor(layerType) {
     return "#599AD4";
   } else if (layerType === 'acvMarkerLayer') {
     return "#E12A5C";
+  } else if (layerType === 'acv2MarkerLayer') {
+    return "#313778";
   }
   // Par défaut, retournez une couleur par défaut si nécessaire.
   return "#000000";
@@ -119,6 +121,35 @@ function toggleLayer(layer, checkbox) {
 }
 
 
+
+function setStyleBaseMap(styleReg, styleDep) {
+  L.DomEvent.on(document.querySelector('input[id="fond1-checkbox"]'), 'change', function () {
+    if (this.checked) {
+      styleReg.setStyle({
+        color: '#363636'
+      });
+      styleDep.setStyle({
+        color: '#363636',
+        weight: 0.15,
+      });
+    }
+  });
+
+  // Code pour changer la couleur des contours de la couche régions en blanc ici
+  L.DomEvent.on(document.querySelector('input[id="photo-checkbox"]'), 'change', function () {
+    if (this.checked) {
+      styleReg.setStyle({
+        color: 'white'
+      });
+      styleDep.setStyle({
+        color: 'white',
+        weight: 0.25,
+      });
+    } 
+  });
+}
+
+
 /* -------------------------------------------------------------------------- */
 /*                                MAP                                         */
 /* -------------------------------------------------------------------------- */
@@ -135,9 +166,6 @@ const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/
   attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
 });
 
-const basemapFond2 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',{
-  attribution: 'Fond cartographique &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',   
-});
 
 const basemapPhoto = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -149,7 +177,6 @@ map.addLayer(basemapFond1);
 //baseLayers est  une couche qui contient tous les fonds
 const baseLayers = {
   'fond1' : basemapFond1,
-  'fond2': basemapFond2,
   'photo satellite' : basemapPhoto
 };
 
@@ -215,10 +242,9 @@ document.querySelectorAll('input[name="basemap"]').forEach(function (input) {
 
     if (selectedBasemap === "fond1") {
       map.addLayer(basemapFond1);
-    } else if (selectedBasemap === "fond2") {
-      map.addLayer(basemapFond2);
     } else if (selectedBasemap === "photo") {
       map.addLayer(basemapPhoto);
+      basemapPhoto.setOpacity(0.8);
     }
   });
 });
@@ -241,6 +267,7 @@ checkboxes.forEach((checkbox) => {
 
 // Charger les données
 const acv = loadData("data/geom/geojson/acv_geom.geojson");
+const acv2 = loadData("data/geom/geojson/acv2_geom.geojson");
 const ti = loadData("data/geom/geojson/ti_geom.geojson");
 
 const region= loadData("data/geom/geojson/reg_geom_4326.geojson");
@@ -266,34 +293,12 @@ Promise.all([region, departement]).then(([regPolygon, depPolygon])=>{
     }, 
   }).addTo(map);
 
-  // Code pour changer la couleur des contours de la couche régions en blanc ici
-  L.DomEvent.on(document.querySelector('input[value="photo"]'), 'change', function () {
-    if (this.checked) {
-      // Changer la couleur des contours des couches departements et régions en blanc
-      regPolygonLayer.setStyle({
-        color: 'white'
-      });
-      depPolygonLayer.setStyle({
-        color: 'white',
-        weight: 0.25,
-      });
-    } else {
-      // Rétablir la couleur par défaut des contours des couches departements et régions
-      regPolygonLayer.setStyle({
-        color: '#363636'
-      });
-      depPolygonLayer.setStyle({
-        color: '#363636',
-        weight: 0.15,
-      });
-    }
-  });
+  setStyleBaseMap(regPolygonLayer, depPolygonLayer);
 
 });
 
 //Données des programmes ANCT
-Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
-  
+Promise.all([ti, acv, acv2]).then(([tiPolygon, acvMarker, acv2Marker])=>{
   
   //TI
   const tiPolygonLayer= new L.geoJSON(tiPolygon,{
@@ -308,8 +313,7 @@ Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
       // }
   }).on('click', (e) => {
     getInfo(e, 'ti');
-  }) 
-  .addTo(map);
+  }).addTo(map);
 
   // ACV
   const acvMarkerLayer= new L.geoJSON(acvMarker,{
@@ -328,18 +332,39 @@ Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
       // }  
   }).on('click', (e) => {
     getInfo(e, 'acv');
-  }) 
-  .addTo(map);
+  }).addTo(map);
+
+  // ACV2
+  const acv2MarkerLayer= new L.geoJSON(acv2Marker,{
+    pointToLayer: function(feature,latlng) {
+        var marker = L.circleMarker(latlng, {
+            color: getColor('acv2MarkerLayer'),
+            fillColor:getColor('acv2MarkerLayer'),
+            fillOpacity:1,
+            radius:2,
+            weight:1
+        })
+        return marker
+    },
+    // onEachFeature: function(feature, layer) {
+    //   layer.on('click', getInfo(feature,'acv'));
+    // }  
+  }).on('click', (e) => {
+  getInfo(e, 'acv2');
+  }).addTo(map);
+
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(acvMarkerLayer);
+  map.removeLayer(acv2MarkerLayer);
  
 //Appel à la fonction pour activier et désactiver les couches
   const tiData = document.getElementById('ti-polygon-checkbox')
   const acvData = document.getElementById('acv-marker-checkbox')
+  const acv2Data = document.getElementById('acv2-marker-checkbox')
 
   toggleLayer(tiPolygonLayer, tiData);
   toggleLayer(acvMarkerLayer, acvData);
-
+  toggleLayer(acv2MarkerLayer, acv2Data);
 
 
 });

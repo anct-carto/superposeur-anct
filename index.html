@@ -84,11 +84,6 @@
               </div>
             
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="fond2-checkbox" name="basemap" value="fond2">
-                <label class="form-check-label" for="fond2-checkbox">OSM ©CARTO</label>
-              </div>
-            
-              <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="photo-checkbox" name="basemap" value="photo">
                 <label class="form-check-label" for="photo-checkbox">Photo satellite</label>
               </div>
@@ -100,15 +95,25 @@
               <br>
               <h1 id="title-legend-1">Programmes ANCT</h1>
               <details>
-                <summary>Villes, métropoles</summary>
+                <summary>Villes petites et moyennes</summary>
                 <label class ="legend-symbol-acv">
                   <input type="checkbox" id="acv-marker-checkbox" > Action Coeur de Ville
                 </label>
+                <br>
+                <label class ="legend-symbol-acv2">
+                  <input type="checkbox" id="acv2-marker-checkbox" > Entrées de ville (ACV2)
+                </label>
               </details>
               <details>
-                <summary>Activités économiques</summary>
+                <summary>Emplois et activités économiques</summary>
                 <label>
                   <input type="checkbox" id="ti-polygon-checkbox" > Territoires d'industrie
+                </label>
+              </details>
+              <details>
+                <summary>Transition écologique</summary>
+                <label>
+                  <input type="checkbox" id="crte-polygon-checkbox" > CRTE
                 </label>
               </details>
             </div> 
