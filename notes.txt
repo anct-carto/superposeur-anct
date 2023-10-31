@@ -62,3 +62,5 @@ memo code :
 //     });
 //     //layer.bindTooltip(feature.properties.lib_com, {className: 'TooltipsNAT', closeButton: false});
 // }
+
+https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/bouton

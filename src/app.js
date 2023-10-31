@@ -15,18 +15,52 @@ async function loadData(chemin) {
 
 //Fonction pour définir une couleur
 function getColor(layerType) {
-  if (layerType === 'tiPolygonLayer') {
+  if (layerType === 'ti') {
     return "#599AD4";
-  } else if (layerType === 'acvMarkerLayer') {
+  } else if (layerType === 'acv') {
     return "#E12A5C";
-  } else if (layerType === 'acv2MarkerLayer') {
+  } else if (layerType === 'acv2') {
     return "#313778";
   }
-  else if (layerType === 'crtePolygonLayer') {
+  else if (layerType === 'crte') {
     return "#2B7019";
   }
   // Par défaut, retournez une couleur par défaut si nécessaire.
   return "#000000";
+};
+
+
+//Automatiser la création de geojson
+function createGeoJSONPolygon(data, color, weight, type) {
+  return new L.geoJSON(data, {
+    style: {
+      fillColor: getColor(type),
+      fillOpacity:0.5,
+      color: color,
+      weight: weight,
+    }, 
+  }).on('click', (e) => {
+    getInfo(e, type);
+  }).addTo(map);
+
+};
+
+
+function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
+  return new L.geoJSON(data,{
+    pointToLayer: function(feature,latlng) {
+        var marker = L.circleMarker(latlng, {
+            color: getColor(type),
+            fillColor:getColor(type),
+            fillOpacity: fillOpacity,
+            radius: radius,
+            weight: weight
+        })
+        return marker
+    },
+}).on('click', (e) => {
+  getInfo(e, type);
+}).addTo(map);
 };
 
 // Fonction pour récupérer les propriétés des couches geojson
@@ -265,68 +299,20 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 });
 
 
-function createGeoJSONLayer(data, color, map, type) {
 
-}
+
 
 //Données des programmes ANCT
 Promise.all([tiInit, crteInit, acvInit, acv2Init]).then(([tiLayer, crteLayer, acvLayer, acv2Layer])=>{
   
-  //TI
-  const tiPolygonLayer= new L.geoJSON(tiLayer,{
-      style: {
-        fillColor: getColor('tiPolygonLayer'),
-        fillOpacity:0.5,
-        color:null,
-        lineWidth: null,
-      }, 
-  }).on('click', (e) => {
-    getInfo(e, 'ti');
-  }).addTo(map);
+  //POLYGON
+  const tiPolygonLayer= createGeoJSONPolygon(tiLayer, null, null , 'ti');
+  const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 0.2, 'crte');
+  
+  //MARKER
+  const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 1, 2, 1, 'acv');
+  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 2, 1, 'acv2');
 
-    //CRTE
-    const crtePolygonLayer= new L.geoJSON(crteLayer,{
-      style: {
-        fillColor: getColor('crtePolygonLayer'),
-        fillOpacity:0.5,
-        color:"white",
-        weight: 0.2,
-      }, 
-  }).on('click', (e) => {
-    getInfo(e, 'crte');
-  }).addTo(map);
-
-  // ACV
-  const acvMarkerLayer= new L.geoJSON(acvLayer,{
-      pointToLayer: function(feature,latlng) {
-          var marker = L.circleMarker(latlng, {
-              color: getColor('acvMarkerLayer'),
-              fillColor:getColor('acvMarkerLayer'),
-              fillOpacity:1,
-              radius:2,
-              weight:1
-          })
-          return marker
-      },
-  }).on('click', (e) => {
-    getInfo(e, 'acv');
-  }).addTo(map);
-
-  // ACV2
-  const acv2MarkerLayer= new L.geoJSON(acv2Layer,{
-    pointToLayer: function(feature,latlng) {
-        var marker = L.circleMarker(latlng, {
-            color: getColor('acv2MarkerLayer'),
-            fillColor:getColor('acv2MarkerLayer'),
-            fillOpacity:1,
-            radius:2,
-            weight:1
-        })
-        return marker
-    },
-  }).on('click', (e) => {
-  getInfo(e, 'acv2');
-  }).addTo(map);
 
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(crtePolygonLayer);
