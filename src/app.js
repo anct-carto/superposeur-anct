@@ -247,7 +247,7 @@ const region= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departement= loadData("data/geom/geojson/dep_geom_4326.geojson");
 
 //Données d'habillage de la carte
-Promise.all([region, departement]).then(([regPolygon, departementPolygon])=>{
+Promise.all([region, departement]).then(([regPolygon, depPolygon])=>{
   const regPolygonLayer =new L.geoJSON(regPolygon,{
       style: {
         fillColor: "transparent",
@@ -257,7 +257,7 @@ Promise.all([region, departement]).then(([regPolygon, departementPolygon])=>{
       }, 
   }).addTo(map);
 
-  const departementPolygonLayer =new L.geoJSON(departementPolygon,{
+  const depPolygonLayer =new L.geoJSON(depPolygon,{
     style: {
       fillColor: "transparent",
       fillOpacity:0,
@@ -265,6 +265,29 @@ Promise.all([region, departement]).then(([regPolygon, departementPolygon])=>{
       weight: 0.15,
     }, 
   }).addTo(map);
+
+  // Code pour changer la couleur des contours de la couche régions en blanc ici
+  L.DomEvent.on(document.querySelector('input[value="photo"]'), 'change', function () {
+    if (this.checked) {
+      // Changer la couleur des contours des couches departements et régions en blanc
+      regPolygonLayer.setStyle({
+        color: 'white'
+      });
+      depPolygonLayer.setStyle({
+        color: 'white',
+        weight: 0.25,
+      });
+    } else {
+      // Rétablir la couleur par défaut des contours des couches departements et régions
+      regPolygonLayer.setStyle({
+        color: '#363636'
+      });
+      depPolygonLayer.setStyle({
+        color: '#363636',
+        weight: 0.15,
+      });
+    }
+  });
 
 });
 
@@ -317,12 +340,9 @@ Promise.all([ti, acv]).then(([tiPolygon, acvMarker])=>{
   toggleLayer(tiPolygonLayer, tiData);
   toggleLayer(acvMarkerLayer, acvData);
 
+
+
 });
-
-
-
-
-
 
 
 
