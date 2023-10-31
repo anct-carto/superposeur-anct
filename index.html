@@ -54,7 +54,6 @@
       <div class="leaflet-sidebar-tabs">
         <ul role="tablist">
           <li><a href="#home" role="tab"><i class="las la-home"></i></a></li>
-          <li><a href="#fiche-territoire" role="tab"><i class="las la-search"></i></a></li>
           <li><a href="#a-propos" role="tab"><i class="la la-question-circle"></i></a></li>
       </ul>
       </div>
@@ -74,25 +73,27 @@
           </div>
 
           <div class="panel-content">
-            <div id="background-tiles">
-              <br>
-              <h1 id="title-legend-1">Fonds cartographiques</h1>
-            
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="fond1-checkbox" name="basemap" value="fond1" checked>
-                <label class="form-check-label" for="fond1-checkbox">OSM ©Stadia Maps</label>
-              </div>
-            
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="photo-checkbox" name="basemap" value="photo">
-                <label class="form-check-label" for="photo-checkbox">Photo satellite</label>
-              </div>
-            </div>
-            
-   
 
+  
             <div id="legend">
+              <div id="background-tiles">
+
+                <br>
+
+                <h1 id="title-legend-1">Fonds cartographiques</h1>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="fond1-checkbox" name="basemap" value="fond1" checked>
+                  <label class="form-check-label" for="fond1-checkbox">OSM ©Stadia Maps</label>
+                </div>
+              
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="photo-checkbox" name="basemap" value="photo">
+                  <label class="form-check-label" for="photo-checkbox">Photo satellite</label>
+                </div>
+              </div>
+
               <br>
+
               <h1 id="title-legend-1">Programmes ANCT</h1>
               <details>
                 <summary>Villes petites et moyennes</summary>
@@ -117,34 +118,27 @@
                 </label>
               </details>
             </div> 
-              
-            <br>     
+
+            <!--Ajouter fiche explicative popup des dispositifs-->
+            <div id="card">
+              <p class="fiche-terr-1" id="lib-com"></p>
+              <p class="fiche-terr-1" id="insee-com"></p>
+              <p class="fiche-terr-2" id="lib-territoire"></p>
+              <p class="fiche-terr-2" id="id-territoire"></p>
+              <button id="bnt-retour" class="fr-btn" > Retour </button>
+            </div>
+            
+            <br>    
+
             <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
               <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
             </p>
           </div>
 
         </div>
+
   
       <!--Panneau 2-->
-        <div class="leaflet-sidebar-pane" id="fiche-territoire">
-          <div class="leaflet-sidebar-header">
-            <span class="leaflet-sidebar-close" @click="sidebar.close()">
-              <i class="la la-step-backward"></i>
-            </span>
-            <p>Fiche territoire</p>
-          </div>
-          <div class="panel-content">
-          <!--Ajouter fiche explicative popup des dispositifs-->
-            <div id="card"></div>
-            <p class="fiche-terr-1" id="lib-com"></p>
-            <p class="fiche-terr-1" id="insee-com"></p>
-            <p class="fiche-terr-2" id="lib-territoire"></p>
-            <p class="fiche-terr-2" id="id-territoire"></p>
-          </div>
-        </div>
-  
-      <!--Panneau 3-->
         <div class="leaflet-sidebar-pane" id="a-propos">
           <div class="leaflet-sidebar-header">
             <h1 class="leaflet-sidebar-header" >A propos</h1> 

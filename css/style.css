@@ -37,7 +37,9 @@ html, body, #IDsuperMap {
 /*                                LEGENDE                             	      */
 /* -------------------------------------------------------------------------- */
 
-
+#legend {
+	display: block;
+}
 
 #title-legend-1{
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
@@ -60,5 +62,17 @@ summary {
 cursor: pointer;
 font-weight: bold;
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                                CARD                             	          */
+/* -------------------------------------------------------------------------- */
+
+#card {
+	display: none;
+
+}
+
+
 
 

@@ -33,6 +33,14 @@ function getColor(layerType) {
 var dataInfos ;
 
 function getInfo(e, layerName) {
+  const card = document.getElementById("card");
+  const legend =document.getElementById("legend");
+  const btnRetour = document.getElementById("bnt-retour");
+
+
+  legend.style.display ="none";
+  card.style.display ="block";
+
   const dataInfos = e.layer.feature.properties;
 
   // const libCom = document.getElementById(`lib-com-${layerName}`);
@@ -44,9 +52,18 @@ function getInfo(e, layerName) {
   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
   libTerr.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + '</div>';
   idTerr.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
-  sidebar.open('fiche-territoire');
+  sidebar.open('home');
 
-  //vider la liste quand clic dans le vide
+  //Quand clic sur le bouton retour, retour à la légende
+  // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
+  btnRetour.addEventListener('click', () => {
+  // Modifiez le style de la div de la légende pour l'ouvrir
+    legend.style.display = 'block';
+    card.style.display ="none";
+    
+  });
+
+  
 };
 
 
