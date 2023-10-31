@@ -22,6 +22,9 @@ function getColor(layerType) {
   } else if (layerType === 'acv2MarkerLayer') {
     return "#313778";
   }
+  else if (layerType === 'crtePolygonLayer') {
+    return "#2B7019";
+  }
   // Par défaut, retournez une couleur par défaut si nécessaire.
   return "#000000";
 };
@@ -46,63 +49,6 @@ function getInfo(e, layerName) {
   //vider la liste quand clic dans le vide
 };
 
-// function getInfo(e, layerName) {
-
-//   const dataInfos = e.layer.feature.properties;
-//   console.log(dataInfos);
-
-//   const layerMappings = {
-//     ti: { libTerr: 'lib_ti', idTerr: 'id_ti' },
-//     acv: { label: 'lib_com.x', insee: 'insee_com', libTerr: 'lib_acv', idTerr: 'id_acv' }
-//     // Ajoutez d'autres couches avec leurs mappages
-//   };
-
-//   const mapping = layerMappings[layerName];
-
-//   if (mapping) {
-//     const libCom = dataInfos[mapping.label];
-//     const inseeCom = dataInfos[mapping.insee];
-//     const libTerr = dataInfos[mapping.libTerr];
-//     const idTerr = dataInfos[mapping.idTerr];
-    
-
-//     // Utilisez les valeurs de libCom, inseeCom, libTerr, idTerr 
-//     console.log('Libellé : ' + libCom);
-//     console.log('Code commune : ' + inseeCom);
-//     console.log('Libellé Territoire : ' + libTerr);
-//     console.log('ID Territoire : ' + idTerr);
-//   }
-
-//   sidebar.open('fiche-territoire');
-// }
-
-
-
-
-// // Change le style des points: augmente le radius à 10
-// function highlightFeature(e) {
-//     var layer = e.target;
-//     layer.setStyle({
-
-//       fillColor: "white"
-//     });
-// }
-  
-// //Change le style des points: diminue le radius à 5
-// function resetHighlight(e) {
-//     var layer = e.target;
-//     layer.setStyle({
-//      fillColor: getColor()  //ne fonctionne parseFloat, renvoie en noir = indefined
-//     });
-// }
-
-// function onEachFeatureData(feature,layer){
-//     layer.on({
-//         mouseover: highlightFeature,
-//         mouseout: resetHighlight,
-//     });
-//     //layer.bindTooltip(feature.properties.lib_com, {className: 'TooltipsNAT', closeButton: false});
-// }
 
 
 function legendSidebar(e){
@@ -266,15 +212,16 @@ checkboxes.forEach((checkbox) => {
 /* --------------------------Lecture des données---------------------------- */
 
 // Charger les données
-const acv = loadData("data/geom/geojson/acv_geom.geojson");
-const acv2 = loadData("data/geom/geojson/acv2_geom.geojson");
-const ti = loadData("data/geom/geojson/ti_geom.geojson");
+const acvInit = loadData("data/geom/geojson/acv_geom.geojson");
+const acv2Init = loadData("data/geom/geojson/acv2_geom.geojson");
+const tiInit = loadData("data/geom/geojson/ti_geom.geojson");
+const crteInit = loadData("data/geom/geojson/crte_geom.geojson");
 
-const region= loadData("data/geom/geojson/reg_geom_4326.geojson");
-const departement= loadData("data/geom/geojson/dep_geom_4326.geojson");
+const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
+const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
 
 //Données d'habillage de la carte
-Promise.all([region, departement]).then(([regPolygon, depPolygon])=>{
+Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
   const regPolygonLayer =new L.geoJSON(regPolygon,{
       style: {
         fillColor: "transparent",
@@ -297,26 +244,40 @@ Promise.all([region, departement]).then(([regPolygon, depPolygon])=>{
 
 });
 
+
+function createGeoJSONLayer(data, color, map, type) {
+
+}
+
 //Données des programmes ANCT
-Promise.all([ti, acv, acv2]).then(([tiPolygon, acvMarker, acv2Marker])=>{
+Promise.all([tiInit, crteInit, acvInit, acv2Init]).then(([tiLayer, crteLayer, acvLayer, acv2Layer])=>{
   
   //TI
-  const tiPolygonLayer= new L.geoJSON(tiPolygon,{
+  const tiPolygonLayer= new L.geoJSON(tiLayer,{
       style: {
         fillColor: getColor('tiPolygonLayer'),
         fillOpacity:0.5,
         color:null,
         lineWidth: null,
       }, 
-      // onEachFeature: function(feature, layer) {
-      //   layer.on('click', getInfo(feature, 'ti'));
-      // }
   }).on('click', (e) => {
     getInfo(e, 'ti');
   }).addTo(map);
 
+    //CRTE
+    const crtePolygonLayer= new L.geoJSON(crteLayer,{
+      style: {
+        fillColor: getColor('crtePolygonLayer'),
+        fillOpacity:0.5,
+        color:"white",
+        weight: 0.2,
+      }, 
+  }).on('click', (e) => {
+    getInfo(e, 'crte');
+  }).addTo(map);
+
   // ACV
-  const acvMarkerLayer= new L.geoJSON(acvMarker,{
+  const acvMarkerLayer= new L.geoJSON(acvLayer,{
       pointToLayer: function(feature,latlng) {
           var marker = L.circleMarker(latlng, {
               color: getColor('acvMarkerLayer'),
@@ -327,15 +288,12 @@ Promise.all([ti, acv, acv2]).then(([tiPolygon, acvMarker, acv2Marker])=>{
           })
           return marker
       },
-      // onEachFeature: function(feature, layer) {
-      //   layer.on('click', getInfo(feature,'acv'));
-      // }  
   }).on('click', (e) => {
     getInfo(e, 'acv');
   }).addTo(map);
 
   // ACV2
-  const acv2MarkerLayer= new L.geoJSON(acv2Marker,{
+  const acv2MarkerLayer= new L.geoJSON(acv2Layer,{
     pointToLayer: function(feature,latlng) {
         var marker = L.circleMarker(latlng, {
             color: getColor('acv2MarkerLayer'),
@@ -346,23 +304,23 @@ Promise.all([ti, acv, acv2]).then(([tiPolygon, acvMarker, acv2Marker])=>{
         })
         return marker
     },
-    // onEachFeature: function(feature, layer) {
-    //   layer.on('click', getInfo(feature,'acv'));
-    // }  
   }).on('click', (e) => {
   getInfo(e, 'acv2');
   }).addTo(map);
 
   map.removeLayer(tiPolygonLayer);
+  map.removeLayer(crtePolygonLayer);
   map.removeLayer(acvMarkerLayer);
   map.removeLayer(acv2MarkerLayer);
  
 //Appel à la fonction pour activier et désactiver les couches
   const tiData = document.getElementById('ti-polygon-checkbox')
+  const crteData = document.getElementById('crte-polygon-checkbox')
   const acvData = document.getElementById('acv-marker-checkbox')
   const acv2Data = document.getElementById('acv2-marker-checkbox')
 
   toggleLayer(tiPolygonLayer, tiData);
+  toggleLayer(crtePolygonLayer, crteData);
   toggleLayer(acvMarkerLayer, acvData);
   toggleLayer(acv2MarkerLayer, acv2Data);
 
