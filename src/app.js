@@ -165,9 +165,9 @@ function legendSidebar(e){
 function toggleLayer(layer, checkbox) {
   checkbox.addEventListener('change', function (e) {
     if (this.checked) {
-      map.addLayer(layer);
+      allLayer.addLayer(layer);
     } else {
-      map.removeLayer(layer);
+      allLayer.removeLayer(layer);
     }
   });
 }
@@ -238,6 +238,8 @@ const overlays = {
 //Ajout d'un control layer qui permet de sélectionner le fond souhaité
 const layerControl = L.control.layers(baseLayers, overlays);
 // layerControl.addTo(map)
+
+const allLayer = new L.layerGroup().addTo(map);
 
 
 
@@ -317,7 +319,19 @@ checkboxes.forEach((checkbox) => {
   });
 });
 
+/* --------------------------Bouton effacer la légende---------------------------- */
 
+function clearLegend() {
+  const programCheckboxes = document.querySelectorAll('.program-checkbox');
+
+  programCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkbox.checked = false;
+      console.log(checkbox)
+      allLayer.clearLayers();
+    }
+  });
+}
 
 
 
@@ -379,7 +393,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 2, 1, 'acv2');
   const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 2, 1, 'pvd');
   const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 1, 2, 1, 'fs');
-//pvd-marker-checkbox
+
+  
 
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(crtePolygonLayer);
@@ -391,8 +406,9 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   map.removeLayer(pvdMarkerLayer);
   map.removeLayer(fsMarkerLayer);
 
+  
  
-//Appel à la fonction pour activier et désactiver les couches
+  //Récupérer les éléments HTML 
   const tiData = document.getElementById('ti-polygon-checkbox');
   const crteData = document.getElementById('crte-polygon-checkbox');
   const amiData = document.getElementById('ami-polygon-checkbox');
@@ -403,7 +419,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   const pvdData = document.getElementById('pvd-marker-checkbox');
   const fsData = document.getElementById('fs-marker-checkbox');
 
-
+  //Appel à la fonction pour activier et désactiver les couches
   toggleLayer(tiPolygonLayer, tiData);
   toggleLayer(crtePolygonLayer, crteData);
   toggleLayer(amiPolygonLayer, amiData);
@@ -415,11 +431,12 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   toggleLayer(fsMarkerLayer, fsData);
 
 
+
+
 });
 
-
-
-
+const clearLegendButton = document.getElementById('clear-legend-button');
+clearLegendButton.addEventListener('click', clearLegend);
   
 /* -------------------------------------------------------------------------- */
 /*                                ZOOM DROM                                   */
@@ -448,6 +465,5 @@ liste_drom.addEventListener('change', (e) => {
       return map.setView([46.5, 0], 5.5555, { animation: true })
   }
 });
-
 
 
