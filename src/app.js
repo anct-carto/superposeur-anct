@@ -42,36 +42,82 @@ function getColor(layerType) {
 
 //Automatiser la création de geojson : polygon
 function createGeoJSONPolygon(data, color, weight, type) {
-  return new L.geoJSON(data, {
+  const layer = new L.geoJSON(data, {
     style: {
       fillColor: getColor(type),
-      fillOpacity:0.5,
+      fillOpacity: 0.5,
       color: color,
       weight: weight,
-    }, 
+    },
   }).on('click', (e) => {
     getInfo(e, type);
   }).addTo(map);
 
-};
+  // Gérer le survol pour chaque élément de la couche
+  layer.eachLayer(function (feature) {
+    feature.on('mouseover', function (e) {
+      // Modifier le style de l'élément survolé
+      this.setStyle({
+        color: 'white', // Bordure blanche
+        fillOpacity: 1,
+        weight: 1,
+      });
+    });
+
+    // Rétablir le style initial de l'élément une fois le survol terminé
+    feature.on('mouseout', function (e) {
+      this.setStyle({
+        color: color, // Utilisez la couleur d'origine
+        fillOpacity: 0.5,
+        weight: weight,
+      });
+    });
+  });
+
+  return layer;
+}
 
 //Automatiser la création de geojson : marker
 function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
-  return new L.geoJSON(data,{
-    pointToLayer: function(feature,latlng) {
-        var marker = L.circleMarker(latlng, {
-            color: getColor(type),
-            fillColor:getColor(type),
-            fillOpacity: fillOpacity,
-            radius: radius,
-            weight: weight
-        })
-        return marker
+  const layer = new L.geoJSON(data, {
+    pointToLayer: function (feature, latlng) {
+      var marker = L.circleMarker(latlng, {
+        color: getColor(type),
+        fillColor: getColor(type),
+        fillOpacity: fillOpacity,
+        radius: radius,
+        weight: weight,
+      });
+      return marker;
     },
-}).on('click', (e) => {
-  getInfo(e, type);
-}).addTo(map);
-};
+  }).on('click', (e) => {
+    getInfo(e, type);
+  }).addTo(map);
+
+  // Gérer le survol pour chaque élément de la couche
+  layer.eachLayer(function (feature) {
+    feature.on('mouseover', function (e) {
+      // Modifier le style de l'élément survolé
+      this.setStyle({
+        color: 'white', // Bordure blanche
+        fillColor: getColor(type), // Remplissage blanc
+        radius: 6,
+      });
+    });
+
+    // Rétablir le style initial de l'élément une fois le survol terminé
+    feature.on('mouseout', function (e) {
+      this.setStyle({
+        color: getColor(type), // Utilisez la couleur d'origine
+        fillColor: getColor(type), // Utilisez la couleur d'origine
+        radius: radius,
+      });
+    });
+  });
+
+  return layer;
+}
+
 
 /* -------------------------- Sidebar ----------------------------- */
 
@@ -96,7 +142,7 @@ function getInfo(e, layerName) {
 
   // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
-  libTerr.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + '</div>';
+  libTerr.innerHTML = `<div id="fiche-terr-1"> <p> Libellé du territoire: </p><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + '</div>';
   idTerr.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
   sidebar.open('home');
 
