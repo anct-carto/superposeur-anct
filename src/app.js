@@ -11,26 +11,36 @@ async function loadData(chemin) {
 };
 
 
-/* --------------------------Mise en place carte----------------------------- */
+/* -------------------------- Styles ----------------------------- */
 
 //Fonction pour définir une couleur
 function getColor(layerType) {
   if (layerType === 'ti') {
     return "#599AD4";
+  } else if (layerType === 'crte') {
+    return "#2B7019";
+  } else if (layerType === 'ami') {
+    return "#74B776";
+  } else if (layerType === 'amm') {
+    return "#74B776";
   } else if (layerType === 'acv') {
     return "#E12A5C";
   } else if (layerType === 'acv2') {
     return "#313778";
+  } else if (layerType === 'pvd') {
+    return "#DA7E42";
+  } else if (layerType === 'fs') {
+    return "#398373";
   }
-  else if (layerType === 'crte') {
-    return "#2B7019";
-  }
+  
   // Par défaut, retournez une couleur par défaut si nécessaire.
   return "#000000";
 };
 
 
-//Automatiser la création de geojson
+/* --------------------------Mise en place carte----------------------------- */
+
+//Automatiser la création de geojson : polygon
 function createGeoJSONPolygon(data, color, weight, type) {
   return new L.geoJSON(data, {
     style: {
@@ -45,7 +55,7 @@ function createGeoJSONPolygon(data, color, weight, type) {
 
 };
 
-
+//Automatiser la création de geojson : marker
 function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
   return new L.geoJSON(data,{
     pointToLayer: function(feature,latlng) {
@@ -62,6 +72,8 @@ function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
   getInfo(e, type);
 }).addTo(map);
 };
+
+/* -------------------------- Sidebar ----------------------------- */
 
 // Fonction pour récupérer les propriétés des couches geojson
 var dataInfos ;
@@ -98,12 +110,12 @@ function getInfo(e, layerName) {
 };
 
 
-
+// Ouverture de la sidebar sur l'onglet "home"
 function legendSidebar(e){
     sidebar.open('home');
 }
 
-// Fonction pour activer et désactiver les couches dans la sidebar
+// Activer et désactiver les couches des programmes ANCT dans la sidebar
 function toggleLayer(layer, checkbox) {
   checkbox.addEventListener('change', function (e) {
     if (this.checked) {
@@ -115,7 +127,7 @@ function toggleLayer(layer, checkbox) {
 }
 
 
-
+//Evenement qui permet de modifier la tuile de fond
 function setStyleBaseMap(styleReg, styleDep) {
   L.DomEvent.on(document.querySelector('input[id="fond1-checkbox"]'), 'change', function () {
     if (this.checked) {
@@ -183,15 +195,15 @@ const layerControl = L.control.layers(baseLayers, overlays);
 
 
 
-
-
-
 /* ----------------Mise en place des éléments habillage carte--------------------- */
+
 // Ajout de l'échelle
 L.control.scale({ position: 'bottomright', imperial:false }).addTo(map);
 
 //Ajout du zoom
 L.control.zoom({ position: 'topright'}).addTo(map);
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                                   SIDEBAR                                  */
@@ -266,10 +278,18 @@ checkboxes.forEach((checkbox) => {
 /* --------------------------Lecture des données---------------------------- */
 
 // Charger les données
+
+// Marker
 const acvInit = loadData("data/geom/geojson/acv_geom.geojson");
 const acv2Init = loadData("data/geom/geojson/acv2_geom.geojson");
+const pvdInit = loadData("data/geom/geojson/pvd_geom.geojson");
+const fsInit = loadData("data/geom/geojson/fs_geom.geojson");
+
+// Polygon
 const tiInit = loadData("data/geom/geojson/ti_geom.geojson");
 const crteInit = loadData("data/geom/geojson/crte_geom.geojson");
+const amiInit = loadData("data/geom/geojson/ami_geom.geojson");
+const ammInit = loadData("data/geom/geojson/amm_geom.geojson");
 
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
@@ -299,36 +319,54 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 });
 
 
-
-
-
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, acvInit, acv2Init]).then(([tiLayer, crteLayer, acvLayer, acv2Layer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, acvLayer, acv2Layer, pvdLayer, fsLayer])=>{
   
   //POLYGON
   const tiPolygonLayer= createGeoJSONPolygon(tiLayer, null, null , 'ti');
   const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 0.2, 'crte');
+  const amiPolygonLayer= createGeoJSONPolygon(amiLayer, "white", 0.2, 'ami');
+  const ammPolygonLayer= createGeoJSONPolygon(ammLayer, "white", 0.2, 'amm');
   
   //MARKER
   const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 1, 2, 1, 'acv');
   const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 2, 1, 'acv2');
-
+  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 2, 1, 'pvd');
+  const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 1, 2, 1, 'fs');
+//pvd-marker-checkbox
 
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(crtePolygonLayer);
+  map.removeLayer(amiPolygonLayer);
+  map.removeLayer(ammPolygonLayer);
+
   map.removeLayer(acvMarkerLayer);
   map.removeLayer(acv2MarkerLayer);
+  map.removeLayer(pvdMarkerLayer);
+  map.removeLayer(fsMarkerLayer);
+
  
 //Appel à la fonction pour activier et désactiver les couches
-  const tiData = document.getElementById('ti-polygon-checkbox')
-  const crteData = document.getElementById('crte-polygon-checkbox')
-  const acvData = document.getElementById('acv-marker-checkbox')
-  const acv2Data = document.getElementById('acv2-marker-checkbox')
+  const tiData = document.getElementById('ti-polygon-checkbox');
+  const crteData = document.getElementById('crte-polygon-checkbox');
+  const amiData = document.getElementById('ami-polygon-checkbox');
+  const ammData = document.getElementById('amm-polygon-checkbox');
+
+  const acvData = document.getElementById('acv-marker-checkbox');
+  const acv2Data = document.getElementById('acv2-marker-checkbox');
+  const pvdData = document.getElementById('pvd-marker-checkbox');
+  const fsData = document.getElementById('fs-marker-checkbox');
+
 
   toggleLayer(tiPolygonLayer, tiData);
   toggleLayer(crtePolygonLayer, crteData);
+  toggleLayer(amiPolygonLayer, amiData);
+  toggleLayer(ammPolygonLayer, ammData);
+
   toggleLayer(acvMarkerLayer, acvData);
   toggleLayer(acv2MarkerLayer, acv2Data);
+  toggleLayer(pvdMarkerLayer, pvdData);
+  toggleLayer(fsMarkerLayer, fsData);
 
 
 });
