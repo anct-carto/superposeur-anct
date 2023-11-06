@@ -71,17 +71,43 @@ cursor: pointer;
 font-weight: bold;
 }
 
+/* Bouton clear legende*/
+
+#clear-legend-button {
+	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
+	font-size: 10px; /* Taille de police 10 pixels */
+	border-radius: 5px; /* Bords arrondis */
+	background-color: #616DAF; /* Fond bleu */
+	color: white; /* Texte en blanc */
+	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
+	cursor: pointer; /* Curseur en main pour indiquer un bouton cliquable */
+
+}
+
 
 /* -------------------------------------------------------------------------- */
 /*                                   CARD                              		  */
 /* -------------------------------------------------------------------------- */
 
 #card {
+	margin: 20px;
 	display: none;
+	background-color: #0073e6; /* Couleur de fond bleue */
+	color: #fff; /* Couleur du texte en blanc */
+	padding: 10px; /* Espace intérieur autour du contenu */
+	border: 2px solid #0050a1; /* Bordure bleue autour de la "card" */
+	border-radius: 5px; /* Coins arrondis */
+	font-family: 'Marianne', sans-serif; /* Police de caractères Marianne */
 
 }
 
-/* --------------------------------BOUTON------------------------------------ */
+/* Sous-titre de la card*/
+.subtitle {
+	color: gray;
+	font-size: .95em;
+}
+
+/* --------------------------------BOUTON RETOUR------------------------------ */
 
 #bnt-retour {
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
@@ -91,6 +117,7 @@ font-weight: bold;
 	color: white; /* Texte en blanc */
 	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
 	cursor: pointer; /* Curseur en main pour indiquer un bouton cliquable */
+	display: none;
 
 }
 

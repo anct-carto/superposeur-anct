@@ -124,6 +124,37 @@ function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
 // Fonction pour récupérer les propriétés des couches geojson
 var dataInfos ;
 
+// function getInfo(e, layerName) {
+//   const card = document.getElementById("card");
+//   const legend =document.getElementById("legend");
+//   const btnRetour = document.getElementById("bnt-retour");
+
+
+//   legend.style.display ="none";
+//   card.style.display ="block";
+
+//   const dataInfos = e.layer.feature.properties;
+
+//   // const libCom = document.getElementById(`lib-com-${layerName}`);
+//   // const inseeCom = document.getElementById(`insee-com-${layerName}`);
+//   const libTerr = document.getElementById("lib-territoire");
+//   const idTerr = document.getElementById("id-territoire");
+
+//   // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
+//   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
+//   libTerr.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + '</div>';
+//   idTerr.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
+//   sidebar.open('home');
+
+//   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
+//   btnRetour.addEventListener('click', () => {
+//     legend.style.display = 'block';
+//     card.style.display ="none";
+//   });
+
+  
+// };
+
 function getInfo(e, layerName) {
   const card = document.getElementById("card");
   const legend =document.getElementById("legend");
@@ -132,25 +163,28 @@ function getInfo(e, layerName) {
 
   legend.style.display ="none";
   card.style.display ="block";
+  btnRetour.style.display ="block";
+
+  
 
   const dataInfos = e.layer.feature.properties;
 
-  // const libCom = document.getElementById(`lib-com-${layerName}`);
-  // const inseeCom = document.getElementById(`insee-com-${layerName}`);
-  const libTerr = document.getElementById("lib-territoire");
-  const idTerr = document.getElementById("id-territoire");
+  const cardHeader = document.querySelector(".card-header");
+  const cardBody = document.querySelector(".card-body");
 
   // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
-  libTerr.innerHTML = `<div id="fiche-terr-1"> <p> Libellé du territoire: </p><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + '</div>';
-  idTerr.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
+  cardHeader.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + ' ('+ dataInfos[`id_${layerName}`] + ')'+ '</div>';
+  // cardBody.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
   sidebar.open('home');
 
   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
   btnRetour.addEventListener('click', () => {
     legend.style.display = 'block';
     card.style.display ="none";
+    btnRetour.style.display="none";
   });
+  
 
   
 };
@@ -431,10 +465,9 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   toggleLayer(fsMarkerLayer, fsData);
 
 
-
-
 });
 
+//Supprimer les éléments cochés dans la légende
 const clearLegendButton = document.getElementById('clear-legend-button');
 clearLegendButton.addEventListener('click', clearLegend);
   
