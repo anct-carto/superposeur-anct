@@ -60,6 +60,14 @@ crte_init_list<-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/co
 #cde_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/liste-cde-20220916.csv", fileEncoding ="utf-8")
 
 
+#Fabriques prospectives
+fabriques_pros_init<-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8")
+
+
+#Cité étuducatives
+
+#Territoires d'industrie Vague 2 
+ti_init<-read_excel("N:/DST/Carto/APPROCHE SECTORIELLE/INDUSTRIE/TERRITOIRES_INDUSTRIES/SUIVI_PERIMETRE/V10/DATA_INIT/suivi-ti-cog2023-20231102-modif.xlsx")
 
 
 
@@ -141,6 +149,20 @@ st_write(obj = crte_geom,
          dsn = here(paste0("geom/geojson/crte_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
+
+fabriques_pros_geom<-ma_fonction(fabriques_pros_init, type="polygon")%>% 
+  separate_rows(id_fabp, sep = " ; ") %>%
+  group_by(id_fabp) %>% 
+  summarise()
+fabriques_pros_geom <- left_join(fabriques_pros_geom, fabriques_pros_init, by = "id_fabp")
+st_write(obj = fabriques_pros_geom,
+         dsn = here(paste0("geom/geojson/fabp_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+# ti_geom<-ma_fonction(ti_init, type="ctr")
+# st_write(obj = ti_geom,
+#          dsn = here(paste0("geom/geojson/ti_geom.geojson")),
+#          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
 
 #A COMPLETER

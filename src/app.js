@@ -168,13 +168,13 @@ function getInfo(e, layerName) {
   
 
   const dataInfos = e.layer.feature.properties;
-
+  console.log(dataInfos)
   const cardHeader = document.querySelector(".card-header");
   const cardBody = document.querySelector(".card-body");
 
   // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
-  cardHeader.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + ' ('+ dataInfos[`id_${layerName}`] + ')'+ '</div>';
+  cardHeader.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
   // cardBody.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
   sidebar.open('home');
 
@@ -374,16 +374,16 @@ function clearLegend() {
 // Charger les données
 
 // Marker
-const acvInit = loadData("data/geom/geojson/acv_geom.geojson");
-const acv2Init = loadData("data/geom/geojson/acv2_geom.geojson");
-const pvdInit = loadData("data/geom/geojson/pvd_geom.geojson");
-const fsInit = loadData("data/geom/geojson/fs_geom.geojson");
+const acvInit = loadData("data/geom/geojsonV2/acv_geom.geojson");
+const acv2Init = loadData("data/geom/geojsonV2/acv2_geom.geojson");
+const pvdInit = loadData("data/geom/geojsonV2/pvd_geom.geojson");
+const fsInit = loadData("data/geom/geojsonV2/fs_geom.geojson");
 
 // Polygon
-const tiInit = loadData("data/geom/geojson/ti_geom.geojson");
-const crteInit = loadData("data/geom/geojson/crte_geom.geojson");
-const amiInit = loadData("data/geom/geojson/ami_geom.geojson");
-const ammInit = loadData("data/geom/geojson/amm_geom.geojson");
+const tiInit = loadData("data/geom/geojsonV2/ti_geom.geojson");
+const crteInit = loadData("data/geom/geojsonV2/crte_geom.geojson");
+const amiInit = loadData("data/geom/geojsonV2/ami_geom.geojson");
+const ammInit = loadData("data/geom/geojsonV2/amm_geom.geojson");
 
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
