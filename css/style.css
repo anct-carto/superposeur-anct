@@ -97,13 +97,14 @@ font-weight: bold;
 	padding: 10px; /* Espace intérieur autour du contenu */
 	border: 2px solid #0050a1; /* Bordure bleue autour de la "card" */
 	border-radius: 5px; /* Coins arrondis */
-	font-family: 'Marianne', sans-serif; /* Police de caractères Marianne */
+	font-family: 'Marianne-Bold', sans-serif; /* Police de caractères Marianne */
 
 }
 
 /* Sous-titre de la card*/
 .subtitle {
-	color: gray;
+	font-family: 'Marianne', sans-serif; /* Police de caractères Marianne */
+	color: white;
 	font-size: .95em;
 }
 

@@ -160,7 +160,7 @@ function getInfo(e, layerName) {
   const legend =document.getElementById("legend");
   const btnRetour = document.getElementById("bnt-retour");
 
-
+  console.log(e)
   legend.style.display ="none";
   card.style.display ="block";
   btnRetour.style.display ="block";
@@ -168,14 +168,14 @@ function getInfo(e, layerName) {
   
 
   const dataInfos = e.layer.feature.properties;
-  console.log(dataInfos)
+  
   const cardHeader = document.querySelector(".card-header");
   const cardBody = document.querySelector(".card-body");
 
   // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
-  cardHeader.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
-  // cardBody.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
+  cardHeader.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"><p class="subtitle" id="lib">Libellé et code du territoire : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
+  cardBody.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"><p class="subtitle" id="lib">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
   sidebar.open('home');
 
   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
