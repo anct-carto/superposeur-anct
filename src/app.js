@@ -31,6 +31,10 @@ function getColor(layerType) {
     return "#DA7E42";
   } else if (layerType === 'fs') {
     return "#398373";
+  } else if (layerType === 'cde') {
+    return "#C3242B";
+  } else if (layerType === 'citeduc') {
+    return "#9A3D77";
   }
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
@@ -159,23 +163,23 @@ function getInfo(e, layerName) {
   const card = document.getElementById("card");
   const legend =document.getElementById("legend");
   const btnRetour = document.getElementById("bnt-retour");
-
-  console.log(e)
+  const checkbox = document.querySelector(".program-checkbox");
+  
   legend.style.display ="none";
   card.style.display ="block";
   btnRetour.style.display ="block";
 
-  
+  const texteCase = checkbox.nextSibling.textContent.trim();
+  console.log("Texte de la case cochée : " + texteCase);
 
   const dataInfos = e.layer.feature.properties;
   
   const cardHeader = document.querySelector(".card-header");
   const cardBody = document.querySelector(".card-body");
 
-  // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
-  // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
-  cardHeader.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"><p class="subtitle" id="lib">Libellé et code du territoire : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
-  cardBody.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"><p class="subtitle" id="lib">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
+  //Inégration des éléments dans la card en HTML
+  cardHeader.innerHTML =`<div id="nom-programme"><span "><p class="subtitle">Programme : </p></span>` + texteCase + `<div"><span><p class="subtitle">Libellé et code du territoire : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
+  cardBody.innerHTML = `<div><span><p class="subtitle">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
   sidebar.open('home');
 
   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
@@ -378,6 +382,8 @@ const acvInit = loadData("data/geom/geojsonV2/acv_geom.geojson");
 const acv2Init = loadData("data/geom/geojsonV2/acv2_geom.geojson");
 const pvdInit = loadData("data/geom/geojsonV2/pvd_geom.geojson");
 const fsInit = loadData("data/geom/geojsonV2/fs_geom.geojson");
+const cdeInit = loadData("data/geom/geojsonV2/cde_geom.geojson");
+const citeducInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
 
 // Polygon
 const tiInit = loadData("data/geom/geojsonV2/ti_geom.geojson");
@@ -414,7 +420,7 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, acvLayer, acv2Layer, pvdLayer, fsLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeducInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeducLayer])=>{
   
   //POLYGON
   const tiPolygonLayer= createGeoJSONPolygon(tiLayer, null, null , 'ti');
@@ -427,6 +433,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 2, 1, 'acv2');
   const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 2, 1, 'pvd');
   const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 1, 2, 1, 'fs');
+  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer, 1, 2, 1, 'cde');
+  const citeducMarkerLayer=  createGeoJSONMarker(citeducLayer, 1, 2, 1, 'citeduc');
 
   
 
@@ -439,6 +447,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   map.removeLayer(acv2MarkerLayer);
   map.removeLayer(pvdMarkerLayer);
   map.removeLayer(fsMarkerLayer);
+  map.removeLayer(cdeMarkerLayer);
+  map.removeLayer(citeducMarkerLayer);
 
   
  
@@ -452,6 +462,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   const acv2Data = document.getElementById('acv2-marker-checkbox');
   const pvdData = document.getElementById('pvd-marker-checkbox');
   const fsData = document.getElementById('fs-marker-checkbox');
+  const cdeData = document.getElementById('cde-marker-checkbox');
+  const citeducData = document.getElementById('citeduc-marker-checkbox');
 
   //Appel à la fonction pour activier et désactiver les couches
   toggleLayer(tiPolygonLayer, tiData);
@@ -463,6 +475,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   toggleLayer(acv2MarkerLayer, acv2Data);
   toggleLayer(pvdMarkerLayer, pvdData);
   toggleLayer(fsMarkerLayer, fsData);
+  toggleLayer(cdeMarkerLayer, cdeData);
+  toggleLayer(citeducMarkerLayer, citeducData);
 
 
 });

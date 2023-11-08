@@ -63,12 +63,16 @@ crte_groupement<-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/c
 
   
 #Cité de l'emploi
-#A METTRE AU COG23
-#cde_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/liste-cde-20220916.csv", fileEncoding ="utf-8")
+cde_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/liste-cde-com2023-20231108.csv", fileEncoding ="utf-8")
+cde_list_init<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/liste-cde-qp2023-20231108.csv", fileEncoding ="utf-8")
+
+cde_data<- cde_init%>%
+  mutate(insee_com = ifelse(nchar(insee_com) == 4, paste0("0", insee_com), insee_com))
 
 
-
-
+#Cité éducative 
+citeduc_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-com2023-20230817.csv", fileEncoding ="utf-8")
+citeduc_list_init<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-20230817.csv", fileEncoding ="utf-8")
 
 #TRANSFORMER LES DONNEES - creation d'une fonction-------------------------------------------------------
 ma_fonction<- function(data_init, type){
@@ -132,6 +136,7 @@ ti_geom<-ma_fonction(ti_init, type="polygon")%>%
   group_by(id_territoire, lib_territoire)%>%
   summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
 
+#Fabriques prospectives 
 
 
 #AMM
@@ -149,8 +154,6 @@ amm_geom<-ma_fonction(amm_init, type="polygon")%>%
   left_join(amm_init_list, by = c("id_territoire"="id_amm"))%>%
   left_join(amm_gpt_data, by= c("id_territoire"="id_amm") )%>%
   rename("lib_territoire"="lib_porteur")
-
-
 
 
 #AMI
@@ -187,8 +190,39 @@ crte_geom<-ma_fonction(crte_init, type="polygon")%>%
   rename("lib_territoire"="lib_crte")
 
 
+#cité de l'emploi 
+cde_list_qp <- cde_list_init%>%
+  group_by(id_cde, lib_cde)%>%
+  summarise(liste_geo = paste0(unique(lib_qp),' (', id_qp, ')', collapse = '; '))
 
-#EXPORTS
+cde_geom<-ma_fonction(cde_data, type="polygon")%>%
+  separate_rows(id_cde, sep = " ; ")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cde", "lib_territoire"="lib_cde")%>%
+  group_by(id_territoire)%>%
+  summarise()%>%
+  st_centroid()%>%
+  left_join(cde_list_qp, by=c("id_territoire"="id_cde"))%>%
+  rename("lib_territoire"="lib_cde")
+
+#cité éducative 
+citeduc <- citeduc_list_init%>%
+  group_by(id_cite, lib_cite)%>%
+  summarise(liste_geo = paste0(unique(lib_cite),' (', id_cite, ')', collapse = '; '))
+
+citeduc_geom<-ma_fonction(citeduc_init, type="polygon")%>%
+  separate_rows(id_cite, sep = " ; ")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cite", "lib_territoire"="lib_cite")%>%
+  group_by(id_territoire)%>%
+  summarise()%>%
+  st_centroid()%>%
+  left_join(citeduc, by=c("id_territoire"="id_cite"))%>%
+  rename("lib_territoire"="lib_cite")
+
+
+
+
+
+#EXPORTS FORMAT GEOJSON -----------------
 st_write(obj = acv_geom,
          dsn = here(paste0("geom/geojsonV2/acv_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
@@ -213,5 +247,12 @@ st_write(obj = ami_geom,
 st_write(obj = crte_geom,
          dsn = here(paste0("geom/geojsonV2/crte_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+st_write(obj = cde_geom,
+         dsn = here(paste0("geom/geojsonV2/cde_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+st_write(obj = citeduc_geom,
+         dsn = here(paste0("geom/geojsonV2/citeduc_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
 
 
