@@ -1,6 +1,6 @@
 ## Carte interactive des programmes de l'ANCT
 
-![alt text](img/Capture.JPG)
+![alt text](img/Capture.PNG)
 
 Page officielle : https://agence-cohesion-territoires.gouv.fr/
 
