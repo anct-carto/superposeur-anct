@@ -35,6 +35,8 @@ function getColor(layerType) {
     return "#C3242B";
   } else if (layerType === 'citeduc') {
     return "#9A3D77";
+  } else if (layerType === 'fabp') {
+    return "#FFBA4A";
   }
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
@@ -128,57 +130,48 @@ function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
 // Fonction pour récupérer les propriétés des couches geojson
 var dataInfos ;
 
-// function getInfo(e, layerName) {
-//   const card = document.getElementById("card");
-//   const legend =document.getElementById("legend");
-//   const btnRetour = document.getElementById("bnt-retour");
-
-
-//   legend.style.display ="none";
-//   card.style.display ="block";
-
-//   const dataInfos = e.layer.feature.properties;
-
-//   // const libCom = document.getElementById(`lib-com-${layerName}`);
-//   // const inseeCom = document.getElementById(`insee-com-${layerName}`);
-//   const libTerr = document.getElementById("lib-territoire");
-//   const idTerr = document.getElementById("id-territoire");
-
-//   // libCom.innerHTML = `<div id="fiche-terr-1"><p>Nom de la commune : </p></span>` + dataInfos.lib_com.x + '</div>';
-//   // inseeCom.innerHTML = `<div id="fiche-terr-1"><i class="las la-male"></i> <span class="fiche-terr-1"></span>` + dataInfos.insee_com + '</div>';
-//   libTerr.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`lib_${layerName}`] + '</div>';
-//   idTerr.innerHTML = `<div id="fiche-terr-1"><span class="fiche-terr-1"></span>` + dataInfos[`id_${layerName}`] + '</div>';
-//   sidebar.open('home');
-
-//   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
-//   btnRetour.addEventListener('click', () => {
-//     legend.style.display = 'block';
-//     card.style.display ="none";
-//   });
-
-  
-// };
 
 function getInfo(e, layerName) {
   const card = document.getElementById("card");
   const legend =document.getElementById("legend");
   const btnRetour = document.getElementById("bnt-retour");
-  const checkbox = document.querySelector(".program-checkbox");
-  
+  const checkbox = document.querySelectorAll(".program-checkbox");
   legend.style.display ="none";
   card.style.display ="block";
   btnRetour.style.display ="block";
+  
+  let libProgramme;
+  for(let i =0;i<checkbox.length;i++) {
+    const getHtmlElement = checkbox[i].getAttribute("data-layer-type");
+    if (getHtmlElement === layerName) {
+      libProgramme = checkbox[i].nextElementSibling.innerHTML;
+    } 
+  }
 
-  const texteCase = checkbox.nextSibling.textContent.trim();
-  console.log("Texte de la case cochée : " + texteCase);
+  // const texteCase = checkbox.textContent.trim();
+  // console.log("Texte de la case cochée : " + texteCase);
+
+  // const checkboxesArray = Array.from(checkboxes);
+
+  // // Parcourez chaque checkbox
+  // checkboxesArray.forEach((checkbox) => {
+  //   // Récupérez le texte du label associé à la checkbox
+  //   const labelText = checkbox.parentNode.textContent.trim();
+  
+  //   // Affichez le texte dans la console (vous pouvez faire autre chose avec le texte)
+  //   console.log(labelText);
+  //   return labelText
+  // });
+  
 
   const dataInfos = e.layer.feature.properties;
   
   const cardHeader = document.querySelector(".card-header");
   const cardBody = document.querySelector(".card-body");
 
+  // + labelText
   //Inégration des éléments dans la card en HTML
-  cardHeader.innerHTML =`<div id="nom-programme"><span "><p class="subtitle">Programme : </p></span>` + texteCase + `<div"><span><p class="subtitle">Libellé et code du territoire : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
+  cardHeader.innerHTML =`<div id="nom-programme"><span "><p class="subtitle">Programme : </p></span>`+libProgramme  + `<div"><span><p class="subtitle">Libellé et code du territoire : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
   cardBody.innerHTML = `<div><span><p class="subtitle">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
   sidebar.open('home');
 
@@ -188,8 +181,6 @@ function getInfo(e, layerName) {
     card.style.display ="none";
     btnRetour.style.display="none";
   });
-  
-
   
 };
 
@@ -390,6 +381,7 @@ const tiInit = loadData("data/geom/geojsonV2/ti_geom.geojson");
 const crteInit = loadData("data/geom/geojsonV2/crte_geom.geojson");
 const amiInit = loadData("data/geom/geojsonV2/ami_geom.geojson");
 const ammInit = loadData("data/geom/geojsonV2/amm_geom.geojson");
+const fabpInit = loadData("data/geom/geojsonV2/fabp_geom.geojson");
 
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
@@ -420,13 +412,14 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeducInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeducLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeducInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeducLayer])=>{
   
   //POLYGON
   const tiPolygonLayer= createGeoJSONPolygon(tiLayer, null, null , 'ti');
   const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 0.2, 'crte');
   const amiPolygonLayer= createGeoJSONPolygon(amiLayer, "white", 0.2, 'ami');
   const ammPolygonLayer= createGeoJSONPolygon(ammLayer, "white", 0.2, 'amm');
+  const fabpPolygonLayer= createGeoJSONPolygon(fabpLayer, "white", 0.2, 'fabp');
   
   //MARKER
   const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 1, 2, 1, 'acv');
@@ -442,6 +435,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   map.removeLayer(crtePolygonLayer);
   map.removeLayer(amiPolygonLayer);
   map.removeLayer(ammPolygonLayer);
+  map.removeLayer(fabpPolygonLayer);
 
   map.removeLayer(acvMarkerLayer);
   map.removeLayer(acv2MarkerLayer);
@@ -457,6 +451,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   const crteData = document.getElementById('crte-polygon-checkbox');
   const amiData = document.getElementById('ami-polygon-checkbox');
   const ammData = document.getElementById('amm-polygon-checkbox');
+  const fabpData = document.getElementById('fabp-polygon-checkbox');
 
   const acvData = document.getElementById('acv-marker-checkbox');
   const acv2Data = document.getElementById('acv2-marker-checkbox');
@@ -470,6 +465,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, acvInit, acv2Init, pvdInit, fsI
   toggleLayer(crtePolygonLayer, crteData);
   toggleLayer(amiPolygonLayer, amiData);
   toggleLayer(ammPolygonLayer, ammData);
+  toggleLayer(fabpPolygonLayer, fabpData);
 
   toggleLayer(acvMarkerLayer, acvData);
   toggleLayer(acv2MarkerLayer, acv2Data);

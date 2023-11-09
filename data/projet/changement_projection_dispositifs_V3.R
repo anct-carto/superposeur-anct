@@ -40,9 +40,11 @@ fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_
 cite_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-com2023-20230817.csv", fileEncoding ="utf-8")
 
 #FABRIQUE PROSPECTIVES
-fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8")
-fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20231005.csv", fileEncoding ="utf-8")
+fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8", colClasses = c("insee_com"="character"))
+glimpse(fabp_init)
 
+fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20231005.csv", fileEncoding ="utf-8")
+fabp_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-grpt2023-20231005.csv", fileEncoding ="utf-8")
 
 
 #Avenir montagne mobilité
@@ -218,7 +220,22 @@ citeduc_geom<-ma_fonction(citeduc_init, type="polygon")%>%
   left_join(citeduc, by=c("id_territoire"="id_cite"))%>%
   rename("lib_territoire"="lib_cite")
 
+#Fabriques prospetives
+fabp_gpt_data <- fabp_groupement %>%
+  group_by(id_fabp)%>%
+  summarise(liste_geo= paste0(unique(lib_groupement),' (', siren_groupement, ')', collapse = '; '))
 
+glimpse(fabp_init)
+glimpse(geom_com_polygon)
+fabp_geom<-ma_fonction(fabp_init, type="polygon")%>% 
+  separate_rows(id_fabp, sep = " ; ")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_fabp", "lib_territoire"="lib_fabp")%>% 
+  select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
+  group_by(id_territoire)%>%
+  summarise()%>%
+  left_join(fabp_init_list, by = c("id_territoire"="id_fabp"))%>%
+  left_join(fabp_gpt_data, by= c("id_territoire"="id_fabp") )%>%
+  rename("lib_territoire"="lib_fabp")
 
 
 
