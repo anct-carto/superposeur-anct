@@ -171,8 +171,8 @@ function getInfo(e, layerName) {
 
   // + labelText
   //Inégration des éléments dans la card en HTML
-  cardHeader.innerHTML =`<div id="nom-programme"><span "><p class="subtitle">Programme : </p></span>`+libProgramme  + `<div"><span><p class="subtitle">Libellé et code du territoire : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>';
-  cardBody.innerHTML = `<div><span><p class="subtitle">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
+  cardHeader.innerHTML =`<div id="nom-programme"><span><p class="title-card-header">`+ libProgramme  + `</p></span></div>`;
+  cardBody.innerHTML =  `<div"><span><p class="title-card-body">Libellé et code du programme : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>'+`<div><span><p class="title-card-body">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
   sidebar.open('home');
 
   // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
@@ -442,7 +442,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(pvdMarkerLayer);
   map.removeLayer(fsMarkerLayer);
   map.removeLayer(cdeMarkerLayer);
-  map.removeLayer(citeducMarkerLayer);
+  //map.removeLayer(citeducMarkerLayer);
 
   
  

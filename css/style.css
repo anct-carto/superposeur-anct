@@ -90,23 +90,53 @@ font-weight: bold;
 /* -------------------------------------------------------------------------- */
 
 #card {
-	margin: 20px;
-	display: none;
-	background-color: #0073e6; /* Couleur de fond bleue */
-	color: #fff; /* Couleur du texte en blanc */
-	padding: 10px; /* Espace intérieur autour du contenu */
-	border: 2px solid #0050a1; /* Bordure bleue autour de la "card" */
-	border-radius: 5px; /* Coins arrondis */
-	font-family: 'Marianne-Bold', sans-serif; /* Police de caractères Marianne */
+	margin: 10px;
+	display: flex;
+	background-color: white;
+	color: #313778;
+	padding: 0px; /* Espace intérieur autour du contenu */
+	border: 2px solid rgba(0,0,0,.125); 
+	border-radius: 2px; /* Coins arrondis */
+	font-family: 'Marianne-Bold', sans-serif;
+	word-wrap: break-word; /*comment couper le mot*/
 
+}
+
+.card-header {
+	background-color: #398373;
+	margin-bottom: 0;
+	padding: 0.5rem 1rem;
+	border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+
+
+
+.card-body {
+	flex: 1 1 auto;
+	padding: 0.5rem 0.5rem;
+}
+
+.title-card-header{
+	font-family:'Marianne', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: white;
+	font-size: 1.6em;
+	margin-top: 0;
+	margin-bottom: 0rem;
+	
 }
 
 /* Sous-titre de la card*/
-.subtitle {
+.title-card-body {
 	font-family: 'Marianne', sans-serif; /* Police de caractères Marianne */
-	color: white;
-	font-size: .95em;
+	color: #313778;
+	font-size: 1em;
+	margin-top: .2rem;
+	margin-bottom: 0rem;
 }
+
 
 /* --------------------------------BOUTON RETOUR------------------------------ */
 
@@ -114,7 +144,7 @@ font-weight: bold;
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
 	font-size: 10px; /* Taille de police 10 pixels */
 	border-radius: 5px; /* Bords arrondis */
-	background-color: #616DAF; /* Fond bleu */
+	background-color: #398373; /* Fond bleu */
 	color: white; /* Texte en blanc */
 	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
 	cursor: pointer; /* Curseur en main pour indiquer un bouton cliquable */

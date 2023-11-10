@@ -225,8 +225,7 @@ fabp_gpt_data <- fabp_groupement %>%
   group_by(id_fabp)%>%
   summarise(liste_geo= paste0(unique(lib_groupement),' (', siren_groupement, ')', collapse = '; '))
 
-glimpse(fabp_init)
-glimpse(geom_com_polygon)
+
 fabp_geom<-ma_fonction(fabp_init, type="polygon")%>% 
   separate_rows(id_fabp, sep = " ; ")%>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_fabp", "lib_territoire"="lib_fabp")%>% 
@@ -236,6 +235,7 @@ fabp_geom<-ma_fonction(fabp_init, type="polygon")%>%
   left_join(fabp_init_list, by = c("id_territoire"="id_fabp"))%>%
   left_join(fabp_gpt_data, by= c("id_territoire"="id_fabp") )%>%
   rename("lib_territoire"="lib_fabp")
+
 
 
 
@@ -271,5 +271,7 @@ st_write(obj = citeduc_geom,
          dsn = here(paste0("geom/geojsonV2/citeduc_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
-
+st_write(obj = fabp_geom,
+         dsn = here(paste0("geom/geojsonV2/fabp_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
