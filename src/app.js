@@ -148,21 +148,6 @@ function getInfo(e, layerName) {
     } 
   }
 
-  // const texteCase = checkbox.textContent.trim();
-  // console.log("Texte de la case cochée : " + texteCase);
-
-  // const checkboxesArray = Array.from(checkboxes);
-
-  // // Parcourez chaque checkbox
-  // checkboxesArray.forEach((checkbox) => {
-  //   // Récupérez le texte du label associé à la checkbox
-  //   const labelText = checkbox.parentNode.textContent.trim();
-  
-  //   // Affichez le texte dans la console (vous pouvez faire autre chose avec le texte)
-  //   console.log(labelText);
-  //   return labelText
-  // });
-  
 
   const dataInfos = e.layer.feature.properties;
   

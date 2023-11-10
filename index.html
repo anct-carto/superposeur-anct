@@ -53,28 +53,26 @@
     <!--Ici: les boutons du sidebar-->
       <div class="leaflet-sidebar-tabs">
         <ul role="tablist">
-          <li><a href="#home" role="tab"><i class="las la-home"></i></a></li>
-          <li><a href="#a-propos" role="tab"><i class="la la-question-circle"></i></a></li>
+          <li><a href="#home" role="tab"><i class="las la-home"></i><span class="tab-name">Accueil</span></a></li>
+          <li><a href="#a-propos" role="tab"><i class="las la-info-circle"></i><span class="tab-name">À propos</span></a></li>
       </ul>
       </div>
     <!-- Ici : le contenu du panneau latéral-->
       <div class="leaflet-sidebar-content">
-        <div class="leaflet-sidebar-header"></div>
 
-      <!--Panneau 1-->
         <div class="leaflet-sidebar-pane" id="home">
 
+          <!--Panneau 1-->
           <div class="leaflet-sidebar-header">
-            <h1 class="leaflet-sidebar-header" >Accueil</h1>         
-            <!--<img src="img/fabrique-prospective-picto-complet-v2_12.png" width="90%">-->
+            <!--<img src="img/LOGO ANCT.jpg" width="20%"> -->
+            <span style="color:gray;">Carte interactive</span>   
+            <h4>Superposeur ANCT</h4>      
             <span class="leaflet-sidebar-close" @click="sidebar.close()">
               <i class="la la-step-backward"></i>
             </span>
           </div>
 
           <div class="panel-content">
-
-  
             <div id="legend">
               <div id="background-tiles">
 
@@ -164,21 +162,17 @@
 
               </div>
 
-              <button id="bnt-retour" > Retour </button>
+              <button id="bnt-retour" ><i class="las la-arrow-left"></i> Retour </button>
 
             </div>
-
-
-  
 
             <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
               <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
             </p>
           </div>
-
         </div>
 
-  
+      
       <!--Panneau 2-->
         <div class="leaflet-sidebar-pane" id="a-propos">
           <div class="leaflet-sidebar-header">
@@ -203,6 +197,7 @@
               </p>
           </div>
         </div>
+
       </div>
   </div>
 

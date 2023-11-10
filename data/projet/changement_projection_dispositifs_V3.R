@@ -75,6 +75,7 @@ cde_data<- cde_init%>%
 #Cité éducative 
 citeduc_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-com2023-20230817.csv", fileEncoding ="utf-8")
 citeduc_list_init<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-20230817.csv", fileEncoding ="utf-8")
+citeduc_groupement<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-grpt2023-20230817.csv", fileEncoding ="utf-8")
 
 #TRANSFORMER LES DONNEES - creation d'une fonction-------------------------------------------------------
 ma_fonction<- function(data_init, type){
@@ -207,9 +208,9 @@ cde_geom<-ma_fonction(cde_data, type="polygon")%>%
   rename("lib_territoire"="lib_cde")
 
 #cité éducative 
-citeduc <- citeduc_list_init%>%
+citeduc_gpt_data <- citeduc_groupement%>%
   group_by(id_cite, lib_cite)%>%
-  summarise(liste_geo = paste0(unique(lib_cite),' (', id_cite, ')', collapse = '; '))
+  summarise(liste_geo = paste0(unique(lib_qp),' (', id_qp, ')', collapse = '; '))
 
 citeduc_geom<-ma_fonction(citeduc_init, type="polygon")%>%
   separate_rows(id_cite, sep = " ; ")%>%
@@ -217,7 +218,7 @@ citeduc_geom<-ma_fonction(citeduc_init, type="polygon")%>%
   group_by(id_territoire)%>%
   summarise()%>%
   st_centroid()%>%
-  left_join(citeduc, by=c("id_territoire"="id_cite"))%>%
+  left_join(citeduc_gpt_data, by=c("id_territoire"="id_cite"))%>%
   rename("lib_territoire"="lib_cite")
 
 #Fabriques prospetives

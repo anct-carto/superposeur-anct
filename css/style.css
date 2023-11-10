@@ -31,19 +31,72 @@ html, body, #IDsuperMap {
 /* -------------------------------------------------------------------------- */
 /*                                    SIDEBAR                                 */
 /* -------------------------------------------------------------------------- */
+#sidebar {
+	position: absolute;
+}
+
+/*bar tabs*/
+.leaflet-sidebar-tabs {
+	background-color: #313778;
+	background: linear-gradient(180deg, #313778 0%, rgb(169, 173, 214) 100%);
+	box-shadow: 2px 0px 2px 0px #656565;
+}
+
+.leaflet-sidebar-tabs > ul > li {
+	color: white;
+}
+
+/*changment de couleur quand clic*/
+.leaflet-sidebar-tabs > ul > li.active, .leaflet-sidebar-tabs > ul > li.active:hover {
+	background-color: rgb(249, 249, 251);
+	color: #313778;
+	border-left: solid 3px #F2CB27;
+}
+
+.tab-name {
+	position: absolute;
+	display: none;
+	z-index: 10000;
+	left: 50px;
+	background: rgba(0,0,0,.8) !important;
+	font-family: 'Marianne-Bold';
+	font-size: .9rem;
+	text-transform: uppercase;
+	text-align: center;
+	color: white !important;
+	width: 100px;
+	border-radius: 3px;
+}
 
 
+.leaflet-sidebar-header {
+	margin: 0px 10px 0px 5px;
+	padding:0px 10px 0px 5px;
+	font-family: 'Marianne', sans-serif;
+	text-transform: uppercase;
+	font-size: 14px;
+	height: auto;
+	color: #313778;
+	background-color: white;
+}
 
+.leaflet-sidebar-pane{
+	padding:0px 0px 0px 5px;
+}
 
 /* -------------------------------------------------------------------------- */
-/*                                Fonds carto                                 */
+/*                                  Content SIDEBAR                           */
 /* -------------------------------------------------------------------------- */
 
+.panel-content {
+	margin: 0px 10px 0px 10px;
+}
 
 
-/* -------------------------------------------------------------------------- */
-/*                                  Legende                             	  */
-/* -------------------------------------------------------------------------- */
+/* ------------------------------Fonds carto----------------------------------*/
+
+
+/* --------------------------------Legende--------------------------------*/
 
 #legend {
 	display: block;
@@ -88,10 +141,14 @@ font-weight: bold;
 /* -------------------------------------------------------------------------- */
 /*                                   CARD                              		  */
 /* -------------------------------------------------------------------------- */
+#card-sidebar{
+	margin: 0px 0px 20px 0px;
+}
+
 
 #card {
-	margin: 10px;
-	display: flex;
+	margin: 10px 0px 10px 0px;
+	display: none;
 	background-color: white;
 	color: #313778;
 	padding: 0px; /* Espace intérieur autour du contenu */
@@ -99,7 +156,6 @@ font-weight: bold;
 	border-radius: 2px; /* Coins arrondis */
 	font-family: 'Marianne-Bold', sans-serif;
 	word-wrap: break-word; /*comment couper le mot*/
-
 }
 
 .card-header {
@@ -108,9 +164,6 @@ font-weight: bold;
 	padding: 0.5rem 1rem;
 	border-bottom: 1px solid rgba(0,0,0,.125);
 }
-
-
-
 
 .card-body {
 	flex: 1 1 auto;
@@ -142,7 +195,7 @@ font-weight: bold;
 
 #bnt-retour {
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
-	font-size: 10px; /* Taille de police 10 pixels */
+	font-size: 12px; /* Taille de police 10 pixels */
 	border-radius: 5px; /* Bords arrondis */
 	background-color: #398373; /* Fond bleu */
 	color: white; /* Texte en blanc */
