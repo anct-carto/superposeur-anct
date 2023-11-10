@@ -148,6 +148,7 @@ function getInfo(e, layerName) {
     } 
   }
 
+  console.log(e)
 
   const dataInfos = e.layer.feature.properties;
   
