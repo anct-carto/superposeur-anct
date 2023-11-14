@@ -38,6 +38,9 @@ html, body, #IDsuperMap {
 	font-size: 20px;
 	min-height: 100%; /* La sidebar aura au moins la hauteur de son conteneur parent (généralement la hauteur de la page) */
 	height: auto; /* La hauteur de la sidebar peut augmenter si le contenu dépasse la hauteur minimale */
+	min-width: 45%;
+	max-width: 60%; 
+	width: auto; 
 
 }
 
@@ -95,7 +98,8 @@ html, body, #IDsuperMap {
 /* -------------------------------------------------------------------------- */
 
 .panel-content {
-	margin: 0px 10px 0px 10px;
+	margin: 0px 10px 0px 10px; 
+	width: auto; 
 }
 
 
