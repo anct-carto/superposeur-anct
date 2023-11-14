@@ -33,9 +33,9 @@ pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petite
 
 
 #TI
-ti_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-com2023-20231107.csv", fileEncoding ="utf-8")
-ti_groupement <-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-grpt2023-20231107.csv", fileEncoding ="utf-8")
-ti_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-20231107.csv", fileEncoding ="utf-8")
+ti_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-com2023-20231114.csv", fileEncoding ="utf-8")
+ti_groupement <-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-grpt2023-20231114.csv", fileEncoding ="utf-8")
+ti_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-20231114.csv", fileEncoding ="utf-8")
 
 
 #France service
@@ -151,21 +151,19 @@ fs_geom<-filter(fs_init,format_fs=='Site principal')%>%
 
 
 #TI
-# ti_gpt_data <- ti_groupement %>%
-#   group_by(id_ti)%>%
-#   summarise(liste_geo= paste0(unique(lib_groupement),' (', siren_groupement, ')', collapse = '; '))
-# 
-# ti_geom<-ti_groupement%>%
-#   left_join(geom_epci_polygon, by =c("siren_groupement"="siren_epci")) %>%
-#   st_as_sf()
-# fichier_4326<- st_transform(fichier, crs= 4326)
-#   rename("id_geo"="siren_epci", "lib_geo"="lib_epci" ,"id_territoire"="id_ti", "lib_territoire"="lib_ti")%>% 
-#   select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
-#   group_by(id_territoire, lib_territoire)%>%
-#   summarise()%>%
-#   left_join(ti_init_list, by = c("id_territoire"="id_crte"))%>%
-#   left_join(ti_gpt_data, by= c("id_territoire"="id_ti") )%>%
-#   rename("lib_territoire"="lib_ti")
+ti_gpt_data <- ti_groupement %>%
+  group_by(id_ti)%>%
+  summarise(liste_geo= paste0(unique(lib_groupement),' (', siren_groupement, ')', collapse = '; '))
+
+ti_geom<-ma_fonction(ti_init, type="polygon")%>% 
+  separate_rows(id_ti, sep = " ; ")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_ti", "lib_territoire"="lib_ti")%>% 
+  select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
+  group_by(id_territoire)%>%
+  summarise()%>%
+  left_join(ti_init_list, by = c("id_territoire"="id_ti"))%>%
+  left_join(ti_gpt_data, by= c("id_territoire"="id_ti") )%>%
+  rename("lib_territoire"="lib_ti")
 
 #A RETRAVAILLER
 

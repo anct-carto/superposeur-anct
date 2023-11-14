@@ -20,9 +20,9 @@ function getColor(layerType) {
   } else if (layerType === 'crte') {
     return "#2B7019";
   } else if (layerType === 'ami') {
-    return "#74B776";
+    return "#427A6F";
   } else if (layerType === 'amm') {
-    return "#74B776";
+    return "#6D4E47";
   } else if (layerType === 'acv') {
     return "#E12A5C";
   } else if (layerType === 'acv2') {
@@ -30,13 +30,13 @@ function getColor(layerType) {
   } else if (layerType === 'pvd') {
     return "#DA7E42";
   } else if (layerType === 'fs') {
-    return "#398373";
+    return "#616DAF";
   } else if (layerType === 'cde') {
     return "#C3242B";
-  } else if (layerType === 'citeduc') {
+  } else if (layerType === 'cite') {
     return "#9A3D77";
   } else if (layerType === 'fabp') {
-    return "#FFBA4A";
+    return "#FF7D00";
   }
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
@@ -103,27 +103,22 @@ function onEachFeatureMarker(feature, layer) {
 
   const type = feature.properties.id_territoire.split('-')[0];
 
-
   layer.on('click', () => {
     getInfo(feature, type);
 
     clicFeatureLayer.clearLayers();
-
     const markerTemp = L.geoJSON(feature, {
       pointToLayer: function (feature, latlng) {
         var marker = L.circleMarker(latlng, {
-          color: getColor(type),
+          color:'#FF0000',
           fillColor: getColor(type),
           fillOpacity: 1,
-          radius: 10,
-          weight: 2,
+          radius: 8,
+          weight: 3,
         });
         return marker;
       },
     }).addTo(clicFeatureLayer);
-
-
-
   });
 };
 
@@ -131,25 +126,60 @@ function onEachFeaturePolygon(feature, layer) {
 
   const type = feature.properties.id_territoire.split('-')[0];
 
-
   layer.on('click', () => {
     getInfo(feature, type);
 
     clicFeatureLayer.clearLayers();
-
     const polygonTemp = L.geoJSON(feature, {
       style: {
         fillColor: getColor(type),
-        fillOpacity: 0.5,
-        color: 'white',
+        fillOpacity: 1,
+        color: '#FF0000',
         weight: 2,
       },
     } ).addTo(clicFeatureLayer);
-
   });
 };
 
+//Automatiser la création de geojson : marker
+function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
+  const layer = new L.geoJSON(data, {
+    pointToLayer: function (feature, latlng) {
+      var marker = L.circleMarker(latlng, {
+        color: getColor(type),
+        fillColor: getColor(type),
+        fillOpacity: fillOpacity,
+        radius: radius,
+        weight: weight,
+      });
+      return marker;
+    },
+    onEachFeature : onEachFeatureMarker,
+  }).addTo(map);
 
+  // Gérer le survol pour chaque élément de la couche
+  layer.eachLayer(function (feature) {
+    feature.on('mouseover', function (e) {
+      // Modifier le style de l'élément survolé
+      this.setStyle({
+        color: 'white', // Bordure blanche
+        fillColor: getColor(type), // Remplissage blanc
+        radius: 8,
+      });
+    });
+
+    // Rétablir le style initial de l'élément une fois le survol terminé
+    feature.on('mouseout', function (e) {
+      this.setStyle({
+        color: getColor(type), // Utilisez la couleur d'origine
+        fillColor: getColor(type), // Utilisez la couleur d'origine
+        radius: radius,
+      });
+    });
+  });
+
+  return layer;
+}
 
 
 //Automatiser la création de geojson : polygon
@@ -189,45 +219,7 @@ function createGeoJSONPolygon(data, color, weight, type) {
   return layer;
 }
 
-//Automatiser la création de geojson : marker
-function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
-  const layer = new L.geoJSON(data, {
-    pointToLayer: function (feature, latlng) {
-      var marker = L.circleMarker(latlng, {
-        color: getColor(type),
-        fillColor: getColor(type),
-        fillOpacity: fillOpacity,
-        radius: radius,
-        weight: weight,
-      });
-      return marker;
-    },
-    onEachFeature : onEachFeatureMarker,
-  }).addTo(map);
 
-  // Gérer le survol pour chaque élément de la couche
-  layer.eachLayer(function (feature) {
-    feature.on('mouseover', function (e) {
-      // Modifier le style de l'élément survolé
-      this.setStyle({
-        color: 'white', // Bordure blanche
-        fillColor: getColor(type), // Remplissage blanc
-        radius: 6,
-      });
-    });
-
-    // Rétablir le style initial de l'élément une fois le survol terminé
-    feature.on('mouseout', function (e) {
-      this.setStyle({
-        color: getColor(type), // Utilisez la couleur d'origine
-        fillColor: getColor(type), // Utilisez la couleur d'origine
-        radius: radius,
-      });
-    });
-  });
-
-  return layer;
-}
 
 
 /* -------------------------- Sidebar ----------------------------- */
@@ -423,7 +415,7 @@ const acv2Init = loadData("data/geom/geojsonV2/acv2_geom.geojson");
 const pvdInit = loadData("data/geom/geojsonV2/pvd_geom.geojson");
 const fsInit = loadData("data/geom/geojsonV2/fs_geom.geojson");
 const cdeInit = loadData("data/geom/geojsonV2/cde_geom.geojson");
-const citeducInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
+const citeInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
 
 // Polygon
 const tiInit = loadData("data/geom/geojsonV2/ti_geom.geojson");
@@ -461,22 +453,22 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeducInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeducLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeLayer])=>{
   
   //POLYGON
-  const tiPolygonLayer= createGeoJSONPolygon(tiLayer, null, null , 'ti');
-  const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 0.2, 'crte');
-  const amiPolygonLayer= createGeoJSONPolygon(amiLayer, "white", 0.2, 'ami');
-  const ammPolygonLayer= createGeoJSONPolygon(ammLayer, "white", 0.2, 'amm');
-  const fabpPolygonLayer= createGeoJSONPolygon(fabpLayer, "white", 0.2, 'fabp');
+  const tiPolygonLayer= createGeoJSONPolygon(tiLayer, "white", 1, 'ti');
+  const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 1, 'crte');
+  const amiPolygonLayer= createGeoJSONPolygon(amiLayer, "white", 1, 'ami');
+  const ammPolygonLayer= createGeoJSONPolygon(ammLayer, "white", 1, 'amm');
+  const fabpPolygonLayer= createGeoJSONPolygon(fabpLayer, "white", 1, 'fabp');
   
   //MARKER
-  const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 1, 2, 1, 'acv');
-  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 2, 1, 'acv2');
-  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 2, 1, 'pvd');
-  const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 1, 2, 1, 'fs');
-  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer, 1, 2, 1, 'cde');
-  const citeducMarkerLayer=  createGeoJSONMarker(citeducLayer, 1, 2, 1, 'citeduc');
+  const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 2, 2, 1, 'acv');
+  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 2, 2, 1, 'acv2');
+  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 2, 2, 1, 'pvd');
+  const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 2, 2, 1, 'fs');
+  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer, 2, 2, 1, 'cde');
+  const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 2, 2, 1, 'cite');
 
   
 
@@ -491,7 +483,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(pvdMarkerLayer);
   map.removeLayer(fsMarkerLayer);
   map.removeLayer(cdeMarkerLayer);
-  map.removeLayer(citeducMarkerLayer);
+  map.removeLayer(citeMarkerLayer);
 
   
  
@@ -507,7 +499,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const pvdData = document.getElementById('pvd-marker-checkbox');
   const fsData = document.getElementById('fs-marker-checkbox');
   const cdeData = document.getElementById('cde-marker-checkbox');
-  const citeducData = document.getElementById('citeduc-marker-checkbox');
+  const citeData = document.getElementById('cite-marker-checkbox');
 
   //Appel à la fonction pour activier et désactiver les couches
   toggleLayer(tiPolygonLayer, tiData);
@@ -521,7 +513,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   toggleLayer(pvdMarkerLayer, pvdData);
   toggleLayer(fsMarkerLayer, fsData);
   toggleLayer(cdeMarkerLayer, cdeData);
-  toggleLayer(citeducMarkerLayer, citeducData);
+  toggleLayer(citeMarkerLayer, citeData);
 
 
 });
