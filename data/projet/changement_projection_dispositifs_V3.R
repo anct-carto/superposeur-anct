@@ -14,6 +14,9 @@ geom_com_ctr <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-p
 geom_com_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
                                     layer = "com")
 
+geom_epci_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
+                            layer = "epci")
+
 
 
 
@@ -31,13 +34,20 @@ pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petite
 
 #TI
 ti_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-com2023-20231107.csv", fileEncoding ="utf-8")
+ti_groupement <-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-grpt2023-20231107.csv", fileEncoding ="utf-8")
+ti_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-20231107.csv", fileEncoding ="utf-8")
+
 
 #France service
-fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2023-20231106.csv", fileEncoding ="utf-8")
+fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-20231106.csv", fileEncoding ="utf-8")
+fs_com_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2023-20231106.csv", fileEncoding ="utf-8")
+
 
 
 #Cité educatives
 cite_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-com2023-20230817.csv", fileEncoding ="utf-8")
+
+
 
 #FABRIQUE PROSPECTIVES
 fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8", colClasses = c("insee_com"="character"))
@@ -125,19 +135,40 @@ pvd_geom<-ma_fonction(pvd_init, type="ctr")%>%
 
 
 #FS
-fs_geom<-ma_fonction(fs_init, type="ctr")%>%
-  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_fs", "lib_territoire"="lib_com_carto")%>% 
+fs_geom<-filter(fs_init,format_fs=='Site principal')%>%
+  ma_fonction(., type="ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_fs", "lib_territoire"="lib_fs")%>% 
   select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
-  group_by(id_territoire, lib_territoire)%>%
-  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+  mutate(id_territoire2= paste0('fs-',id_territoire))%>%
+  select(-id_territoire)%>%
+  rename('id_territoire'='id_territoire2')%>%
+  group_by(id_geo)%>%
+  summarise(lib_geo= paste0(unique(lib_geo)),
+            id_territoire= paste0(unique(id_territoire), collapse = '; '),
+            liste_geo= paste0(unique(lib_geo), ' (', id_geo, ')',collapse = '; '),
+            lib_territoire= paste0(unique(lib_territoire), collapse = '; '))
+
 
 
 #TI
-ti_geom<-ma_fonction(ti_init, type="polygon")%>%
-  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_ti", "lib_territoire"="lib_ti")%>% 
-  select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
-  group_by(id_territoire, lib_territoire)%>%
-  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+# ti_gpt_data <- ti_groupement %>%
+#   group_by(id_ti)%>%
+#   summarise(liste_geo= paste0(unique(lib_groupement),' (', siren_groupement, ')', collapse = '; '))
+# 
+# ti_geom<-ti_groupement%>%
+#   left_join(geom_epci_polygon, by =c("siren_groupement"="siren_epci")) %>%
+#   st_as_sf()
+# fichier_4326<- st_transform(fichier, crs= 4326)
+#   rename("id_geo"="siren_epci", "lib_geo"="lib_epci" ,"id_territoire"="id_ti", "lib_territoire"="lib_ti")%>% 
+#   select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
+#   group_by(id_territoire, lib_territoire)%>%
+#   summarise()%>%
+#   left_join(ti_init_list, by = c("id_territoire"="id_crte"))%>%
+#   left_join(ti_gpt_data, by= c("id_territoire"="id_ti") )%>%
+#   rename("lib_territoire"="lib_ti")
+
+#A RETRAVAILLER
+
 
 #Fabriques prospectives 
 
