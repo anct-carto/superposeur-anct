@@ -1,3 +1,7 @@
+
+
+
+
 html, body, #IDsuperMap {
 	height: 100%;
 	width: 100%;
@@ -5,9 +9,7 @@ html, body, #IDsuperMap {
 	font-family: 'Marianne-regular', Arial, Helvetica, sans-serif !important;
 }
 
-#sidebar {
-	position: absolute;
-}
+
 
 #goTo {
 	cursor: pointer;
@@ -33,6 +35,10 @@ html, body, #IDsuperMap {
 /* -------------------------------------------------------------------------- */
 #sidebar {
 	position: absolute;
+	font-size: 20px;
+	min-height: 100%; /* La sidebar aura au moins la hauteur de son conteneur parent (généralement la hauteur de la page) */
+	height: auto; /* La hauteur de la sidebar peut augmenter si le contenu dépasse la hauteur minimale */
+
 }
 
 /*bar tabs*/

@@ -44,7 +44,113 @@ function getColor(layerType) {
 };
 
 
+// Fonction pour récupérer les propriétés des couches geojson
+var dataInfos ;
+
+
+function getInfo(feature, layerName) {
+  console.log(layerName)
+  const card = document.getElementById("card");
+  const legend =document.getElementById("legend");
+  const btnRetour = document.getElementById("bnt-retour");
+  const checkbox = document.querySelectorAll(".program-checkbox");
+  legend.style.display ="none";
+  card.style.display ="block";
+  btnRetour.style.display ="block";
+  
+  let libProgramme;
+  for(let i =0;i<checkbox.length;i++) {
+    const getHtmlElement = checkbox[i].getAttribute("data-layer-type");
+    if (getHtmlElement === layerName) {
+      libProgramme = checkbox[i].nextElementSibling.innerHTML;
+    } else if (getHtmlElement === 'fs') {
+      libProgramme = 'France services'
+    }
+  }
+
+  console.log(libProgramme)
+
+  const dataInfos = feature.properties;
+  
+  const cardHeader = document.querySelector(".card-header");
+  const cardBody = document.querySelector(".card-body");
+
+  // + labelText
+  //Inégration des éléments dans la card en HTML
+  cardHeader.innerHTML =`<div id="nom-programme"><span><p class="title-card-header">`+ libProgramme  + `</p></span></div>`;
+  cardBody.innerHTML =  `<div"><span><p class="title-card-body">Libellé et code du programme : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>'+`<div><span><p class="title-card-body">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
+  sidebar.open('home');
+
+  // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
+  btnRetour.addEventListener('click', () => {
+    legend.style.display = 'block';
+    card.style.display ="none";
+    btnRetour.style.display="none";
+
+    clicFeatureLayer.clearLayers();
+  });
+  
+};
 /* --------------------------Mise en place carte----------------------------- */
+
+
+
+// Définir une variable pour stocker la référence de la couche GeoJSON sélectionnée
+
+
+
+function onEachFeatureMarker(feature, layer) {
+
+  const type = feature.properties.id_territoire.split('-')[0];
+
+
+  layer.on('click', () => {
+    getInfo(feature, type);
+
+    clicFeatureLayer.clearLayers();
+
+    const markerTemp = L.geoJSON(feature, {
+      pointToLayer: function (feature, latlng) {
+        var marker = L.circleMarker(latlng, {
+          color: getColor(type),
+          fillColor: getColor(type),
+          fillOpacity: 1,
+          radius: 10,
+          weight: 2,
+        });
+        return marker;
+      },
+    }).addTo(clicFeatureLayer);
+
+
+
+  });
+};
+
+function onEachFeaturePolygon(feature, layer) {
+
+  const type = feature.properties.id_territoire.split('-')[0];
+
+
+  layer.on('click', () => {
+    getInfo(feature, type);
+
+    clicFeatureLayer.clearLayers();
+
+    const polygonTemp = L.geoJSON(feature, {
+      style: {
+        fillColor: getColor(type),
+        fillOpacity: 0.5,
+        color: 'white',
+        weight: 2,
+      },
+    } ).addTo(clicFeatureLayer);
+
+  });
+};
+
+
+
 
 //Automatiser la création de geojson : polygon
 function createGeoJSONPolygon(data, color, weight, type) {
@@ -55,8 +161,7 @@ function createGeoJSONPolygon(data, color, weight, type) {
       color: color,
       weight: weight,
     },
-  }).on('click', (e) => {
-    getInfo(e, type);
+    onEachFeature : onEachFeaturePolygon,
   }).addTo(map);
 
   // Gérer le survol pour chaque élément de la couche
@@ -78,6 +183,7 @@ function createGeoJSONPolygon(data, color, weight, type) {
         weight: weight,
       });
     });
+    
   });
 
   return layer;
@@ -96,8 +202,7 @@ function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
       });
       return marker;
     },
-  }).on('click', (e) => {
-    getInfo(e, type);
+    onEachFeature : onEachFeatureMarker,
   }).addTo(map);
 
   // Gérer le survol pour chaque élément de la couche
@@ -126,49 +231,6 @@ function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
 
 
 /* -------------------------- Sidebar ----------------------------- */
-
-// Fonction pour récupérer les propriétés des couches geojson
-var dataInfos ;
-
-
-function getInfo(e, layerName) {
-  const card = document.getElementById("card");
-  const legend =document.getElementById("legend");
-  const btnRetour = document.getElementById("bnt-retour");
-  const checkbox = document.querySelectorAll(".program-checkbox");
-  legend.style.display ="none";
-  card.style.display ="block";
-  btnRetour.style.display ="block";
-  
-  let libProgramme;
-  for(let i =0;i<checkbox.length;i++) {
-    const getHtmlElement = checkbox[i].getAttribute("data-layer-type");
-    if (getHtmlElement === layerName) {
-      libProgramme = checkbox[i].nextElementSibling.innerHTML;
-    } 
-  }
-
-  console.log(e)
-
-  const dataInfos = e.layer.feature.properties;
-  
-  const cardHeader = document.querySelector(".card-header");
-  const cardBody = document.querySelector(".card-body");
-
-  // + labelText
-  //Inégration des éléments dans la card en HTML
-  cardHeader.innerHTML =`<div id="nom-programme"><span><p class="title-card-header">`+ libProgramme  + `</p></span></div>`;
-  cardBody.innerHTML =  `<div"><span><p class="title-card-body">Libellé et code du programme : </p></span>` + dataInfos[`lib_territoire`] + ' ('+ dataInfos[`id_territoire`] + ')'+ '</div>'+`<div><span><p class="title-card-body">Territoires concernés : </p></span>` + dataInfos[`liste_geo`] + '</div>';
-  sidebar.open('home');
-
-  // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
-  btnRetour.addEventListener('click', () => {
-    legend.style.display = 'block';
-    card.style.display ="none";
-    btnRetour.style.display="none";
-  });
-  
-};
 
 
 // Ouverture de la sidebar sur l'onglet "home"
@@ -256,6 +318,7 @@ const layerControl = L.control.layers(baseLayers, overlays);
 
 const allLayer = new L.layerGroup().addTo(map);
 
+const clicFeatureLayer = new L.layerGroup().addTo(map);
 
 
 /* ----------------Mise en place des éléments habillage carte--------------------- */
@@ -428,7 +491,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(pvdMarkerLayer);
   map.removeLayer(fsMarkerLayer);
   map.removeLayer(cdeMarkerLayer);
-  //map.removeLayer(citeducMarkerLayer);
+  map.removeLayer(citeducMarkerLayer);
 
   
  
