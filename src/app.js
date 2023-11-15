@@ -37,6 +37,8 @@ function getColor(layerType) {
     return "#9A3D77";
   } else if (layerType === 'fabp') {
     return "#FF7D00";
+  } else if (layerType === 'fabt') {
+    return "#726786";
   }
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
@@ -64,7 +66,7 @@ function getInfo(feature, layerName) {
     if (getHtmlElement === layerName) {
       libProgramme = checkbox[i].nextElementSibling.innerHTML;
     } else if (getHtmlElement === 'fs') {
-      libProgramme = 'France services'
+      libProgramme = 'France services' //A ENLEVER?
     }
   }
 
@@ -416,6 +418,8 @@ const pvdInit = loadData("data/geom/geojsonV2/pvd_geom.geojson");
 const fsInit = loadData("data/geom/geojsonV2/fs_geom.geojson");
 const cdeInit = loadData("data/geom/geojsonV2/cde_geom.geojson");
 const citeInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
+const fabtInit = loadData("data/geom/geojsonV2/fabt_geom.geojson");
+
 
 // Polygon
 const tiInit = loadData("data/geom/geojsonV2/ti_geom.geojson");
@@ -453,7 +457,7 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeInit, fabtInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeLayer, fabtLayer])=>{
   
   //POLYGON
   const tiPolygonLayer= createGeoJSONPolygon(tiLayer, "white", 1, 'ti');
@@ -469,8 +473,9 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 2, 2, 1, 'fs');
   const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer, 2, 2, 1, 'cde');
   const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 2, 2, 1, 'cite');
+  const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer, 2, 2, 1, 'fabt');
 
-  
+  console.log(fabtMarkerLayer)
 
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(crtePolygonLayer);
@@ -484,6 +489,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(fsMarkerLayer);
   map.removeLayer(cdeMarkerLayer);
   map.removeLayer(citeMarkerLayer);
+  map.removeLayer(fabtMarkerLayer);
 
   
  
@@ -500,6 +506,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const fsData = document.getElementById('fs-marker-checkbox');
   const cdeData = document.getElementById('cde-marker-checkbox');
   const citeData = document.getElementById('cite-marker-checkbox');
+  const fabtData = document.getElementById('fabt-marker-checkbox');
 
   //Appel à la fonction pour activier et désactiver les couches
   toggleLayer(tiPolygonLayer, tiData);
@@ -514,6 +521,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   toggleLayer(fsMarkerLayer, fsData);
   toggleLayer(cdeMarkerLayer, cdeData);
   toggleLayer(citeMarkerLayer, citeData);
+  toggleLayer(fabtMarkerLayer, fabtData);
 
 
 });

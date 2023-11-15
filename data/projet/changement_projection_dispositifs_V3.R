@@ -87,6 +87,12 @@ citeduc_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/ci
 citeduc_list_init<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-20230817.csv", fileEncoding ="utf-8")
 citeduc_groupement<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-educatives/liste-cite-grpt2023-20230817.csv", fileEncoding ="utf-8")
 
+
+#Fabriques de territoire
+fabt_init<- read_excel("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/FABRIQUE_TERRITOIRE/2E_VAGUE/DATA/tabs/data_fabrique_territoires_11_23.xlsx")%>%
+  st_drop_geometry()%>%
+  select(-geom)
+
 #TRANSFORMER LES DONNEES - creation d'une fonction-------------------------------------------------------
 ma_fonction<- function(data_init, type){
   fichier_init <- deparse(substitute(data_init))
@@ -168,7 +174,7 @@ ti_geom<-ma_fonction(ti_init, type="polygon")%>%
 #A RETRAVAILLER
 
 
-#Fabriques prospectives 
+
 
 
 #AMM
@@ -266,6 +272,23 @@ fabp_geom<-ma_fonction(fabp_init, type="polygon")%>%
   left_join(fabp_gpt_data, by= c("id_territoire"="id_fabp") )%>%
   rename("lib_territoire"="lib_fabp")
 
+#Fabriques de territoires
+fabt_data <- fabt_init %>%
+  mutate(n_vague = as.numeric(stringr::str_extract(vague, "\\d+")))%>%
+  arrange(n_vague)%>%
+  mutate(id_fabt = sprintf("fabt-%02d", row_number()))%>%
+  rename('insee_com'='code_insee', 'lib_fabt'='lib_projet')
+  
+fabt_geom <- ma_fonction(fabt_data, type="ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_fabt", "lib_territoire"="lib_fabt")%>%
+  select(id_geo, lib_geo, id_territoire, lib_territoire, Adresse, n_vague)%>%
+  group_by(id_geo)%>%
+  summarise(lib_geo= paste0(unique(lib_geo)),
+            id_territoire= paste0(unique(id_territoire), collapse = '; '),
+            liste_geo= paste0(lib_geo, ' (', id_geo[1], ')'),
+            lib_territoire= paste0(unique(lib_territoire), collapse = '; '))
+
+
 
 
 
@@ -304,4 +327,9 @@ st_write(obj = citeduc_geom,
 st_write(obj = fabp_geom,
          dsn = here(paste0("geom/geojsonV2/fabp_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+st_write(obj = fabt_geom,
+         dsn = here(paste0("geom/geojsonV2/fabt_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+
 
