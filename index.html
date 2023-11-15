@@ -174,9 +174,10 @@
             <p>Pour télécharger les données: 
               <a href="https://www.data.gouv.fr/fr/organizations/agence-nationale-de-la-cohesion-des-territoires/#/presentation" target="_blank">data.gouv.fr</a>
             </p>
-            <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
-              <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
+            <p>Pour visualiser et télécharger les cartes produites par le service cartographie ANCT :
+              <a href = 'https://cartotheque.anct.gouv.fr/cartes' target="_blank">Service cartographie</a>
             </p>
+
           </div>
         </div>
 
@@ -186,28 +187,69 @@
           <div class="leaflet-sidebar-header">
             <span style="color:gray;">À propos</span>   
             <h4 style="color:#F2CB27; font-size: 20px;">Superposeur ANCT</h4> 
+            <span class="leaflet-sidebar-close" @click="sidebar.close()">
+              <i class="la la-step-backward"></i>
+            </span>
           </div>
           <div class="panel-content">
-            <p><b>Réalisation :</b>
-              ANCT, Pôle analyse & diagnostics territoriaux - <a href = 'https://cartotheque.anct.gouv.fr/cartes' target="_blank">Service cartographie</a>
-            </p>
+
+            <a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">
+              <img id="logo" src="img/LOGO ANCT+Marianne.PNG" width="90%">
+            </a>
+
+            <span class="apropos-text-anct">
+              <p>Agence de l’État créée en 2020, l’Agence nationale de la cohésion des territoires (ANCT) assure un rôle de « fabrique à projets » pour permettre aux collectivités de mener à bien leurs projets ; facilite l’accès des collectivités locales aux ressources nécessaires pour les concrétiser (ingénierie technique et financière, partenariats, subventions…) ; prend en compte les différences entre les territoires et adapte son action à leurs besoins.</p>
+              <b>Contact: </b>
+              <a href="info@anct.gouv.fr" target="_blank">info@anct.gouv.fr</a></p>
+            </span>
+
+            <span class="apropos-liens-programmes">
+              <p>
+                <b>En savoir plus sur le programme :</b>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/france-services-36" target="_blank">France services</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/cites-de-lemploi-571" target="_blank">Cités de l'emploi</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/cites-educatives-76" target="_blank">Cités éducatives</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/action-coeur-de-ville-42" target="_blank">Action Coeur de ville</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/guide-entrees-de-ville-1226" target="_blank">Entrées de ville</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/petites-villes-de-demain-45" target="_blank">Petites Villes de demain</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/fabriques-de-territoire-582" target="_blank">Fabriques de territoires</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/territoires-dindustrie-44" target="_blank">Territoires d'industrie</a>
+                <br>
+                <a href="" target="_blank">Contrats pour la réussite de la transition écologique</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/avenir-montagnes-ingenierie" target="_blank">Avenir Montagne Ingénierie</a>
+                <br>
+                <a href="https://agence-cohesion-territoires.gouv.fr/avenir-montagnes-mobilites-629" target="_blank">Avenir Montagne Mobilité</a>
+                <br>
+                <a href="" target="_blank">Fabriques prospectives</a>
+              </p>
+            </span>
+
+            <span class="apropos-realisation"><b>Réalisation: </b>
+              Pôle analyse & diagnostics territoriaux - ANCT 
+              <br>              
+              <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
+                <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
+              </p>
+            </span>
             <p><b>Technologies :</b>
                 Leaflet 1.9.4, Bootstrap 5.2, Line-awesome 1.3.0
               </p>
               <p>
-                Cette carte est alimentée par  ...........
+                Le code source de cet outil est consultable sur 
+                <a href="https://github.com/anct-carto/superposeur-anct" target="_blank">Github</a>
+                .
               </p>
-              <p>
-              <b>Contact : </b>
-                <a href="cartographie@anct.gouv.fr" target="_blank">blabla@anct.gouv.fr</a></p>
-              <p>
-                <b>En savoir plus sur le programme :</b>
-                <br>
-                
-                <a href="https://agence-cohesion-territoires.gouv.fr/action-coeur-de-ville-42" target="_blank">Action Coeur de ville</a>
-                <br>
-                <a href="https://agence-cohesion-territoires.gouv.fr/petites-villes-de-demain-45" target="_blank">Petites Villes de demain</a>
-              </p>
+
+
           </div>
         </div>
 
@@ -218,4 +260,3 @@
   <script src="src/app.js"></script>
 </body>
 </html>
-

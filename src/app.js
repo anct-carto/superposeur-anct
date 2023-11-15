@@ -468,7 +468,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 2, 2, 1, 'acv');
   const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 2, 2, 1, 'acv2');
   const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 2, 2, 1, 'pvd');
-  const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 2, 2, 1, 'fs');
+  const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 2, 1, 1, 'fs');
   const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer, 2, 2, 1, 'cde');
   const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 2, 2, 1, 'cite');
   const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer, 2, 2, 1, 'fabt');

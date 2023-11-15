@@ -223,4 +223,18 @@ font-weight: bold;
 
 }
 
+#logo {
+	margin-top: 8px;
+	margin-bottom: 10px;
+}
 
+.apropos-text-anct {
+	font-family:"Marianne-Regular", sans-serif;
+	font-size: 12px;
+	text-align: left;
+}
+.apropos-text-anct p {
+	margin-top: 8px;
+	margin-bottom: 10px;
+	margin-right: 20px;
+}
