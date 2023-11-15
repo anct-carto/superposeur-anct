@@ -2,8 +2,8 @@
 <html lang="fr" dir="ltr"></html>
 <head>
   <meta charset="utf-8" />
-
-  <title>Superposeur des dispositifs de l'ANCT</title>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/ico"/>
+  <title> Croisement des programmes de l'ANCT</title>
 
   <!--Leaflet-->
   <link rel="stylesheet" href="lib/leaflet.css"/>
@@ -37,7 +37,7 @@
 
   <!-- Bouton DROM-->
   <select type="menu" id = "goTo" style="color:#313778;">
-    <option value="">Zoomer sur un territoire</option>
+    <option value="">Zoomer sur un territoire d'outre-mer</option>
     <option value="met">Métropole</option>
     <option value="reu">La Réunion</option>
     <option value="glp">Guadeloupe</option>
@@ -45,6 +45,10 @@
     <option value="guf">Guyane</option>
     <option value="myt">Mayotte</option>
   </select>
+
+  <!--<div id="logo-anct-petit">
+    <img src="img/LOGO ANCT seul.PNG" width="90%">
+  </div>-->
 
  
   <!--Sidebar-->
@@ -55,7 +59,7 @@
         <ul role="tablist">
           <li><a href="#home" role="tab"><i class="las la-home"></i><span class="tab-name">Accueil</span></a></li>
           <li><a href="#a-propos" role="tab"><i class="las la-info-circle"></i><span class="tab-name">À propos</span></a></li>
-      </ul>
+        </ul>
       </div>
     <!-- Ici : le contenu du panneau latéral-->
       <div class="leaflet-sidebar-content">
@@ -65,8 +69,8 @@
           <!--Panneau 1-->
           <div class="leaflet-sidebar-header">
             <!--<img src="img/LOGO ANCT.jpg" width="20%"> -->
-            <span style="color:gray;">Carte interactive</span>   
-            <h4 style="color:#F2CB27; font-size: 20px;">Superposeur ANCT</h4>      
+            <span style="color:gray;"><img src="img/LOGO ANCT seul.PNG" width="13%"> Carte interactive</span>   
+            <h4 style="color:#F2CB27; font-size: 20px; margin-top: 8px;">Programmes ANCT</h4>      
             <span class="leaflet-sidebar-close" @click="sidebar.close()">
               <i class="la la-step-backward"></i>
             </span>
@@ -75,9 +79,10 @@
           <div class="panel-content">
             <div id="legend">
               <div id="background-tiles">
-
+                <span class="content-titre-explication">
+                  <p>Croisement des programmes et dispositifs mis en place par l'Agence Nationale de la Cohésion des territoires</p>
+                </span>
                 <br>
-
                 <h1 id="title-legend-1">Fonds cartographiques</h1>
                 <div class="form-check form-switch">
                   <input class="form-check-input" type="checkbox" id="fond1-checkbox" name="basemap" value="fond1" checked>
@@ -92,64 +97,64 @@
 
               <br>
 
-              <h1 id="title-legend-1">Programmes ANCT</h1>
+              <h1 id="title-legend-1">Programmes et dispositifs</h1>
 
               <details>
                 <summary>Équipements, services et accessibilité</summary>
                   <input type="checkbox" class="program-checkbox" id="fs-marker-checkbox" data-layer-type='fs' >
-                  <label for="fs-marker-checkbox">France services</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="fs-marker-checkbox">France services</label>
               </details>
 
               <details>
                 <summary>Éducation, formation</summary>
                   <input type="checkbox" class="program-checkbox" id="cde-marker-checkbox" data-layer-type='cde' >
-                  <label for="cde-marker-checkbox">Cités de l'emploi</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="cde-marker-checkbox">Cités de l'emploi</label>
                 <br>
                   <input type="checkbox" class="program-checkbox" id="cite-marker-checkbox" data-layer-type='cite' >
-                  <label for="cite-marker-checkbox" >Cités éducatives</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="cite-marker-checkbox" >Cités éducatives</label>
               </details>
               
 
               <details>
                 <summary>Villes petites et moyennes</summary>
                   <input type="checkbox" class="program-checkbox" id="acv-marker-checkbox" data-layer-type='acv' >
-                  <label for ="acv-marker-checkbox">Action Coeur de Ville</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for ="acv-marker-checkbox">Action Coeur de Ville</label>
                 <br>
                   <input type="checkbox" class="program-checkbox" id="acv2-marker-checkbox" data-layer-type='acv2' >
-                  <label for ="acv2-marker-checkbox">Entrées de ville (ACV2)</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for ="acv2-marker-checkbox">Entrées de ville (ACV2)</label>
                 <br>
                   <input type="checkbox" class="program-checkbox" id="pvd-marker-checkbox" data-layer-type='pvd'>
-                  <label for ="pvd-marker-checkbox">Petites Villes de Demain</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for ="pvd-marker-checkbox">Petites Villes de Demain</label>
               </details>
 
               <details>
                 <summary>Numérique</summary>
                   <input type="checkbox" class="program-checkbox" id="fabt-marker-checkbox" data-layer-type='fabt' >
-                  <label for="fabt-marker-checkbox">Fabriques de territoires</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="fabt-marker-checkbox">Fabriques de territoires</label>
               </details>
 
               <details>
                 <summary>Emplois et activités économiques</summary>
                   <input type="checkbox" class="program-checkbox" id="ti-polygon-checkbox" data-layer-type='ti' >
-                  <label for="ti-polygon-checkbox"> Territoires d'industrie</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="ti-polygon-checkbox"> Territoires d'industrie</label>
               </details>
 
               <details>
                 <summary>Transition écologique</summary>
                   <input type="checkbox" class="program-checkbox" id="crte-polygon-checkbox" data-layer-type='crte' >
-                  <label for="crte-polygon-checkbox">Contrats pour la réussite de la transition écologique</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="crte-polygon-checkbox">Contrats pour la réussite de la transition écologique</label>
                 <br>
                   <input type="checkbox" class="program-checkbox" id="ami-polygon-checkbox" data-layer-type='ami' >
-                  <label for="ami-polygon-checkbox">Avenir Montagne Ingénierie</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="ami-polygon-checkbox">Avenir Montagne Ingénierie</label>
                 <br>
                   <input type="checkbox" class="program-checkbox" id="amm-polygon-checkbox" data-layer-type='amm' >
-                  <label for="amm-polygon-checkbox"> Avenir Montagne Mobilité</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="amm-polygon-checkbox"> Avenir Montagne Mobilité</label>
               </details>
 
               <details>
                 <summary>Ingénierie</summary>
                   <input type="checkbox" class="program-checkbox" id="fabp-polygon-checkbox" data-layer-type='fabp' >
-                  <label for="fabp-polygon-checkbox">Fabriques prospectives</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="fabp-polygon-checkbox">Fabriques prospectives</label>
               </details>
 
               <button id="clear-legend-button">Effacer</button>
@@ -171,12 +176,17 @@
               <button id="bnt-retour" ><i class="las la-arrow-left"></i> Retour </button>
 
             </div>
-            <p>Pour télécharger les données: 
-              <a href="https://www.data.gouv.fr/fr/organizations/agence-nationale-de-la-cohesion-des-territoires/#/presentation" target="_blank">data.gouv.fr</a>
-            </p>
-            <p>Pour visualiser et télécharger les cartes produites par le service cartographie ANCT :
-              <a href = 'https://cartotheque.anct.gouv.fr/cartes' target="_blank">Service cartographie</a>
-            </p>
+
+            <span class="text-info-home">
+              <p>Pour télécharger les données: 
+                <a href="https://www.data.gouv.fr/fr/organizations/agence-nationale-de-la-cohesion-des-territoires/#/presentation" target="_blank">data.gouv.fr</a>
+              </p>
+              <p>Pour visualiser et télécharger les cartes :
+                <a href = 'https://cartotheque.anct.gouv.fr/cartes' target="_blank">Cartothèque</a>
+              </p>
+            </span>
+
+
 
           </div>
         </div>
@@ -185,8 +195,8 @@
       <!--Panneau 2-->
         <div class="leaflet-sidebar-pane" id="a-propos">
           <div class="leaflet-sidebar-header">
-            <span style="color:gray;">À propos</span>   
-            <h4 style="color:#F2CB27; font-size: 20px;">Superposeur ANCT</h4> 
+            <span style="color:gray;"><img src="img/LOGO ANCT seul.PNG" width="13%">   À propos</span>   
+            <h4 style="color:#F2CB27; font-size: 20px; margin-top: 8px;">Programmes ANCT</h4> 
             <span class="leaflet-sidebar-close" @click="sidebar.close()">
               <i class="la la-step-backward"></i>
             </span>
@@ -205,7 +215,7 @@
 
             <span class="apropos-liens-programmes">
               <p>
-                <b>En savoir plus sur le programme :</b>
+                <b>En savoir plus sur les programmes :</b>
                 <br>
                 <a href="https://agence-cohesion-territoires.gouv.fr/france-services-36" target="_blank">France services</a>
                 <br>
@@ -223,31 +233,31 @@
                 <br>
                 <a href="https://agence-cohesion-territoires.gouv.fr/territoires-dindustrie-44" target="_blank">Territoires d'industrie</a>
                 <br>
-                <a href="" target="_blank">Contrats pour la réussite de la transition écologique</a>
+                <a href="https://agence-cohesion-territoires.gouv.fr/le-crte-un-contrat-au-service-des-territoires-et-de-la-mise-en-oeuvre-de-la-planification" target="_blank">Contrats pour la réussite de la transition écologique</a>
                 <br>
                 <a href="https://agence-cohesion-territoires.gouv.fr/avenir-montagnes-ingenierie" target="_blank">Avenir Montagne Ingénierie</a>
                 <br>
                 <a href="https://agence-cohesion-territoires.gouv.fr/avenir-montagnes-mobilites-629" target="_blank">Avenir Montagne Mobilité</a>
                 <br>
-                <a href="" target="_blank">Fabriques prospectives</a>
+                <a href="https://agence-cohesion-territoires.gouv.fr/les-fabriques-prospectives-accompagner-les-territoires-dans-les-transitions-211" target="_blank">Fabriques prospectives</a>
               </p>
             </span>
 
             <span class="apropos-realisation"><b>Réalisation: </b>
-              Pôle analyse & diagnostics territoriaux - ANCT 
-              <br>              
-              <p>Pour toutes questions, veuillez contacter le service cartographie ANCT :
+              <p>Pôle analyse & diagnostics territoriaux - Cartographie - ANCT </p>            
+              <p>Pour toutes questions, veuillez contacter :
                 <a href="cartographie@anct.gouv.fr" target="_blank">cartographie@anct.gouv.fr</a>
               </p>
             </span>
-            <p><b>Technologies :</b>
-                Leaflet 1.9.4, Bootstrap 5.2, Line-awesome 1.3.0
-              </p>
+            <br>
+            <span class="apropos-technologie"><b>Technologies :</b>
+              <p>Leaflet 1.9.4, Bootstrap 5.2, Line-awesome 1.3.0</p>
               <p>
                 Le code source de cet outil est consultable sur 
                 <a href="https://github.com/anct-carto/superposeur-anct" target="_blank">Github</a>
                 .
               </p>
+            </span>
 
 
           </div>

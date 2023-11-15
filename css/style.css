@@ -30,6 +30,11 @@ html, body, #IDsuperMap {
 	transition: .2s ease-in-out;
 }
 
+#logo-anct-petit {
+	position: absolute;
+	height: 30px;
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                    SIDEBAR                                 */
 /* -------------------------------------------------------------------------- */
@@ -110,9 +115,21 @@ html, body, #IDsuperMap {
 	width: auto; 
 }
 
+.content-titre-explication p {
+	margin: 0px 10px 0px 0px;
+	padding-right: 5px;
+	font-family: "Marianne-Bold", sans-serif; 
+	font-size: 10px; 
+	color: gray;
+	
+}
 
 /* ------------------------------Fonds carto----------------------------------*/
 
+.form-check-label {
+	font-family: "Marianne", sans-serif;
+
+}
 
 /* --------------------------------Legende--------------------------------*/
 
@@ -122,7 +139,7 @@ html, body, #IDsuperMap {
 
 #title-legend-1{
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
-	font-size: 20px; /* Taille de police 10 pixels */
+	font-size: 18px; /* Taille de police 10 pixels */
 	color: #313778; /* Couleur de police bleue */
 }
 
@@ -139,7 +156,7 @@ details {
 /* Personnalisation du style de l'étiquette de résumé */
 summary {
 cursor: pointer;
-font-weight: bold;
+font-family: "Marianne", sans-serif;
 }
 
 /* Bouton clear legende*/
@@ -228,13 +245,40 @@ font-weight: bold;
 	margin-bottom: 10px;
 }
 
+
+.text-info-home p {
+	margin-bottom: 10px;
+	font-family: "Marianne-Bold", sans-serif; 
+	font-size: 12px; 
+	color: gray;
+}
+
 .apropos-text-anct {
 	font-family:"Marianne-Regular", sans-serif;
 	font-size: 12px;
 	text-align: left;
 }
 .apropos-text-anct p {
-	margin-top: 8px;
 	margin-bottom: 10px;
 	margin-right: 20px;
+	font-family: "Marianne-Bold", sans-serif; 
+	font-size: 12px; 
+	color: gray;
+}
+
+
+.apropos-realisation p {
+	margin-bottom: 0px;
+	margin-right: 20px;
+	font-family: "Marianne-Bold", sans-serif; 
+	font-size: 12px; 
+	color: gray;
+}
+
+.apropos-technologie p {
+	margin-bottom: 0px;
+	margin-right: 20px;
+	font-family: "Marianne-Bold", sans-serif; 
+	font-size: 12px; 
+	color: gray;
 }
