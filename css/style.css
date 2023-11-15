@@ -33,16 +33,24 @@ html, body, #IDsuperMap {
 /* -------------------------------------------------------------------------- */
 /*                                    SIDEBAR                                 */
 /* -------------------------------------------------------------------------- */
+
+
 #sidebar {
 	position: absolute;
-	font-size: 20px;
-	min-height: 100%; /* La sidebar aura au moins la hauteur de son conteneur parent (généralement la hauteur de la page) */
-	height: auto; /* La hauteur de la sidebar peut augmenter si le contenu dépasse la hauteur minimale */
-	min-width: 45%;
-	max-width: 60%; 
-	width: auto; 
 
 }
+
+#sidebar .leaflet-sidebar-close{
+	position:absolute;
+	top:0;
+    width: 40px !important;
+    height: 40px !important;
+	text-align:center;
+	cursor:pointer
+}
+#sidebar .leaflet-sidebar-left .leaflet-sidebar-close{right:0}
+#sidebar .leaflet-sidebar-right .leaflet-sidebar-close{left:0}
+
 
 /*bar tabs*/
 .leaflet-sidebar-tabs {

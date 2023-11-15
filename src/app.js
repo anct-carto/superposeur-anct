@@ -38,7 +38,7 @@ function getColor(layerType) {
   } else if (layerType === 'fabp') {
     return "#FF7D00";
   } else if (layerType === 'fabt') {
-    return "#726786";
+    return "#793186";
   }
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
@@ -65,9 +65,7 @@ function getInfo(feature, layerName) {
     const getHtmlElement = checkbox[i].getAttribute("data-layer-type");
     if (getHtmlElement === layerName) {
       libProgramme = checkbox[i].nextElementSibling.innerHTML;
-    } else if (getHtmlElement === 'fs') {
-      libProgramme = 'France services' //A ENLEVER?
-    }
+    } 
   }
 
   console.log(libProgramme)
@@ -475,7 +473,6 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 2, 2, 1, 'cite');
   const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer, 2, 2, 1, 'fabt');
 
-  console.log(fabtMarkerLayer)
 
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(crtePolygonLayer);
