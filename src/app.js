@@ -231,11 +231,19 @@ function legendSidebar(e){
 }
 
 // Activer et désactiver les couches des programmes ANCT dans la sidebar
+let count = 0;
 function toggleLayer(layer, checkbox) {
   checkbox.addEventListener('change', function (e) {
+    console.log(count);
     if (this.checked) {
+      count++
       allLayer.addLayer(layer);
+      if(count == 6) {
+        count--;
+        alert("Vous avez coché trop de calques, pour plus de lisibilité, ne pas en cocher plus de 5 à la fois.")
+      }
     } else {
+      count--;
       allLayer.removeLayer(layer);
     }
   });
@@ -399,6 +407,7 @@ function clearLegend() {
       checkbox.checked = false;
       console.log(checkbox)
       allLayer.clearLayers();
+      count=0;
     }
   });
 }
@@ -554,5 +563,3 @@ liste_drom.addEventListener('change', (e) => {
       return map.setView([46.5, 0], 5.5555, { animation: true })
   }
 });
-
-

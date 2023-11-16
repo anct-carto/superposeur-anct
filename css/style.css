@@ -163,8 +163,9 @@ font-family: "Marianne", sans-serif;
 
 #clear-legend-button {
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
-	font-size: 10px; /* Taille de police 10 pixels */
-	border-radius: 5px; /* Bords arrondis */
+	font-size: 14px; /* Taille de police 10 pixels */
+	border-radius: 4px; /* Bords arrondis */
+	border:none;
 	background-color: #616DAF; /* Fond bleu */
 	color: white; /* Texte en blanc */
 	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
@@ -230,14 +231,14 @@ font-family: "Marianne", sans-serif;
 
 #bnt-retour {
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
-	font-size: 12px; /* Taille de police 10 pixels */
-	border-radius: 5px; /* Bords arrondis */
+	font-size: 14px; /* Taille de police 10 pixels */
+	border-radius: 4px; /* Bords arrondis */
 	background-color: #398373; /* Fond bleu */
 	color: white; /* Texte en blanc */
 	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
 	cursor: pointer; /* Curseur en main pour indiquer un bouton cliquable */
 	display: none;
-
+	border:none;
 }
 
 #logo {
