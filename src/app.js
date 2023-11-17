@@ -24,7 +24,7 @@ function getColor(layerType) {
   } else if (layerType === 'amm') {
     return "#6D4E47";
   } else if (layerType === 'acv') {
-    return "#E12A5C";
+    return "#E01F83"; 
   } else if (layerType === 'acv2') {
     return "#313778";
   } else if (layerType === 'pvd') {
@@ -34,7 +34,7 @@ function getColor(layerType) {
   } else if (layerType === 'cde') {
     return "#C3242B";
   } else if (layerType === 'cite') {
-    return "#9A3D77";
+    return "#4DB2EB";
   } else if (layerType === 'fabp') {
     return "#FF7D00";
   } else if (layerType === 'fabt') {
@@ -45,7 +45,7 @@ function getColor(layerType) {
   return "#000000";
 };
 
-
+//E12A5C
 // Fonction pour récupérer les propriétés des couches geojson
 var dataInfos ;
 
@@ -142,13 +142,13 @@ function onEachFeaturePolygon(feature, layer) {
 };
 
 //Automatiser la création de geojson : marker
-function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
+function createGeoJSONMarker(data, weight, radius, type) {
   const layer = new L.geoJSON(data, {
     pointToLayer: function (feature, latlng) {
       var marker = L.circleMarker(latlng, {
-        color: getColor(type),
+        color: '#FFFFFF',
         fillColor: getColor(type),
-        fillOpacity: fillOpacity,
+        fillOpacity: 1,
         radius: radius,
         weight: weight,
       });
@@ -171,7 +171,7 @@ function createGeoJSONMarker(data, weight, radius, fillOpacity, type) {
     // Rétablir le style initial de l'élément une fois le survol terminé
     feature.on('mouseout', function (e) {
       this.setStyle({
-        color: getColor(type), // Utilisez la couleur d'origine
+        color:'#FFFFFF', // Utilisez la couleur d'origine
         fillColor: getColor(type), // Utilisez la couleur d'origine
         radius: radius,
       });
@@ -474,13 +474,13 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const fabpPolygonLayer= createGeoJSONPolygon(fabpLayer, "white", 1, 'fabp');
   
   //MARKER
-  const acvMarkerLayer=  createGeoJSONMarker(acvLayer, 2, 2, 1, 'acv');
-  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 2, 2, 1, 'acv2');
-  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 2, 2, 1, 'pvd');
-  const fsMarkerLayer=  createGeoJSONMarker(fsLayer, 2, 1, 1, 'fs');
-  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer, 2, 2, 1, 'cde');
-  const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 2, 2, 1, 'cite');
-  const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer, 2, 2, 1, 'fabt');
+  const acvMarkerLayer=  createGeoJSONMarker(acvLayer,  1, 3,'acv');
+  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 3,'acv2');
+  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 3,'pvd');
+  const fsMarkerLayer=  createGeoJSONMarker(fsLayer,  1, 3,'fs');
+  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer,  1, 3,'cde');
+  const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 1, 3,'cite');
+  const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer,  1, 3,'fabt');
 
 
   map.removeLayer(tiPolygonLayer);
