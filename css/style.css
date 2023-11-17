@@ -157,6 +157,7 @@ details {
 summary {
 cursor: pointer;
 font-family: "Marianne", sans-serif;
+font-weight: 500;
 }
 
 /* Bouton clear legende*/
@@ -221,7 +222,8 @@ font-family: "Marianne", sans-serif;
 .title-card-body {
 	font-family: 'Marianne', sans-serif; /* Police de caractères Marianne */
 	color: #313778;
-	font-size: 1em;
+	font-size: 12px;
+	font-weight: 500;
 	margin-top: .2rem;
 	margin-bottom: 0rem;
 }
@@ -232,6 +234,7 @@ font-family: "Marianne", sans-serif;
 #bnt-retour {
 	font-family: "Marianne", sans-serif; /* Utilise la police Marianne ou une police sans-serif de secours */
 	font-size: 14px; /* Taille de police 10 pixels */
+	font-weight: 400;
 	border-radius: 4px; /* Bords arrondis */
 	background-color: #398373; /* Fond bleu */
 	color: white; /* Texte en blanc */
