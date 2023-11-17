@@ -238,9 +238,9 @@ function toggleLayer(layer, checkbox) {
     if (this.checked) {
       count++
       allLayer.addLayer(layer);
-      if(count == 6) {
+      if(count == 7) {
         count--;
-        alert("Vous avez coché trop de calques, pour plus de lisibilité, ne pas en cocher plus de 5 à la fois.")
+        alert("Pour plus de lisibilité, ne pas cocher plus de 6 calques à la fois.")
       }
     } else {
       count--;
