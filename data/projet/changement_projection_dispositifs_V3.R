@@ -14,8 +14,8 @@ geom_com_ctr <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-p
 geom_com_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
                                     layer = "com")
 
-geom_epci_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
-                            layer = "epci")
+# geom_epci_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
+#                             layer = "epci")
 
 
 
@@ -154,8 +154,6 @@ fs_geom<-filter(fs_init,format_fs=='Site principal')%>%
             liste_geo= paste0(unique(lib_geo), ' (', id_geo, ')',collapse = '; '),
             lib_territoire= paste0(unique(lib_territoire), collapse = '; '))
 
-
-
 #TI
 ti_gpt_data <- ti_groupement %>%
   group_by(id_ti)%>%
@@ -170,10 +168,6 @@ ti_geom<-ma_fonction(ti_init, type="polygon")%>%
   left_join(ti_init_list, by = c("id_territoire"="id_ti"))%>%
   left_join(ti_gpt_data, by= c("id_territoire"="id_ti") )%>%
   rename("lib_territoire"="lib_ti")
-
-#A RETRAVAILLER
-
-
 
 
 
@@ -226,6 +220,11 @@ crte_geom<-ma_fonction(crte_init, type="polygon")%>%
   left_join(crte_init_list, by = c("id_territoire"="id_crte"))%>%
   left_join(crte_gpt_data, by= c("id_territoire"="id_crte") )%>%
   rename("lib_territoire"="lib_crte")
+
+#Filtrer et retirer les CRTE non signés 
+
+crte_geom <- crte_geom%>%
+  filter(id_territoire != 'crte-94-2B-4', id_territoire != 'crte-03-973-03', id_territoire != 'crte-03-973-04', id_territoire != 'crte-32-60-20' , id_territoire != 'crte-28-76-9', id_territoire != 'crte-28-27-13')
 
 
 #cité de l'emploi 
