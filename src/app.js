@@ -413,7 +413,6 @@ function clearLegend() {
 }
 
 
-
 /* --------------------------Lecture des données---------------------------- */
 
 // Charger les données
@@ -563,3 +562,38 @@ liste_drom.addEventListener('change', (e) => {
       return map.setView([46.5, 0], 5.5555, { animation: true })
   }
 });
+
+
+/* --------------------------Bouton export---------------------------- */
+// Fonction pour capturer et télécharger la carte
+// function captureAndDownloadMap() {
+//   html2canvas(document.getElementById('IDsuperMap')).then(function (canvas) {
+//     var imageDataURL = canvas.toDataURL('image/png');
+
+//     var link = document.createElement('a');
+//     link.href = imageDataURL;
+//     link.download = 'carte_anct.png';
+
+//     link.click();
+//   });
+// }
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   alert('La page est entièrement chargée');
+// });
+// var bntExport = document.getElementById("bnt-export");
+// bntExport.addEventListener('click', function () {
+//   alert('Le bouton d\'exportation a été cliqué');
+//   captureAndDownloadMap();
+// });
+
+// Sélectionnez le bouton d'exportation
+var bntExport = document.getElementById("bnt-export");
+var browserControl = L.control.browserPrint(
+  {position:'bottomright', 
+  title: 'Télécharger', 
+  documentTitle:"Croisement des programmes de l'ANCT", 
+  printModes:["Portrait", "Landscape","Custom"],
+}).addTo(map);
+
+
