@@ -291,3 +291,6 @@ font-weight: 500;
 
 
 /* --------------------------------TELECHARGEMENT------------------------------ */
+.leaflet-control-search .search-input {
+    width: 200px;
+}

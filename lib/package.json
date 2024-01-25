@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "leaflet-search": "^4.0.0",
     "leaflet.browser.print": "^2.0.2"
   }
 }

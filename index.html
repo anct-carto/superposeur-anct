@@ -20,9 +20,11 @@
   <script src="lib/leaflet-sidebar.min.js"></script>
 
   <!--Leaflet extensions-->
-  <!-- <script src="lib/leaflet-sidebar.min.js"></script> -->
-  <!-- <script src="lib/node_modules/leaflet-image/leaflet-image.js"></script> -->
-  <script src="lib/node_modules/leaflet.browser.print/dist/leaflet.browser.print.min.js"></script>
+  <script src="lib/node_modules/leaflet.browser.print/dist/leaflet.browser.print.js"></script>
+
+  <link rel="stylesheet" href="lib/node_modules/leaflet-search/dist/leaflet-search.min.css" />
+  <script src="lib/node_modules/leaflet-search/dist/leaflet-search.min.js"></script>
+
 
 
   <!--Bootstrap-->
@@ -37,6 +39,10 @@
 <body>
   <!-- MAP-->
   <div id="IDsuperMap"></div>
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Rechercher une commune" />
+  </div>
+  
 
   <!-- Bouton DROM-->
   <select type="menu" id = "goTo" style="color:#313778;">

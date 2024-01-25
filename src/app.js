@@ -292,7 +292,7 @@ const map = new L.map('IDsuperMap',{zoomControl: false}).setView([46.603354, 1.8
 
 // Fonds de cartes 
 const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
+  attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT 2023</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
 });
 
 
@@ -436,6 +436,20 @@ const fabpInit = loadData("data/geom/geojsonV2/fabp_geom.geojson");
 
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
+//const communeInit= loadData("data/geom/geojson/com_geom_4326.geojson");
+
+
+// Fonction pour réinitialiser le style des départements
+function resetDepStyles(depLayerResetStyle) {
+  depLayerResetStyle.eachLayer(function (layer) {
+      layer.setStyle({
+        fillColor: "transparent",
+        fillOpacity:0,
+        color:"#363636",
+        weight: 0.15,
+      });
+  });
+}
 
 //Données d'habillage de la carte
 Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
@@ -457,7 +471,37 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
     }, 
   }).addTo(map);
 
+  
   setStyleBaseMap(regPolygonLayer, depPolygonLayer);
+
+  var searchControl = new L.Control.Search({
+    layer: depPolygonLayer,
+    propertyName: 'lib_dep',
+    marker: false,
+  });
+
+  searchControl.on('search:locationfound', function (e) {
+    console.log("Département trouvé:", e.layer);
+    var depLayer = e.layer;
+
+    // Récupérer les limites (bounds) de la couche GeoJSON du département
+    var bounds = depLayer.getBounds();
+
+    // Zoomer sur les limites du département
+    map.fitBounds(bounds, { maxZoom: 16 });
+
+    // Réinitialiser le style des départements précédemment sélectionnés
+    resetDepStyles(depPolygonLayer);
+
+    // Appliquer le nouveau style au département sélectionné
+    depLayer.setStyle({
+        color: 'red',
+        weight: 2,
+    });
+  });
+
+  
+  map.addControl(searchControl);
 
 });
 
@@ -567,11 +611,14 @@ liste_drom.addEventListener('change', (e) => {
 /* --------------------------Bouton export---------------------------- */
 
 
-var browserControl = L.control.browserPrint(
-  {position:'bottomright', 
+var browserControl = L.control.browserPrint({
+  position:'bottomright', 
   title: 'Télécharger', 
   documentTitle:"Croisement des programmes de l'ANCT - CARTE DE TRAVAIL", 
   printModes:["Portrait", "Landscape","Custom"],
 }).addTo(map);
+
+
+
 
 
