@@ -478,11 +478,13 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
     layer: depPolygonLayer,
     propertyName: 'lib_dep',
     marker: false,
+    textPlaceholder: 'Rechercher un département'
   });
 
   searchControl.on('search:locationfound', function (e) {
-    console.log("Département trouvé:", e.layer);
+    
     var depLayer = e.layer;
+    console.log("Département trouvé:", depLayer);
 
     // Récupérer les limites (bounds) de la couche GeoJSON du département
     var bounds = depLayer.getBounds();
