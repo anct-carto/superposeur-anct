@@ -70,10 +70,10 @@ function getInfo(feature, layerName) {
     } 
   }
 
-  console.log(libProgramme)
+
 
   const dataInfos = feature.properties;
-  console.log(dataInfos[`lib_territoire`])
+
   const cardHeader = document.querySelector(".card-header");
   const cardBody = document.querySelector(".card-body");
 

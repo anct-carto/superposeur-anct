@@ -54,11 +54,11 @@ cite_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites
 
 
 #FABRIQUE PROSPECTIVES
-fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20231005.csv", fileEncoding ="utf-8", colClasses = c("insee_com"="character"))
+fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20240108.csv", fileEncoding ="utf-8", colClasses = c("insee_com"="character"))
 glimpse(fabp_init)
 
-fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20231005.csv", fileEncoding ="utf-8")
-fabp_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-grpt2023-20231005.csv", fileEncoding ="utf-8")
+fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20240108.csv", fileEncoding ="utf-8")
+fabp_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-grpt2023-20240108.csv", fileEncoding ="utf-8")
 
 
 #Avenir montagne mobilité
@@ -93,9 +93,10 @@ citeduc_groupement<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/AN
 
 
 #Fabriques de territoire
-fabt_init<- read_excel("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/FABRIQUE_TERRITOIRE/2E_VAGUE/DATA/tabs/data_fabrique_territoires_11_23.xlsx")%>%
-  st_drop_geometry()%>%
-  select(-geom)
+fabt_init<- read_excel("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/FABRIQUE_TERRITOIRE/2E_VAGUE/DATA/tabs/data_fabrique_territoires_01_24.xlsx")
+# %>%
+#   st_drop_geometry()%>%
+#   select(-geom)
 
 #TRANSFORMER LES DONNEES - creation d'une fonction-------------------------------------------------------
 ma_fonction<- function(data_init, type){
