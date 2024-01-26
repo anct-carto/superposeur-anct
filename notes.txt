@@ -16,6 +16,6 @@ Remarques superposeur après Salon des maires;
 - voir ADE pour hébergement de la carte : héberger à l'ANCT mais rester en opendata
 
 - corriger PVD (mal écrit) et MAJ OK
-- ajouter VA
+- ajouter VA OK
 - corriger ACV2 (juste mettre Entrée de ville) OK
-- mettre à jour les data de : PVD, Fabriques de territoires, Fabriques prospectives
+- mettre à jour les data de : PVD, Fabriques de territoires, Fabriques prospectives OK 

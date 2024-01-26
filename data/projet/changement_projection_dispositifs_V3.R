@@ -33,7 +33,7 @@ acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action
 acv2_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville-2/liste-acv2-com2023-20230922.csv", fileEncoding ="utf-8" )
 
 #PVD
-pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petites-villes-de-demain/liste-pvd-com2023-20231005.csv", fileEncoding ="utf-8")
+pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petites-villes-de-demain/liste-pvd-com2023-20240102.csv", fileEncoding ="utf-8")
 
 
 #TI
@@ -142,7 +142,6 @@ acv2_geom<-ma_fonction(acv2_init, type="ctr")%>%
   select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
   group_by(id_territoire, lib_territoire)%>%
   summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
-
 
 #PVD
 pvd_geom<-ma_fonction(pvd_init, type="ctr")%>%

@@ -487,10 +487,13 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
     textPlaceholder: 'Rechercher un département'
   });
 
+  searchControl.on('search:collapsed', function () {
+    resetDepStyles(depPolygonLayer);
+  });
+
   searchControl.on('search:locationfound', function (e) {
-    
+
     var depLayer = e.layer;
-    console.log("Département trouvé:", depLayer);
 
     // Récupérer les limites (bounds) de la couche GeoJSON du département
     var bounds = depLayer.getBounds();
@@ -503,13 +506,19 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
     // Appliquer le nouveau style au département sélectionné
     depLayer.setStyle({
-        color: 'red',
+        color: 'black',
         weight: 2,
     });
   });
 
-  
+  //Ajouter le controle de la search bar sur la carte
   map.addControl(searchControl);
+  
+  // // Ajouter un gestionnaire d'événements pour réinitialiser le style lorsque la barre de recherche est repliée
+  // searchControl.on('search:cancel', function () {
+  //   resetDepStyles(depPolygonLayer);
+  //   map.setView([46.603354, 1.888334],6);
+  // });
 
 });
 
