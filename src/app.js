@@ -417,12 +417,15 @@ function clearLegend() {
 
 /* -----------------------Bouton pour rechercher par départements----------------- */
 // Fonction pour réinitialiser le style des départements
+//attention a reset le style comme pr photosatellite
 function resetDepStyles(depLayerResetStyle) {
   depLayerResetStyle.eachLayer(function (layer) {
       layer.setStyle({
         fillColor: "transparent",
         fillOpacity:0,
         color:"#363636",
+        lineCap: 'round',
+        lineJoin: 'round',
         weight: 0.15,
       });
   });
@@ -464,6 +467,8 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
         fillColor: "transparent",
         fillOpacity:0,
         color:"#363636",
+        lineCap: 'round',
+        lineJoin: 'round',
         weight: 0.35,
       }, 
   }).addTo(map);
@@ -473,6 +478,8 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
       fillColor: "transparent",
       fillOpacity:0,
       color:"#363636",
+      lineCap: 'round',
+      lineJoin: 'round',
       weight: 0.15,
     }, 
   }).addTo(map);
@@ -506,7 +513,11 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
     // Appliquer le nouveau style au département sélectionné
     depLayer.setStyle({
-        color: 'black',
+        color: '#313778',
+        opacity:0.7,
+        dashOffset: 2,
+        lineCap: 'round',
+        lineJoin: 'round',
         weight: 2,
     });
   });
@@ -514,11 +525,6 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
   //Ajouter le controle de la search bar sur la carte
   map.addControl(searchControl);
   
-  // // Ajouter un gestionnaire d'événements pour réinitialiser le style lorsque la barre de recherche est repliée
-  // searchControl.on('search:cancel', function () {
-  //   resetDepStyles(depPolygonLayer);
-  //   map.setView([46.603354, 1.888334],6);
-  // });
 
 });
 
@@ -613,7 +619,7 @@ liste_drom.addEventListener('change', (e) => {
   switch (option.value) {
     case "met":
       return map.flyTo([46.5, -3.55], 5.5555, { animation: true, duration: 1 });     
-      // break;
+
     case "glp":
       return map.setView([16.25, -61.706], 10, { animation: true });
     case "mtq":
