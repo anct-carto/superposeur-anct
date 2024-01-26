@@ -4,7 +4,7 @@ https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/bouton
 
 
 Remarques superposeur après Salon des maires;
-- faire la recherche d'une commune
+- faire la recherche d'un département OK
 - meilleure visualisation
 - ajouter info dans la card sur les programmes
 - légende

@@ -22,6 +22,10 @@ geom_com_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/m
 
 #LIRE LES DONNEES -------------------------------------------------------------
 
+#Villages d'avenir
+va_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/villages-davenir/liste-va-com2023-20240112.csv", fileEncoding ="utf-8")
+
+
 #ACV
 acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville/liste-acv-com2023-20230802.csv", fileEncoding ="utf-8" )
 
@@ -116,6 +120,13 @@ ma_fonction<- function(data_init, type){
 
 
 #LANCEMENT FONCTION NETTOAGE DATA ET EXPORT DES DONNEES-------------------------------------------------------
+
+#VA
+va_geom <- ma_fonction(va_init, type = "ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_va", "lib_territoire"="lib_com.y")%>% 
+  select(id_geo, lib_geo, id_territoire, lib_territoire, date_signature)%>%
+  group_by(id_territoire, lib_territoire, date_signature)%>%
+  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
 
 #ACV
 acv_geom<-ma_fonction(acv_init, type="ctr")%>%
@@ -292,6 +303,10 @@ fabt_geom <- ma_fonction(fabt_data, type="ctr")%>%
 
 
 #EXPORTS FORMAT GEOJSON -----------------
+
+st_write(obj = va_geom,
+         dsn = here(paste0("geom/geojsonV2/va_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 st_write(obj = acv_geom,
          dsn = here(paste0("geom/geojsonV2/acv_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)

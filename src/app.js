@@ -29,6 +29,8 @@ function getColor(layerType) {
     return "#313778";
   } else if (layerType === 'pvd') {
     return "#DA7E42";
+  } else if (layerType === 'va') {
+    return "black";
   } else if (layerType === 'fs') {
     return "#616DAF";
   } else if (layerType === 'cde') {
@@ -71,7 +73,7 @@ function getInfo(feature, layerName) {
   console.log(libProgramme)
 
   const dataInfos = feature.properties;
-  
+  console.log(dataInfos[`lib_territoire`])
   const cardHeader = document.querySelector(".card-header");
   const cardBody = document.querySelector(".card-body");
 
@@ -413,6 +415,20 @@ function clearLegend() {
 }
 
 
+/* -----------------------Bouton pour rechercher par départements----------------- */
+// Fonction pour réinitialiser le style des départements
+function resetDepStyles(depLayerResetStyle) {
+  depLayerResetStyle.eachLayer(function (layer) {
+      layer.setStyle({
+        fillColor: "transparent",
+        fillOpacity:0,
+        color:"#363636",
+        weight: 0.15,
+      });
+  });
+}
+
+
 /* --------------------------Lecture des données---------------------------- */
 
 // Charger les données
@@ -421,6 +437,7 @@ function clearLegend() {
 const acvInit = loadData("data/geom/geojsonV2/acv_geom.geojson");
 const acv2Init = loadData("data/geom/geojsonV2/acv2_geom.geojson");
 const pvdInit = loadData("data/geom/geojsonV2/pvd_geom.geojson");
+const vaInit = loadData("data/geom/geojsonV2/va_geom.geojson");
 const fsInit = loadData("data/geom/geojsonV2/fs_geom.geojson");
 const cdeInit = loadData("data/geom/geojsonV2/cde_geom.geojson");
 const citeInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
@@ -434,22 +451,11 @@ const amiInit = loadData("data/geom/geojsonV2/ami_geom.geojson");
 const ammInit = loadData("data/geom/geojsonV2/amm_geom.geojson");
 const fabpInit = loadData("data/geom/geojsonV2/fabp_geom.geojson");
 
+//Couches d'habillage
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
 //const communeInit= loadData("data/geom/geojson/com_geom_4326.geojson");
 
-
-// Fonction pour réinitialiser le style des départements
-function resetDepStyles(depLayerResetStyle) {
-  depLayerResetStyle.eachLayer(function (layer) {
-      layer.setStyle({
-        fillColor: "transparent",
-        fillOpacity:0,
-        color:"#363636",
-        weight: 0.15,
-      });
-  });
-}
 
 //Données d'habillage de la carte
 Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
@@ -509,8 +515,9 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, fsInit, cdeInit, citeInit, fabtInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, fsLayer, cdeLayer, citeLayer, fabtLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer])=>{
   
+  //Création des couches
   //POLYGON
   const tiPolygonLayer= createGeoJSONPolygon(tiLayer, "white", 1, 'ti');
   const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 1, 'crte');
@@ -522,12 +529,13 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const acvMarkerLayer=  createGeoJSONMarker(acvLayer,  1, 3,'acv');
   const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 3,'acv2');
   const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 3,'pvd');
+  const vaMarkerLayer=  createGeoJSONMarker(vaLayer, 1, 3,'va');
   const fsMarkerLayer=  createGeoJSONMarker(fsLayer,  1, 3,'fs');
   const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer,  1, 3,'cde');
   const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 1, 3,'cite');
   const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer,  1, 3,'fabt');
 
-
+//Suppression des couches 
   map.removeLayer(tiPolygonLayer);
   map.removeLayer(crtePolygonLayer);
   map.removeLayer(amiPolygonLayer);
@@ -537,6 +545,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(acvMarkerLayer);
   map.removeLayer(acv2MarkerLayer);
   map.removeLayer(pvdMarkerLayer);
+  map.removeLayer(vaMarkerLayer);
   map.removeLayer(fsMarkerLayer);
   map.removeLayer(cdeMarkerLayer);
   map.removeLayer(citeMarkerLayer);
@@ -554,6 +563,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const acvData = document.getElementById('acv-marker-checkbox');
   const acv2Data = document.getElementById('acv2-marker-checkbox');
   const pvdData = document.getElementById('pvd-marker-checkbox');
+  const vaData = document.getElementById('va-marker-checkbox');
   const fsData = document.getElementById('fs-marker-checkbox');
   const cdeData = document.getElementById('cde-marker-checkbox');
   const citeData = document.getElementById('cite-marker-checkbox');
@@ -569,6 +579,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   toggleLayer(acvMarkerLayer, acvData);
   toggleLayer(acv2MarkerLayer, acv2Data);
   toggleLayer(pvdMarkerLayer, pvdData);
+  toggleLayer(vaMarkerLayer, vaData);
   toggleLayer(fsMarkerLayer, fsData);
   toggleLayer(cdeMarkerLayer, cdeData);
   toggleLayer(citeMarkerLayer, citeData);
