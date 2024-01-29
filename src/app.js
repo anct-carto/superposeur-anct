@@ -417,7 +417,6 @@ function clearLegend() {
 
 /* -----------------------Bouton pour rechercher par départements----------------- */
 // Fonction pour réinitialiser le style des départements
-//attention a reset le style comme pr photosatellite
 function resetDepStyles(depLayerResetStyle) {
   depLayerResetStyle.eachLayer(function (layer) {
       layer.setStyle({
@@ -484,9 +483,10 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
     }, 
   }).addTo(map);
 
-  
+  // Définir les styles des couches d'habillage
   setStyleBaseMap(regPolygonLayer, depPolygonLayer);
 
+  //Ajour d'une barre de recherche par département
   var searchControl = new L.Control.Search({
     layer: depPolygonLayer,
     propertyName: 'lib_dep',
@@ -494,10 +494,12 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
     textPlaceholder: 'Rechercher un département'
   });
 
+  //style qui reste jusqu'au prochain clic, quand la recherche est "collapsed"
   searchControl.on('search:collapsed', function () {
     resetDepStyles(depPolygonLayer);
   });
 
+  //Au résultat, on zoom sur les limites du départements recherché puis on y applique le style du departement sélectionné
   searchControl.on('search:locationfound', function (e) {
 
     var depLayer = e.layer;
