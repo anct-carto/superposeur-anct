@@ -293,3 +293,26 @@ font-weight: 500;
     width: 200px;
 }
 
+
+/* -------------------------------- LEGENDE ACTIVE ------------------------------ */
+
+#legende-active{
+	background-color: white;
+	color: black;
+	padding: 5px;
+	display: block;
+	position: absolute;
+	z-index: 1000;
+	top: 90px;
+	left:1550px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.circle {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	margin-right: 5px;
+  }

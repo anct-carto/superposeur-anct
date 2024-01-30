@@ -37,12 +37,17 @@
 </head>
 
 <body>
+
   <!-- MAP-->
   <div id="IDsuperMap"></div>
+  <div id="legende-active" ></div>
+  
+
   <div id="search-container">
     <input type="text" id="search-input" placeholder="Rechercher une commune" />
   </div>
-  
+
+ 
 
   <!-- Bouton DROM-->
   <select type="menu" id = "goTo" style="color:#313778;">
@@ -122,7 +127,10 @@
               <details>
                 <summary>Villes petites et moyennes</summary>
                   <input type="checkbox" class="program-checkbox" id="acv-marker-checkbox" data-layer-type='acv' >
-                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for ="acv-marker-checkbox">Action Coeur de Ville</label>
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for ="acv-marker-checkbox">
+                    <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background-color:#E01F83; margin-left:1px; margin-right:1px;"></span>
+                    Action Coeur de Ville
+                  </label>
                 <br>
                   <input type="checkbox" class="program-checkbox" id="acv2-marker-checkbox" data-layer-type='acv2' >
                   <label style="font-family: Marianne, sans-serif; font-weight: 300;" for ="acv2-marker-checkbox">Entrées de ville</label>

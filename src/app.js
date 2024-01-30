@@ -226,11 +226,33 @@ function createGeoJSONPolygon(data, color, weight, type) {
 
 /* -------------------------- Sidebar ----------------------------- */
 
+function updateLegend() {
+
+  const legendActive = document.getElementById('legende-active');
+  // Effacer le contenu de la légende active
+  legendActive.innerHTML = '';
+ 
+  legendActive.style.display ="none";
+  const checkboxes = document.querySelectorAll('.program-checkbox');
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      const layerType = checkbox.getAttribute('data-layer-type');
+      const layerLabel = checkbox.nextElementSibling.innerHTML;
+      const color = getColor(layerType);
+
+      legendActive.style.display ="block";
+
+      // Ajouter l'élément à la légende
+      legendActive.innerHTML += `<p><span class="circle" style="background-color: ${color};"></span> ${layerLabel}</p>`;
+    }
+  });
+}
 
 // Ouverture de la sidebar sur l'onglet "home"
 function legendSidebar(e){
     sidebar.open('home');
 }
+
 
 // Activer et désactiver les couches des programmes ANCT dans la sidebar
 let count = 0;
@@ -248,6 +270,10 @@ function toggleLayer(layer, checkbox) {
       count--;
       allLayer.removeLayer(layer);
     }
+
+    // Mettre à jour la légende
+    updateLegend();
+
   });
 }
 
@@ -279,6 +305,8 @@ function setStyleBaseMap(styleReg, styleDep) {
     } 
   });
 }
+
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -410,6 +438,13 @@ function clearLegend() {
       console.log(checkbox)
       allLayer.clearLayers();
       count=0;
+
+      // Masquer la légende active
+      const legendActive = document.getElementById('legende-active');
+      legendActive.style.display = 'none';
+
+      // Effacer le contenu de la légende active
+      legendActive.innerHTML = '';
     }
   });
 }
@@ -531,6 +566,7 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 });
 
 
+
 //Données des programmes ANCT
 Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer])=>{
   
@@ -568,7 +604,9 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(citeMarkerLayer);
   map.removeLayer(fabtMarkerLayer);
 
-  
+  // Appeler la fonction pour mettre à jour la légende
+  updateLegend();
+
  
   //Récupérer les éléments HTML 
   const tiData = document.getElementById('ti-polygon-checkbox');

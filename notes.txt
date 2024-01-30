@@ -1,11 +1,18 @@
-
-
+Charte web Etat
 https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/bouton
 
-
 Remarques superposeur après Salon des maires;
-- faire la recherche d'un département OK
-- meilleure visualisation
+
+Fait :
+- faire la recherche d'un département 
+- corriger PVD (mal écrit) et MAJ 
+- ajouter VA 
+- corriger ACV2 (juste mettre Entrée de ville)
+- mettre à jour les data de : PVD, Fabriques de territoires, Fabriques prospectives 
+
+
+A faire : 
+- améliorer la visualisation
 - ajouter info dans la card sur les programmes
 - légende
 - niveaux de zoom à gérer et adapter le nombre de programmes à afficher
@@ -15,7 +22,3 @@ Remarques superposeur après Salon des maires;
 - définir un zoom limite?
 - voir ADE pour hébergement de la carte : héberger à l'ANCT mais rester en opendata
 
-- corriger PVD (mal écrit) et MAJ OK
-- ajouter VA OK
-- corriger ACV2 (juste mettre Entrée de ville) OK
-- mettre à jour les data de : PVD, Fabriques de territoires, Fabriques prospectives OK 
