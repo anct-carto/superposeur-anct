@@ -236,7 +236,7 @@ function updateLegend() {
       legendActive.style.display ="block";
 
       // Ajouter l'élément à la légende
-      legendActive.innerHTML += `<p>${layerLabel}</p>`;
+      legendActive.innerHTML += `<p class="legend-item">${layerLabel}</p>`;
     }
   });
 }
@@ -646,33 +646,33 @@ clearLegendButton.addEventListener('click', clearLegend);
 /*                                ZOOM DROM                                   */
 /* -------------------------------------------------------------------------- */
 
-let liste_drom = document.getElementById("goTo");
+// let liste_drom = document.getElementById("goTo");
 
 
-liste_drom.addEventListener('change', (e) => {
-  option = e.target.selectedOptions[0];
-  switch (option.value) {
-    case "met":
-      return map.flyTo([46.5, -3.55], 5.5555, { animation: true, duration: 1 });     
+// liste_drom.addEventListener('change', (e) => {
+//   option = e.target.selectedOptions[0];
+//   switch (option.value) {
+//     case "met":
+//       return map.flyTo([46.5, -3.55], 5.5555, { animation: true, duration: 1 });     
 
-    case "glp":
-      return map.setView([16.25, -61.706], 10, { animation: true });
-    case "mtq":
-      return map.setView([14.68, -61.2], 10, { animation: true });
-    case "guf":
-      return map.setView([3.92, -54.5], 7.855, { animation: true });
-    case "reu":
-      return map.setView([-21.11, 55.28], 10, { animation: true });
-    case "myt":
-      return map.setView([-12.81, 45.06], 11, { animation: true });
-    default:
-      return map.setView([46.5, 0], 5.5555, { animation: true })
-  }
-});
+//     case "glp":
+//       return map.setView([16.25, -61.706], 10, { animation: true });
+//     case "mtq":
+//       return map.setView([14.68, -61.2], 10, { animation: true });
+//     case "guf":
+//       return map.setView([3.92, -54.5], 7.855, { animation: true });
+//     case "reu":
+//       return map.setView([-21.11, 55.28], 10, { animation: true });
+//     case "myt":
+//       return map.setView([-12.81, 45.06], 11, { animation: true });
+//     default:
+//       return map.setView([46.5, 0], 5.5555, { animation: true })
+//   }
+// });
 
-
-/* --------------------------Bouton export---------------------------- */
-
+/* -------------------------------------------------------------------------- */
+/*                                BOUTON EXPORT                               */
+/* -------------------------------------------------------------------------- */
 
 var browserControl = L.control.browserPrint({
   position:'bottomright', 

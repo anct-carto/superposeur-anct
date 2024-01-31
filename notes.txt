@@ -7,17 +7,18 @@ N:\DST\Carto\ORGANISATION_CELLULECARTO\OUTILS\GABARITS CHARTE\GABARIT_CARTO\char
 Remarques superposeur après Salon des maires;
 
 Fait :
-- faire la recherche d'un département 
+- faire la recherche d'un département qui remplace le zoom vers les DROM
 - corriger PVD (mal écrit) et MAJ 
 - ajouter VA 
 - corriger ACV2 (juste mettre Entrée de ville)
 - mettre à jour les data de : PVD, Fabriques de territoires, Fabriques prospectives 
+- création d'une légende dynamique, qui renseigne les programmes superposés sur la carte
+- ajout de picto devant chaque libellé de programmes
 
 
 A faire : 
 - améliorer la visualisation
 - ajouter info dans la card sur les programmes
-- légende
 - niveaux de zoom à gérer et adapter le nombre de programmes à afficher
 - définir le public visé
 - trouver un fond tuile plus précis --> IGN
