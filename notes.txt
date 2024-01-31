@@ -1,5 +1,8 @@
-Charte web Etat
+Charte web Etat:
 https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/bouton
+
+Charte de la carte interactive: 
+N:\DST\Carto\ORGANISATION_CELLULECARTO\OUTILS\GABARITS CHARTE\GABARIT_CARTO\charte_superposeur.ai
 
 Remarques superposeur après Salon des maires;
 

@@ -30,7 +30,7 @@ function getColor(layerType) {
   } else if (layerType === 'pvd') {
     return "#DA7E42";
   } else if (layerType === 'va') {
-    return "black";
+    return "#A4173A";
   } else if (layerType === 'fs') {
     return "#616DAF";
   } else if (layerType === 'cde') {
@@ -221,11 +221,7 @@ function createGeoJSONPolygon(data, color, weight, type) {
   return layer;
 }
 
-
-
-
-/* -------------------------- Sidebar ----------------------------- */
-
+/* -------------------------- Legnde active ----------------------------- */
 function updateLegend() {
 
   const legendActive = document.getElementById('legende-active');
@@ -236,17 +232,16 @@ function updateLegend() {
   const checkboxes = document.querySelectorAll('.program-checkbox');
   checkboxes.forEach((checkbox) => {
     if (checkbox.checked) {
-      const layerType = checkbox.getAttribute('data-layer-type');
       const layerLabel = checkbox.nextElementSibling.innerHTML;
-      const color = getColor(layerType);
-
       legendActive.style.display ="block";
 
       // Ajouter l'élément à la légende
-      legendActive.innerHTML += `<p><span class="circle" style="background-color: ${color};"></span> ${layerLabel}</p>`;
+      legendActive.innerHTML += `<p>${layerLabel}</p>`;
     }
   });
 }
+
+/* -------------------------- Sidebar ----------------------------- */
 
 // Ouverture de la sidebar sur l'onglet "home"
 function legendSidebar(e){
