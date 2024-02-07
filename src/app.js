@@ -10,7 +10,6 @@ async function loadData(chemin) {
     return resultat
 };
 
-
 /* -------------------------- Styles ----------------------------- */
 
 //Fonction pour définir une couleur
@@ -47,10 +46,8 @@ function getColor(layerType) {
   return "#000000";
 };
 
-//E12A5C
 // Fonction pour récupérer les propriétés des couches geojson
 var dataInfos ;
-
 
 function getInfo(feature, layerName) {
   console.log(layerName)
@@ -140,11 +137,15 @@ function onEachFeaturePolygon(feature, layer) {
         weight: 2,
       },
     } ).addTo(clicFeatureLayer);
+    updateLayerOrder();
   });
+  
 };
 
+
+
 //Automatiser la création de geojson : marker
-function createGeoJSONMarker(data, weight, radius, type) {
+function createGeoJSONMarker(data, weight, radius, type, zIndex) {
   const layer = new L.geoJSON(data, {
     pointToLayer: function (feature, latlng) {
       var marker = L.circleMarker(latlng, {
@@ -157,7 +158,15 @@ function createGeoJSONMarker(data, weight, radius, type) {
       return marker;
     },
     onEachFeature : onEachFeatureMarker,
-  }).addTo(map);
+  });
+
+  // Ajustez l'ordre d'affichage en utilisant setZIndex
+  layer.setZIndex(zIndex);  // Ajustez l'indice Z selon vos besoins
+
+  layer.addTo(map);
+  layer.bringToFront(); // Ajoutez cette ligne pour amener la couche à l'avant
+
+  layer.myZIndex = zIndex;
 
   // Gérer le survol pour chaque élément de la couche
   layer.eachLayer(function (feature) {
@@ -185,7 +194,7 @@ function createGeoJSONMarker(data, weight, radius, type) {
 
 
 //Automatiser la création de geojson : polygon
-function createGeoJSONPolygon(data, color, weight, type) {
+function createGeoJSONPolygon(data, color, weight, type, zIndex) {
   const layer = new L.geoJSON(data, {
     style: {
       fillColor: getColor(type),
@@ -194,7 +203,15 @@ function createGeoJSONPolygon(data, color, weight, type) {
       weight: weight,
     },
     onEachFeature : onEachFeaturePolygon,
-  }).addTo(map);
+  });
+
+  // Ajustez l'ordre d'affichage en utilisant setZIndex
+  layer.setZIndex(zIndex); 
+  layer.addTo(map);
+  layer.bringToBack(); // Ajoutez cette ligne pour amener la couche à l'avant
+
+  layer.myZIndex = zIndex;
+
 
   // Gérer le survol pour chaque élément de la couche
   layer.eachLayer(function (feature) {
@@ -245,7 +262,16 @@ function updateLegend() {
 
 // Ouverture de la sidebar sur l'onglet "home"
 function legendSidebar(e){
-    sidebar.open('home');
+  sidebar.open('home');
+}
+
+// Fonction pour mettre à jour l'ordre d'affichage des couches : points toujours au dessus des polygons
+function updateLayerOrder() {
+  map.eachLayer(function (layer) {
+    if (layer instanceof L.GeoJSON && layer.options.pointToLayer) {
+      layer.bringToFront(); // Amener chaque couche GeoJSON de type marker à l'avant
+    }
+  });
 }
 
 
@@ -253,7 +279,6 @@ function legendSidebar(e){
 let count = 0;
 function toggleLayer(layer, checkbox) {
   checkbox.addEventListener('change', function (e) {
-    console.log(count);
     if (this.checked) {
       count++
       allLayer.addLayer(layer);
@@ -268,6 +293,10 @@ function toggleLayer(layer, checkbox) {
 
     // Mettre à jour la légende
     updateLegend();
+
+    
+    // Mettre à jour l'ordre d'affichage après ajout/suppression de la couche
+    updateLayerOrder();
 
   });
 }
@@ -300,8 +329,6 @@ function setStyleBaseMap(styleReg, styleDep) {
     } 
   });
 }
-
-
 
 
 /* -------------------------------------------------------------------------- */
@@ -367,7 +394,6 @@ const sidebar = L.control.sidebar({
   position: 'left',
 });
 
-
 sidebar.on('content', function (ev) {
   switch (ev.id) {
       case 'home':
@@ -384,9 +410,11 @@ sidebar.on('content', function (ev) {
   }
 });
 sidebar.addTo(map)
-
 sidebar.open('home');
 
+/* -------------------------------------------------------------------------- */
+/*                                TUILES DE FOND                              */
+/* -------------------------------------------------------------------------- */
 // Listen for changes in the background tile selection and update the map
 document.querySelectorAll('input[name="basemap"]').forEach(function (input) {
   input.addEventListener("change", function () {
@@ -422,8 +450,9 @@ checkboxes.forEach((checkbox) => {
   });
 });
 
-/* --------------------------Bouton effacer la légende---------------------------- */
-
+/* -------------------------------------------------------------------------- */
+/*                          BOUTON - Effacer légende                          */
+/* -------------------------------------------------------------------------- */
 function clearLegend() {
   const programCheckboxes = document.querySelectorAll('.program-checkbox');
 
@@ -444,8 +473,9 @@ function clearLegend() {
   });
 }
 
-
-/* -----------------------Bouton pour rechercher par départements----------------- */
+/* -------------------------------------------------------------------------- */
+/*                         BOUTON - Recherche par département                 */
+/* -------------------------------------------------------------------------- */
 // Fonction pour réinitialiser le style des départements
 function resetDepStyles(depLayerResetStyle) {
   depLayerResetStyle.eachLayer(function (layer) {
@@ -460,8 +490,9 @@ function resetDepStyles(depLayerResetStyle) {
   });
 }
 
-
-/* --------------------------Lecture des données---------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                   DONNEES                                  */
+/* -------------------------------------------------------------------------- */
 
 // Charger les données
 
@@ -488,7 +519,6 @@ const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
 //const communeInit= loadData("data/geom/geojson/com_geom_4326.geojson");
 
-
 //Données d'habillage de la carte
 Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
   const regPolygonLayer =new L.geoJSON(regPolygon,{
@@ -502,6 +532,7 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
       }, 
   }).addTo(map);
 
+  
   const depPolygonLayer =new L.geoJSON(depPolygon,{
     style: {
       fillColor: "transparent",
@@ -560,28 +591,26 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
 
 });
 
-
-
 //Données des programmes ANCT
 Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer])=>{
   
   //Création des couches
   //POLYGON
-  const tiPolygonLayer= createGeoJSONPolygon(tiLayer, "white", 1, 'ti');
-  const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 1, 'crte');
-  const amiPolygonLayer= createGeoJSONPolygon(amiLayer, "white", 1, 'ami');
-  const ammPolygonLayer= createGeoJSONPolygon(ammLayer, "white", 1, 'amm');
-  const fabpPolygonLayer= createGeoJSONPolygon(fabpLayer, "white", 1, 'fabp');
+  const tiPolygonLayer= createGeoJSONPolygon(tiLayer, "white", 1, 'ti', 1000);
+  const crtePolygonLayer= createGeoJSONPolygon(crteLayer, "white", 1, 'crte', 1000);
+  const amiPolygonLayer= createGeoJSONPolygon(amiLayer, "white", 1, 'ami', 1000);
+  const ammPolygonLayer= createGeoJSONPolygon(ammLayer, "white", 1, 'amm', 1000);
+  const fabpPolygonLayer= createGeoJSONPolygon(fabpLayer, "white", 1, 'fabp', 1000);
   
   //MARKER
-  const acvMarkerLayer=  createGeoJSONMarker(acvLayer,  1, 3,'acv');
-  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 3,'acv2');
-  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 3,'pvd');
-  const vaMarkerLayer=  createGeoJSONMarker(vaLayer, 1, 3,'va');
-  const fsMarkerLayer=  createGeoJSONMarker(fsLayer,  1, 3,'fs');
-  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer,  1, 3,'cde');
-  const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 1, 3,'cite');
-  const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer,  1, 3,'fabt');
+  const acvMarkerLayer=  createGeoJSONMarker(acvLayer,  1, 3,'acv', 2000);
+  const acv2MarkerLayer=  createGeoJSONMarker(acv2Layer, 1, 3,'acv2', 2000);
+  const pvdMarkerLayer=  createGeoJSONMarker(pvdLayer, 1, 3,'pvd', 2000);
+  const vaMarkerLayer=  createGeoJSONMarker(vaLayer, 1, 3,'va', 2000);
+  const fsMarkerLayer=  createGeoJSONMarker(fsLayer,  1, 3,'fs', 2000);
+  const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer,  1, 3,'cde', 2000);
+  const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 1, 3,'cite', 2000);
+  const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer,  1, 3,'fabt', 2000);
 
 //Suppression des couches 
   map.removeLayer(tiPolygonLayer);
@@ -602,7 +631,6 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   // Appeler la fonction pour mettre à jour la légende
   updateLegend();
 
- 
   //Récupérer les éléments HTML 
   const tiData = document.getElementById('ti-polygon-checkbox');
   const crteData = document.getElementById('crte-polygon-checkbox');
@@ -634,7 +662,6 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   toggleLayer(cdeMarkerLayer, cdeData);
   toggleLayer(citeMarkerLayer, citeData);
   toggleLayer(fabtMarkerLayer, fabtData);
-
 
 });
 
@@ -671,7 +698,7 @@ clearLegendButton.addEventListener('click', clearLegend);
 // });
 
 /* -------------------------------------------------------------------------- */
-/*                                BOUTON EXPORT                               */
+/*                          BOUTON - Exporter/imprimer                        */
 /* -------------------------------------------------------------------------- */
 
 var browserControl = L.control.browserPrint({
