@@ -50,7 +50,6 @@ function getColor(layerType) {
 var dataInfos ;
 
 function getInfo(feature, layerName) {
-  console.log(layerName)
   const card = document.getElementById("card");
   const legend =document.getElementById("legend");
   const btnRetour = document.getElementById("bnt-retour");
@@ -63,11 +62,9 @@ function getInfo(feature, layerName) {
   for(let i =0;i<checkbox.length;i++) {
     const getHtmlElement = checkbox[i].getAttribute("data-layer-type");
     if (getHtmlElement === layerName) {
-      libProgramme = checkbox[i].nextElementSibling.innerHTML;
+      libProgramme = checkbox[i].nextElementSibling.textContent.trim();
     } 
   }
-
-
 
   const dataInfos = feature.properties;
 
@@ -706,9 +703,34 @@ var browserControl = L.control.browserPrint({
   title: 'Télécharger', 
   documentTitle:"Croisement des programmes de l'ANCT - CARTE DE TRAVAIL", 
   printModes:["Portrait", "Landscape","Custom"],
+  closePopupsOnPrint: false,
 }).addTo(map);
 
 
+// map.on("browser-print-start", function(e){
+//   // Vérifier si l'impression est déjà active
+//   if (!e.printMap.legendActiveAdded) {
+//     const legendActive = document.getElementById('legende-active');
+  
+//     // Créer un nouvel élément de légende Leaflet
+//     const legendActiveLayer = L.DomUtil.create('div', 'print-legend-active');
+//     legendActiveLayer.innerHTML = legendActive.innerHTML;
+
+//     // Ajouter le nouvel élément de légende à la carte d'impression
+//     const legendMarker = L.marker(map.getCenter(), {
+//       icon: L.divIcon({className: 'print-legend-active', html: legendActiveLayer.outerHTML})
+//     }).addTo(e.printMap);
+
+//     // Marquer que l'élément de légende active a été ajouté pour éviter la répétition
+//     e.printMap.legendActiveAdded = true;
+
+//     // Ajouter une classe CSS pour positionner l'élément à droite
+//     legendMarker._icon.classList.add('print-legend-active');
+//   }
+// });
+
+
+//modifier le style et le position de la légende
 
 
 
