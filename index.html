@@ -68,6 +68,8 @@
         <ul role="tablist">
           <li><a href="#home" role="tab"><i class="las la-home"></i><span class="tab-name">Accueil</span></a></li>
           <li><a href="#a-propos" role="tab"><i class="las la-info-circle"></i><span class="tab-name">À propos</span></a></li>
+          <li><a href="#info" role="tab"><i class="las la-question" style="font-size: 20px;"></i><span class="tab-name">Informations utilisation</span></a></li>
+
         </ul>
       </div>
       <!-- Ici : le contenu du panneau latéral-->
@@ -207,6 +209,7 @@
 
               <button id="clear-legend-button"><i class="las la-trash-alt"></i> Effacer</button>
               
+              
               <div class="info-notice" >
                 <span style="display: inline-flex; align-items: center;font-family: Marianne, sans-serif; font-size:10px; color:gray;">
                   <i class="las la-exclamation-circle" style="color: #1f456e; font-size: 28px; margin-right: 5px;padding: 4px; border-radius: 50%;"></i>
@@ -224,9 +227,6 @@
                   <i class="las la-map" style="font-size: 24px;"></i> Visualiser et télécharger les cartes
                 </div>
               </span>
-
-
-
 
             </div> 
             
@@ -259,7 +259,7 @@
               <i class="la la-step-backward"></i>
             </span>
           </div>
-          <div class="panel-content">
+          <div class="panel-content" style="margin-right: 15px;">
             <a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">
               <img id="logo" src="img/LOGO_ANCT_Marianne.png" width="90%">
             </a>
@@ -329,6 +329,36 @@
 
           </div>
         </div>
+
+              <!--Panneau 3-->
+              <div class="leaflet-sidebar-pane" id="info">
+                <div class="leaflet-sidebar-header">
+                  <span style="color:gray; font-weight: 500;"><img src="img/LOGO_ANCT_seul.png" width="13%"> À propos</span>   
+                  <h4 style="color:#F2CB27; font-size: 20px; margin-top: 8px; margin-bottom: 30px; font-weight: 600;">Programmes ANCT</h4> 
+                  <span class="leaflet-sidebar-close" @click="sidebar.close()">
+                    <i class="la la-step-backward"></i>
+                  </span>
+                </div>
+                <div class="panel-content">
+
+                  <div id="conseil-utilisation">
+                    <span id="aide-recherche">
+                      <h1><i class="las la-search" style="font-size:16px"></i>Barre de cherche par département</h1>
+                      <p>Une recherche par département est rendu possible grâce à l'icon "Loupe". Il suffit de renseigner le nom du département souhaité afin de zoomer sur ce dernier et ainsi, découvrir quels programmes et dispositifs ANCT existent sur le territoire.</p>
+                    </span>
+                    <span id="aide-print">
+                      <h1><i class="las la-print" style="font-size:16px"></i> Exporter ou imprimer</h1>
+                      <p>Un export au format PDF ou une impression est rendu possible grâce à l'icon "impriante". Il suffit de séléctionner le type d'export: en A4 portrait ("Portrait"), A4 paysage ("Landscape") ou bien au format customisé ("Custom"). </p>
+                      <p><i class="las la-exclamation-triangle" style="font-size:16px" ></i> Ces exports sont des cartes de travail et ne pourront pas être publiées.</p>
+                    </span>
+                    
+                  </div>
+ 
+      
+                </div>
+              </div>
+
+
 
       </div>
   </div>

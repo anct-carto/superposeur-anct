@@ -104,6 +104,7 @@ html, body, #IDsuperMap {
 	padding:0px 0px 0px 5px;
 }
 
+
 /* -------------------------------------------------------------------------- */
 /*                                  Content SIDEBAR                           */
 /* -------------------------------------------------------------------------- */
@@ -133,6 +134,7 @@ html, body, #IDsuperMap {
 
 #legend {
 	display: block;
+	margin-right: 15px;
 }
 
 #title-legend-1{
@@ -168,6 +170,7 @@ font-weight: 500;
 	background-color: #616DAF; /* Fond bleu */
 	color: white; /* Texte en blanc */
 	padding: 5px 10px; /* Marge interne pour un meilleur aspect */
+	margin: 5px 5px 15px 5px  ;
 	cursor: pointer; /* Curseur en main pour indiquer un bouton cliquable */
 
 }
@@ -254,12 +257,7 @@ font-weight: 500;
 
 
 
-#logo {
-	margin-top: 8px;
-	margin-bottom: 10px;
-}
-
-
+/* -------------------------------- HOME ------------------------------ */
 .text-info-home p {
 	margin-bottom: 10px;
 	font-family: "Marianne-Bold", sans-serif; 
@@ -267,6 +265,12 @@ font-weight: 500;
 	color: gray;
 }
 
+
+/* -------------------------------- EN SAVOIR PLUS ------------------------------ */
+#logo {
+	margin-top: 8px;
+	margin-bottom: 10px;
+}
 .apropos-text-anct {
 	font-family:"Marianne-Regular", sans-serif;
 	font-size: 12px;
@@ -274,7 +278,7 @@ font-weight: 500;
 }
 .apropos-text-anct p {
 	margin-bottom: 10px;
-	margin-right: 20px;
+	margin-right: 10px;
 	font-family: "Marianne-Bold", sans-serif; 
 	font-size: 12px; 
 	color: gray;
@@ -295,6 +299,31 @@ font-weight: 500;
 	font-family: "Marianne-Bold", sans-serif; 
 	font-size: 12px; 
 	color: gray;
+}
+
+/* -------------------------------- INFORMATION UTILISATION ------------------------------ */
+
+
+#conseil-utilisation{
+	margin-right: 15px;
+}
+
+#aide-recherche h1 {
+	font-family:"Marianne", sans-serif;
+	font-size: 12px;
+	text-align: left;
+	font-weight: 500;
+	margin: 10px 5px 5px 0px ;
+
+}
+
+#aide-print h1 {
+	font-family:"Marianne", sans-serif;
+	font-size: 12px;
+	text-align: left;
+	font-weight: 500;
+	margin: 10px 5px 5px 0px ;
+
 }
 
 
@@ -335,19 +364,20 @@ font-weight: 500;
 	border: none; /* Aucun contour */
 	margin-top: 10px;
 	padding: 0px 5px 5px 5px ;
+	margin: 0px 10px 5px 5px ;
 }
 
 .info-notice p {
 	margin: 0;
 	padding: 10px 0 5px 0;
-	color: #1f456e; /* Bleu foncé pour le texte */
+	color: #313778; /* Bleu foncé pour le texte */
 	font-family: 'Marianne', sans-serif;
 	font-size: 9px;
 }
 
 .text-info-home {
     display: inline-block;
-    border-left: 2px solid rgb(201, 0, 0); /* Ajoute une bordure rouge à gauche du span */
+    border-left: 2px solid rgb(57, 131, 115); /* Ajoute une bordure rouge à gauche du span */
     padding-left: 10px; /* Ajuste l'espace à gauche de la bordure */
 }
   
@@ -357,10 +387,12 @@ font-weight: 500;
     align-items: center;
     margin-bottom: 10px; /* Ajuste l'espace en dessous de la phrase */
     cursor: pointer; /* Change le curseur pour indiquer que c'est cliquable */
-	color: rgb(201, 0, 0);
+	color:rgb(57, 131, 115);
 	font-family:'Marianne', sans-serif ;
 	font-size: 10px;
 }
+
+
 
 
 

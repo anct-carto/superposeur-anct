@@ -17,6 +17,11 @@ Fait :
 - forcer les points au dessus des polygons
 - corriger erreur dans libProgramme, uniquement le texte sans le symbole legende
 - regrouper les programmes dans la thématiques : Education, formation, emploi et économie
+- Ajouter un onglet pédagogique ou dans l'onglet actuel :
+	- expliquer la possibilité de chercher par département + impression --> sous forme d'un nouvel onglet
+	- ajouter les dates des données + cog23 
+	- expliquer que les données ponctuelles ont été aggrégés à l'échelle communale
+
 
 A faire : 
 - améliorer la visualisation :
@@ -25,12 +30,8 @@ A faire :
 	- contours pour les CRTE
 - définir un zoom limite 
 - remplacer la photo satellite
-- Ajouter un onglet pédagogique ou dans l'onglet actuel :
-	- expliquer la possibilité de chercher par département + impression --> sous forme de popup?
-	- ajouter les dates des données + cog23 
-	- expliquer que les données ponctuelles ont été aggrégés à l'échelle communale
+-couche epci 
 
---> couche epci 
 
 - ajouter info dans la card sur les programmes
 - définir le public visé
@@ -38,3 +39,4 @@ A faire :
 - afficher limites admin quand zoom ? 
 - voir ADE pour hébergement de la carte : héberger à l'ANCT mais rester en opendata
 
+ 
