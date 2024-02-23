@@ -178,26 +178,36 @@ font-weight: 500;
 /* -------------------------------------------------------------------------- */
 #card-sidebar{
 	margin: 0px 0px 15px 0px;
+	border-radius: 10px;
 }
 
 
 #card {
 	margin: 10px 0px 10px 0px;
+	border-radius: 10px;
 	display: none;
-	background-color: white;
+	background-color: white; 
 	color: #313778;
 	padding: 0px; /* Espace intérieur autour du contenu */
-	border: 2px solid rgba(0,0,0,.125); 
-	border-radius: 2px; /* Coins arrondis */
+	border: 2px solid rgba(0, 0, 0, 0.125); 
 	font-family: 'Marianne-Bold', sans-serif;
 	word-wrap: break-word; /*comment couper le mot*/
+}
+
+.card-header:first-child {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 .card-header {
 	background-color: #398373;
 	margin-bottom: 0;
+	border-radius: 10px;
 	padding: 0.5rem 1rem;
-	border-bottom: 1px solid rgba(0,0,0,.125);
+	border-bottom: 2px solid rgba(0,0,0,.125);
+
 }
 
 .card-body {
@@ -316,3 +326,42 @@ font-weight: 500;
 	font-size:12px; 
 	font-weight: 300;
 }
+
+
+
+.info-notice {
+	background-color: #e6f7ff; /* Bleu clair en fond */
+	padding: 10px;
+	border: none; /* Aucun contour */
+	margin-top: 10px;
+	padding: 0px 5px 5px 5px ;
+}
+
+.info-notice p {
+	margin: 0;
+	padding: 10px 0 5px 0;
+	color: #1f456e; /* Bleu foncé pour le texte */
+	font-family: 'Marianne', sans-serif;
+	font-size: 9px;
+}
+
+.text-info-home {
+    display: inline-block;
+    border-left: 2px solid rgb(201, 0, 0); /* Ajoute une bordure rouge à gauche du span */
+    padding-left: 10px; /* Ajuste l'espace à gauche de la bordure */
+}
+  
+
+.highlighted-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 10px; /* Ajuste l'espace en dessous de la phrase */
+    cursor: pointer; /* Change le curseur pour indiquer que c'est cliquable */
+	color: rgb(201, 0, 0);
+	font-family:'Marianne', sans-serif ;
+	font-size: 10px;
+}
+
+
+
+

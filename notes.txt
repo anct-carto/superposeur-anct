@@ -14,15 +14,27 @@ Fait :
 - mettre à jour les data de : PVD, Fabriques de territoires, Fabriques prospectives 
 - création d'une légende dynamique, qui renseigne les programmes superposés sur la carte
 - ajout de picto devant chaque libellé de programmes
-
+- forcer les points au dessus des polygons
+- corriger erreur dans libProgramme, uniquement le texte sans le symbole legende
+- regrouper les programmes dans la thématiques : Education, formation, emploi et économie
 
 A faire : 
-- améliorer la visualisation
+- améliorer la visualisation :
+	- changer picto pour ACV, VA et cite emploi --> carré
+	- hachures pour Avenir Montagne
+	- contours pour les CRTE
+- définir un zoom limite 
+- remplacer la photo satellite
+- Ajouter un onglet pédagogique ou dans l'onglet actuel :
+	- expliquer la possibilité de chercher par département + impression --> sous forme de popup?
+	- ajouter les dates des données + cog23 
+	- expliquer que les données ponctuelles ont été aggrégés à l'échelle communale
+
+--> couche epci 
+
 - ajouter info dans la card sur les programmes
-- niveaux de zoom à gérer et adapter le nombre de programmes à afficher
 - définir le public visé
 - trouver un fond tuile plus précis --> IGN
 - afficher limites admin quand zoom ? 
-- définir un zoom limite?
 - voir ADE pour hébergement de la carte : héberger à l'ANCT mais rester en opendata
 

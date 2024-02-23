@@ -349,8 +349,11 @@ const basemapPhoto = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/se
   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
+
+
 // Ajout du fond de base
 map.addLayer(basemapFond1);
+
 
 //baseLayers est  une couche qui contient tous les fonds
 const baseLayers = {

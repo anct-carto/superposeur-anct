@@ -107,7 +107,7 @@
               <br>
 
               <h1 id="title-legend-1">Programmes et dispositifs</h1>
-              <span style = "font-family: Marianne, sans-serif; font-size:10px; color:#616DAF; "> <p style ="margin:0px 0px 0px 0px">Périmètres et lauréats</p></span>
+              <span style = "font-family: Marianne, sans-serif; font-size:10px; color:#616DAF; "> <p style ="margin:0px 0px 0px 0px">Périmètres et lauréats en 2023</p></span>
               <details>
                 <summary>Équipements, services et accessibilité</summary>
                   <input type="checkbox" class="program-checkbox" id="fs-marker-checkbox" data-layer-type='fs' >
@@ -118,7 +118,7 @@
               </details>
 
               <details>
-                <summary>Éducation, formation</summary>
+                <summary>Éducation, formation, emploi et économie</summary>
                   <input type="checkbox" class="program-checkbox" id="cde-marker-checkbox" data-layer-type='cde' >
                   <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="cde-marker-checkbox">
                     <span style="display:inline-block; width:8px; height:8px; border-radius:50%;background-color:#C3242B; margin-left:2px; margin-right:0px;"></span>
@@ -129,6 +129,12 @@
                   <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="cite-marker-checkbox" >
                     <span style="display:inline-block; width:8px; height:8px; border-radius:50%;background-color:#4DB2EB; margin-left:2px; margin-right:0px;"></span>
                     Cités éducatives
+                  </label>
+                <br>
+                  <input type="checkbox" class="program-checkbox" id="ti-polygon-checkbox" data-layer-type='ti' >
+                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="ti-polygon-checkbox"> 
+                    <span style="display:inline-block; width:12px; height:10px; border-radius:0; background-color:#599AD4; margin-left:2px; margin-right:0px;"></span>
+                    Territoires d'industrie
                   </label>
               </details>
               
@@ -170,15 +176,6 @@
               </details>
 
               <details>
-                <summary>Emplois et activités économiques</summary>
-                  <input type="checkbox" class="program-checkbox" id="ti-polygon-checkbox" data-layer-type='ti' >
-                  <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="ti-polygon-checkbox"> 
-                    <span style="display:inline-block; width:12px; height:10px; border-radius:0; background-color:#599AD4; margin-left:2px; margin-right:0px;"></span>
-                    Territoires d'industrie
-                  </label>
-              </details>
-
-              <details>
                 <summary>Transition écologique</summary>
                 <input type="checkbox" class="program-checkbox" id="crte-polygon-checkbox" data-layer-type='crte' >
                 <label style="font-family: Marianne, sans-serif; font-weight: 300;" for="crte-polygon-checkbox">
@@ -209,9 +206,28 @@
               </details>
 
               <button id="clear-legend-button"><i class="las la-trash-alt"></i> Effacer</button>
-              <br>
-              <span style="font-family: Marianne, sans-serif; font-size:8px; color:gray;"><p style="margin:0px 0px 0px 0px; padding:10px 0px 5px 0px ; ">* Les données France Services et Fabriques de territoires ont été agrégées à l'échelle de la commune.</p></span>
               
+              <div class="info-notice" >
+                <span style="display: inline-flex; align-items: center;font-family: Marianne, sans-serif; font-size:10px; color:gray;">
+                  <i class="las la-exclamation-circle" style="color: #1f456e; font-size: 28px; margin-right: 5px;padding: 4px; border-radius: 50%;"></i>
+                  <p >Les données sont au COG 2023. <br>Les données ponctuelles ont été agrégées à l'échelle communale.</p>
+                </span>
+              </div>
+              <br>
+
+              <span class="text-info-home">
+                <div class="highlighted-link" onclick="window.location.href='https://www.data.gouv.fr/fr/organizations/agence-nationale-de-la-cohesion-des-territoires/#/presentation'">
+                  <i class="las la-server" style="font-size: 24px;"></i> Télécharger les données
+                </div> 
+                <br>
+                <div class="highlighted-link" onclick="window.location.href='https://cartotheque.anct.gouv.fr/cartes'">
+                  <i class="las la-map" style="font-size: 24px;"></i> Visualiser et télécharger les cartes
+                </div>
+              </span>
+
+
+
+
             </div> 
             
             
@@ -229,14 +245,6 @@
               <button id="bnt-retour" ><i class="las la-arrow-left"></i> Retour </button>
               
             </div>
-            <span class="text-info-home">
-              <p>Pour télécharger les données: 
-                <a href="https://www.data.gouv.fr/fr/organizations/agence-nationale-de-la-cohesion-des-territoires/#/presentation" target="_blank">data.gouv.fr</a>
-              </p>
-              <p>Pour visualiser et télécharger les cartes :
-                <a href = 'https://cartotheque.anct.gouv.fr/cartes' target="_blank">Cartothèque</a>
-              </p>
-            </span>
 
           </div>
         </div>
