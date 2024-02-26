@@ -21,22 +21,22 @@ Fait :
 	- expliquer la possibilité de chercher par département + impression --> sous forme d'un nouvel onglet
 	- ajouter les dates des données + cog23 
 	- expliquer que les données ponctuelles ont été aggrégés à l'échelle communale
--ajouter la couche epci à un certain niveau de zoom
+-ajouter la couche epci etla couche commune à un certain niveau de zoom 
+- remplacer la photo satellite par un fond plus simple
+- définir un zoom limite 
 
 A faire : 
 - améliorer la visualisation :
 	- changer picto pour ACV, VA et cite emploi --> carré
 	- hachures pour Avenir Montagne
 	- contours pour les CRTE
-- définir un zoom limite 
-- remplacer la photo satellite
+- afficher les petits polygons sur les grands
+
 
 
 
 - ajouter info dans la card sur les programmes
 - définir le public visé
-- trouver un fond tuile plus précis --> IGN
-- afficher limites admin quand zoom ? 
 - voir ADE pour hébergement de la carte : héberger à l'ANCT mais rester en opendata
 
  

@@ -292,44 +292,6 @@ function toggleLayer(layer, checkbox) {
   });
 }
 
-
-//Evenement qui permet de modifier la tuile de fond
-// function setStyleBaseMap(styleReg, styleDep, styleEpci) {
-//   L.DomEvent.on(document.querySelector('input[id="fond1-checkbox"]'), 'change', function () {
-//     if (this.checked) {
-//       styleReg.setStyle({
-//         color: '#363636'
-//       });
-//       styleDep.setStyle({
-//         color: '#363636',
-//         weight: 0.15,
-//       });
-//       styleEpci.setStyle({
-//         color: '#363636',
-//         weight: 0.15,
-//       });
-//     }
-//   });
-
-//   // Code pour changer la couleur des contours de la couche régions en blanc ici
-//   L.DomEvent.on(document.querySelector('input[id="fond2-checkbox"]'), 'change', function () {
-//     if (this.checked) {
-//       styleReg.setStyle({
-//         color: '#363636'
-//       });
-//       styleDep.setStyle({
-//         color: 'white',
-//         weight: 0.25,
-//       });
-//       styleEpci.setStyle({
-//         color: 'white',
-//         weight: 0.25,
-//       });
-//     } 
-//   });
-// }
-
-
 /* -------------------------------------------------------------------------- */
 /*                                MAP                                         */
 /* -------------------------------------------------------------------------- */
@@ -342,24 +304,21 @@ const map = new L.map('IDsuperMap',{zoomControl: false, maxZoom:12}).setView([46
 /* ---------------------Mise en place des fonds de carte--------------------- */
 
 // Fonds de cartes 
-const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT 2023</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
-});
-
 
 // const basemafond2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 //   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 // });
 
+const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+  attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT 2023</a> | Fond cartographique &copy;<a href="https://stadiamaps.com/">Stadia Maps</a> &copy;<a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;<a href="http://openstreetmap.org">OpenStreetMap</a>',
+});
+
 const basemapFond2 = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',{
   attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT 2023</a> | Fond cartographique &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a>',
 });
 
-
-
 // Ajout du fond de base
 map.addLayer(basemapFond1);
-
 
 //baseLayers est  une couche qui contient tous les fonds
 const baseLayers = {
@@ -386,8 +345,6 @@ L.control.scale({ position: 'bottomright', imperial:false }).addTo(map);
 
 //Ajout du zoom
 L.control.zoom({ position: 'topright'}).addTo(map);
-
-
 
 
 /* -------------------------------------------------------------------------- */
@@ -574,9 +531,6 @@ Promise.all([regionInit, departementInit, epciInit, comInit]).then(([regPolygon,
     }, 
   });
 
-  // Définir les styles des couches d'habillage
-  //setStyleBaseMap(regPolygonLayer, depPolygonLayer, epciPolygonLayer);
-
   // Ajouter un gestionnaire d'événement pour ajouter et retirer la couche PECI en fonction du zoom
   map.on('zoomend', function () {
     const currentZoom = map.getZoom();
@@ -724,33 +678,6 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
 const clearLegendButton = document.getElementById('clear-legend-button');
 clearLegendButton.addEventListener('click', clearLegend);
   
-/* -------------------------------------------------------------------------- */
-/*                                ZOOM DROM                                   */
-/* -------------------------------------------------------------------------- */
-
-// let liste_drom = document.getElementById("goTo");
-
-
-// liste_drom.addEventListener('change', (e) => {
-//   option = e.target.selectedOptions[0];
-//   switch (option.value) {
-//     case "met":
-//       return map.flyTo([46.5, -3.55], 5.5555, { animation: true, duration: 1 });     
-
-//     case "glp":
-//       return map.setView([16.25, -61.706], 10, { animation: true });
-//     case "mtq":
-//       return map.setView([14.68, -61.2], 10, { animation: true });
-//     case "guf":
-//       return map.setView([3.92, -54.5], 7.855, { animation: true });
-//     case "reu":
-//       return map.setView([-21.11, 55.28], 10, { animation: true });
-//     case "myt":
-//       return map.setView([-12.81, 45.06], 11, { animation: true });
-//     default:
-//       return map.setView([46.5, 0], 5.5555, { animation: true })
-//   }
-// });
 
 /* -------------------------------------------------------------------------- */
 /*                          BOUTON - Exporter/imprimer                        */
@@ -791,4 +718,30 @@ var browserControl = L.control.browserPrint({
 //modifier le style et le position de la légende
 
 
+/* -------------------------------------------------------------------------- */
+/*                                ZOOM DROM                                   */
+/* -------------------------------------------------------------------------- */
 
+// let liste_drom = document.getElementById("goTo");
+
+
+// liste_drom.addEventListener('change', (e) => {
+//   option = e.target.selectedOptions[0];
+//   switch (option.value) {
+//     case "met":
+//       return map.flyTo([46.5, -3.55], 5.5555, { animation: true, duration: 1 });     
+
+//     case "glp":
+//       return map.setView([16.25, -61.706], 10, { animation: true });
+//     case "mtq":
+//       return map.setView([14.68, -61.2], 10, { animation: true });
+//     case "guf":
+//       return map.setView([3.92, -54.5], 7.855, { animation: true });
+//     case "reu":
+//       return map.setView([-21.11, 55.28], 10, { animation: true });
+//     case "myt":
+//       return map.setView([-12.81, 45.06], 11, { animation: true });
+//     default:
+//       return map.setView([46.5, 0], 5.5555, { animation: true })
+//   }
+// });
