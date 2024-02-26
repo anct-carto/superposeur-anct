@@ -21,7 +21,7 @@ Fait :
 	- expliquer la possibilité de chercher par département + impression --> sous forme d'un nouvel onglet
 	- ajouter les dates des données + cog23 
 	- expliquer que les données ponctuelles ont été aggrégés à l'échelle communale
-
+-ajouter la couche epci à un certain niveau de zoom
 
 A faire : 
 - améliorer la visualisation :
@@ -30,7 +30,7 @@ A faire :
 	- contours pour les CRTE
 - définir un zoom limite 
 - remplacer la photo satellite
--couche epci 
+
 
 
 - ajouter info dans la card sur les programmes

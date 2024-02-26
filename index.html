@@ -101,8 +101,8 @@
                 </div>
               
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="photo-checkbox" name="basemap" value="photo">
-                  <label class="form-check-label" for="photo-checkbox">Photo satellite</label>
+                  <input class="form-check-input" type="checkbox" id="fond2-checkbox" name="basemap" value="fond2">
+                  <label class="form-check-label" for="fond2-checkbox">OSM ©Humanitarian</label>
                 </div>
               </div>
 
@@ -332,9 +332,9 @@
 
               <!--Panneau 3-->
               <div class="leaflet-sidebar-pane" id="info">
-                <div class="leaflet-sidebar-header">
-                  <span style="color:gray; font-weight: 500;"><img src="img/LOGO_ANCT_seul.png" width="13%"> À propos</span>   
-                  <h4 style="color:#F2CB27; font-size: 20px; margin-top: 8px; margin-bottom: 30px; font-weight: 600;">Programmes ANCT</h4> 
+                <div class="leaflet-sidebar-header" style="margin-bottom: 30px;">
+                  <span style="color:gray; font-weight: 500;"><img src="img/LOGO_ANCT_seul.png" width="13%"> Guide utilisation</span>   
+                  <!-- <h4 style="color:#F2CB27; font-size: 20px; margin-top: 8px; margin-bottom: 30px; font-weight: 600;">Programmes ANCT</h4>  -->
                   <span class="leaflet-sidebar-close" @click="sidebar.close()">
                     <i class="la la-step-backward"></i>
                   </span>
@@ -348,7 +348,7 @@
                     </span>
                     <span id="aide-print">
                       <h1><i class="las la-print" style="font-size:16px"></i> Exporter ou imprimer</h1>
-                      <p>Un export au format PDF ou une impression est rendu possible grâce à l'icon "impriante". Il suffit de séléctionner le type d'export: en A4 portrait ("Portrait"), A4 paysage ("Landscape") ou bien au format customisé ("Custom"). </p>
+                      <p>Un export au format PDF ou une impression est rendu possible grâce à l'icon "impriante". Il suffit de séléctionner le type d'export souhaité: <br>- en A4 portrait ("Portrait") <br>- A4 paysage ("Landscape") <br>- en A4 customisé ("Custom"). </p>
                       <p><i class="las la-exclamation-triangle" style="font-size:16px" ></i> Ces exports sont des cartes de travail et ne pourront pas être publiées.</p>
                     </span>
                     

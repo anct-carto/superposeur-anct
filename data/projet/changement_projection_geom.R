@@ -13,6 +13,9 @@ reg_geom <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-proce
 dep_geom <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
                     layer = "dep")
 
+epci_geom <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
+                    layer = "epci")
+
 com_geom <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/map-process/public/france/2023/fr-drom/fr-drom-3395-gen.gpkg",
                     layer = "com")
 
@@ -39,6 +42,23 @@ plot(dep_geom_4326$geom)
 st_write(obj = dep_geom_4326,
          dsn = here(paste0("geom/geojson/dep_geom_4326.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+
+#EPCI
+
+epci_geom_4326<- st_transform(epci_geom, crs= 4326)
+
+
+plot(epci_geom$geom)
+plot(epci_geom_4326$geom)
+
+st_write(obj = epci_geom_4326,
+         dsn = here(paste0("geom/geojson/epci_geom_4326.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+
+
+
 
 
 #COMMUNES

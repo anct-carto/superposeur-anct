@@ -90,11 +90,6 @@ function getInfo(feature, layerName) {
 /* --------------------------Mise en place carte----------------------------- */
 
 
-
-// Définir une variable pour stocker la référence de la couche GeoJSON sélectionnée
-
-
-
 function onEachFeatureMarker(feature, layer) {
 
   const type = feature.properties.id_territoire.split('-')[0];
@@ -138,7 +133,6 @@ function onEachFeaturePolygon(feature, layer) {
   });
   
 };
-
 
 
 //Automatiser la création de geojson : marker
@@ -300,32 +294,40 @@ function toggleLayer(layer, checkbox) {
 
 
 //Evenement qui permet de modifier la tuile de fond
-function setStyleBaseMap(styleReg, styleDep) {
-  L.DomEvent.on(document.querySelector('input[id="fond1-checkbox"]'), 'change', function () {
-    if (this.checked) {
-      styleReg.setStyle({
-        color: '#363636'
-      });
-      styleDep.setStyle({
-        color: '#363636',
-        weight: 0.15,
-      });
-    }
-  });
+// function setStyleBaseMap(styleReg, styleDep, styleEpci) {
+//   L.DomEvent.on(document.querySelector('input[id="fond1-checkbox"]'), 'change', function () {
+//     if (this.checked) {
+//       styleReg.setStyle({
+//         color: '#363636'
+//       });
+//       styleDep.setStyle({
+//         color: '#363636',
+//         weight: 0.15,
+//       });
+//       styleEpci.setStyle({
+//         color: '#363636',
+//         weight: 0.15,
+//       });
+//     }
+//   });
 
-  // Code pour changer la couleur des contours de la couche régions en blanc ici
-  L.DomEvent.on(document.querySelector('input[id="photo-checkbox"]'), 'change', function () {
-    if (this.checked) {
-      styleReg.setStyle({
-        color: 'white'
-      });
-      styleDep.setStyle({
-        color: 'white',
-        weight: 0.25,
-      });
-    } 
-  });
-}
+//   // Code pour changer la couleur des contours de la couche régions en blanc ici
+//   L.DomEvent.on(document.querySelector('input[id="fond2-checkbox"]'), 'change', function () {
+//     if (this.checked) {
+//       styleReg.setStyle({
+//         color: '#363636'
+//       });
+//       styleDep.setStyle({
+//         color: 'white',
+//         weight: 0.25,
+//       });
+//       styleEpci.setStyle({
+//         color: 'white',
+//         weight: 0.25,
+//       });
+//     } 
+//   });
+// }
 
 
 /* -------------------------------------------------------------------------- */
@@ -335,7 +337,7 @@ function setStyleBaseMap(styleReg, styleDep) {
 
 /* --------------------------Mise en place carte----------------------------- */
 
-const map = new L.map('IDsuperMap',{zoomControl: false}).setView([46.603354, 1.888334],6);
+const map = new L.map('IDsuperMap',{zoomControl: false, maxZoom:12}).setView([46.603354, 1.888334],6);
 
 /* ---------------------Mise en place des fonds de carte--------------------- */
 
@@ -345,8 +347,12 @@ const basemapFond1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/
 });
 
 
-const basemapPhoto = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+// const basemafond2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+//   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+// });
+
+const basemapFond2 = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',{
+  attribution: '<a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">ANCT 2023</a> | Fond cartographique &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a>',
 });
 
 
@@ -358,7 +364,7 @@ map.addLayer(basemapFond1);
 //baseLayers est  une couche qui contient tous les fonds
 const baseLayers = {
   'fond1' : basemapFond1,
-  'photo satellite' : basemapPhoto
+  'fond2 satellite' : basemapFond2
 };
 
 const overlays = {
@@ -428,9 +434,9 @@ document.querySelectorAll('input[name="basemap"]').forEach(function (input) {
 
     if (selectedBasemap === "fond1") {
       map.addLayer(basemapFond1);
-    } else if (selectedBasemap === "photo") {
-      map.addLayer(basemapPhoto);
-      basemapPhoto.setOpacity(0.8);
+    } else if (selectedBasemap === "fond2") {
+      map.addLayer(basemapFond2);
+      basemapFond2.setOpacity(0.8);
     }
   });
 });
@@ -518,10 +524,11 @@ const fabpInit = loadData("data/geom/geojsonV2/fabp_geom.geojson");
 //Couches d'habillage
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
-//const communeInit= loadData("data/geom/geojson/com_geom_4326.geojson");
+const epciInit= loadData("data/geom/geojson/epci_geom_4326.geojson");
+const comInit= loadData("data/geom/geojson/com_geom_4326.geojson");
 
 //Données d'habillage de la carte
-Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
+Promise.all([regionInit, departementInit, epciInit, comInit]).then(([regPolygon, depPolygon, epciPolygon, comPolygon])=>{
   const regPolygonLayer =new L.geoJSON(regPolygon,{
       style: {
         fillColor: "transparent",
@@ -529,7 +536,7 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
         color:"#363636",
         lineCap: 'round',
         lineJoin: 'round',
-        weight: 0.35,
+        weight: 0.30,
       }, 
   }).addTo(map);
 
@@ -541,12 +548,59 @@ Promise.all([regionInit, departementInit]).then(([regPolygon, depPolygon])=>{
       color:"#363636",
       lineCap: 'round',
       lineJoin: 'round',
-      weight: 0.15,
+      weight: 0.25,
     }, 
   }).addTo(map);
 
+  const epciPolygonLayer =new L.geoJSON(epciPolygon,{
+    style: {
+      fillColor: "transparent",
+      fillOpacity:0,
+      color:"#363636",
+      lineCap: 'round',
+      lineJoin: 'round',
+      weight: 0.20,
+    }, 
+  });
+
+  const comPolygonLayer =new L.geoJSON(comPolygon,{
+    style: {
+      fillColor: "transparent",
+      fillOpacity:0,
+      color:"#363636",
+      lineCap: 'round',
+      lineJoin: 'round',
+      weight: 0.10,
+    }, 
+  });
+
   // Définir les styles des couches d'habillage
-  setStyleBaseMap(regPolygonLayer, depPolygonLayer);
+  //setStyleBaseMap(regPolygonLayer, depPolygonLayer, epciPolygonLayer);
+
+  // Ajouter un gestionnaire d'événement pour ajouter et retirer la couche PECI en fonction du zoom
+  map.on('zoomend', function () {
+    const currentZoom = map.getZoom();
+
+
+    // Définir le niveau de zoom auquel vous souhaitez afficher la couche epciPolygon
+    const EPCIzoomThreshold = 9;
+
+    const COMzoomThreshold = 11;
+
+    // Vérifier le niveau de zoom et afficher ou masquer la couche en conséquence
+    if (currentZoom >= EPCIzoomThreshold) {
+      map.addLayer(epciPolygonLayer);
+    } else {
+      map.removeLayer(epciPolygonLayer);
+    }
+
+    if (currentZoom >= COMzoomThreshold) {
+      map.addLayer(comPolygonLayer);
+    } else {
+      map.removeLayer(comPolygonLayer);
+    }
+  });
+
 
   //Ajour d'une barre de recherche par département
   var searchControl = new L.Control.Search({
