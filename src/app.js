@@ -2,6 +2,8 @@
 /*                                FONCTIONS                                   */
 /* -------------------------------------------------------------------------- */
 
+// Importez d'autres bibliothèques ou fichiers nécessaires ici
+
 /* --------------------------Lecture des données----------------------------- */
 // Fonction qui permet de lire les données json
 async function loadData(chemin) {
@@ -17,7 +19,7 @@ function getColor(layerType) {
   if (layerType === 'ti') {
     return "#599AD4";
   } else if (layerType === 'crte') {
-    return "#2B7019";
+    return "#719971";
   } else if (layerType === 'ami') {
     return "#427A6F";
   } else if (layerType === 'amm') {
@@ -33,7 +35,7 @@ function getColor(layerType) {
   } else if (layerType === 'fs') {
     return "#616DAF";
   } else if (layerType === 'cde') {
-    return "#C3242B";
+    return "#E8CA1A";
   } else if (layerType === 'cite') {
     return "#4DB2EB";
   } else if (layerType === 'fabp') {
@@ -112,6 +114,8 @@ function onEachFeatureMarker(feature, layer) {
     }).addTo(clicFeatureLayer);
   });
 };
+
+
 
 function onEachFeaturePolygon(feature, layer) {
 
@@ -229,6 +233,7 @@ function createGeoJSONPolygon(data, color, weight, type, zIndex) {
   return layer;
 }
 
+
 /* -------------------------- Legnde active ----------------------------- */
 function updateLegend() {
 
@@ -345,6 +350,8 @@ L.control.scale({ position: 'bottomright', imperial:false }).addTo(map);
 
 //Ajout du zoom
 L.control.zoom({ position: 'topright'}).addTo(map);
+
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -482,10 +489,10 @@ const fabpInit = loadData("data/geom/geojsonV2/fabp_geom.geojson");
 const regionInit= loadData("data/geom/geojson/reg_geom_4326.geojson");
 const departementInit= loadData("data/geom/geojson/dep_geom_4326.geojson");
 const epciInit= loadData("data/geom/geojson/epci_geom_4326.geojson");
-const comInit= loadData("data/geom/geojson/com_geom_4326.geojson");
+// const comInit= loadData("data/geom/geojson/com_geom_4326.geojson");
 
 //Données d'habillage de la carte
-Promise.all([regionInit, departementInit, epciInit, comInit]).then(([regPolygon, depPolygon, epciPolygon, comPolygon])=>{
+Promise.all([regionInit, departementInit, epciInit]).then(([regPolygon, depPolygon, epciPolygon])=>{
   const regPolygonLayer =new L.geoJSON(regPolygon,{
       style: {
         fillColor: "transparent",
@@ -520,38 +527,20 @@ Promise.all([regionInit, departementInit, epciInit, comInit]).then(([regPolygon,
     }, 
   });
 
-  const comPolygonLayer =new L.geoJSON(comPolygon,{
-    style: {
-      fillColor: "transparent",
-      fillOpacity:0,
-      color:"#363636",
-      lineCap: 'round',
-      lineJoin: 'round',
-      weight: 0.10,
-    }, 
-  });
-
   // Ajouter un gestionnaire d'événement pour ajouter et retirer la couche PECI en fonction du zoom
   map.on('zoomend', function () {
     const currentZoom = map.getZoom();
+    console.log(currentZoom)
 
 
     // Définir le niveau de zoom auquel vous souhaitez afficher la couche epciPolygon
     const EPCIzoomThreshold = 9;
-
-    const COMzoomThreshold = 11;
 
     // Vérifier le niveau de zoom et afficher ou masquer la couche en conséquence
     if (currentZoom >= EPCIzoomThreshold) {
       map.addLayer(epciPolygonLayer);
     } else {
       map.removeLayer(epciPolygonLayer);
-    }
-
-    if (currentZoom >= COMzoomThreshold) {
-      map.addLayer(comPolygonLayer);
-    } else {
-      map.removeLayer(comPolygonLayer);
     }
   });
 
@@ -639,6 +628,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
 
   // Appeler la fonction pour mettre à jour la légende
   updateLegend();
+
 
   //Récupérer les éléments HTML 
   const tiData = document.getElementById('ti-polygon-checkbox');

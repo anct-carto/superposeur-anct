@@ -7,6 +7,7 @@ N:\DST\Carto\ORGANISATION_CELLULECARTO\OUTILS\GABARITS CHARTE\GABARIT_CARTO\char
 Remarques superposeur après Salon des maires;
 
 Fait :
+Modif V1 :
 - faire la recherche d'un département qui remplace le zoom vers les DROM
 - corriger PVD (mal écrit) et MAJ 
 - ajouter VA 
@@ -25,11 +26,24 @@ Fait :
 - remplacer la photo satellite par un fond plus simple
 - définir un zoom limite 
 
+Modif modif v1:
+- enlever les communes contours
+- preciser: les donnes sont a l'echelle des communes sauf fs --> finalemen tles données sont agrégées 
+- ajouter VA onglet 2
+
+
 A faire : 
+- ajouter frla et commerce ruraux
+- deplacement point qui se superposent (pas sure)
+- pour les cites emploi et educative preciser que cest les qp 2015 + les afficher en deux points plutot que centroide
+- en attente des contrats de ville
+-beug au zoom ; fonction mouse over et clic semblent pas bien fonctionner
 - améliorer la visualisation :
-	- changer picto pour ACV, VA et cite emploi --> carré
-	- hachures pour Avenir Montagne
-	- contours pour les CRTE
+	-cite emploi --> jaune
+- tester les hachure pour avenir montagne
+	- contours pour les CRTE ou plus clair
+
+
 - afficher les petits polygons sur les grands
 
 
