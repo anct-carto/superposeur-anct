@@ -29,20 +29,24 @@ Modif V1 :
 
 Modif modif v1:
 - enlever les communes contours
-- preciser: les donnes sont a l'echelle des communes sauf fs --> finalemen tles données sont agrégées 
-- ajouter VA onglet 
+- preciser: les donnees sont a l'echelle des communes sauf fs --> finalemen tles données sont agrégées 
 - améliorer la visualisation : -cite emploi --> jaune  + les CRTE en clair
 
-
-
-A FAIRE : 
-
 DATA:
-- ajouter frla et commerce ruraux + territoire engagement + manufacture de proximité
+- cite emploi et cite educative : dupliquer les points plutot que centroide
 
 TEXTE:
-- pour les cites emploi et educative preciser que cest les qp 2015 + les afficher en deux points plutot que centroide
+- pour les cites emploi et educative preciser que cest les qp 2015 + 
 - "en attente des contrats de ville"
+- ajouter VA onglet2 vers liens ANCT
+
+
+
+
+A FAIRE ---
+
+DATA:
+- ajouter frla et commerce ruraux + territoire engagement + manufacture de proximité(agrégés à la com et arr)
 
 
 LISIBILITE :

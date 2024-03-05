@@ -100,7 +100,6 @@ function onEachFeatureMarker(feature, layer) {
 
   layer.on('click', () => {
     getInfo(feature, type);
-    console.log(type)
 
     clicFeatureLayer.clearLayers();
     const markerTemp = L.geoJSON(feature, {

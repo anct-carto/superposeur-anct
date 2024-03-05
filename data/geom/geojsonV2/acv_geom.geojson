@@ -231,6 +231,8 @@
 { "type": "Feature", "properties": { "id_territoire": "acv-226", "lib_territoire": "Pontoise", "date_signature": "", "liste_geo": "Pontoise (95500)" }, "geometry": { "type": "Point", "coordinates": [ 2.094897070400108, 49.051326456457481 ] } },
 { "type": "Feature", "properties": { "id_territoire": "acv-227", "lib_territoire": "Saint-Gaudens", "date_signature": "", "liste_geo": "Saint-Gaudens (31483)" }, "geometry": { "type": "Point", "coordinates": [ 0.726746312142523, 43.119937242958983 ] } },
 { "type": "Feature", "properties": { "id_territoire": "acv-228", "lib_territoire": "Sélestat", "date_signature": "", "liste_geo": "Sélestat (67462)" }, "geometry": { "type": "Point", "coordinates": [ 7.462257899687168, 48.248408406542012 ] } },
-{ "type": "Feature", "properties": { "id_territoire": "acv-229", "lib_territoire": "Sin-le-Noble", "date_signature": "", "liste_geo": "Sin-le-Noble (59569)" }, "geometry": { "type": "Point", "coordinates": [ 3.120422883294835, 50.367308061720678 ] } }
+{ "type": "Feature", "properties": { "id_territoire": "acv-229", "lib_territoire": "Sin-le-Noble", "date_signature": "", "liste_geo": "Sin-le-Noble (59569)" }, "geometry": { "type": "Point", "coordinates": [ 3.120422883294835, 50.367308061720678 ] } },
+{ "type": "Feature", "properties": { "id_territoire": "acv-230", "lib_territoire": "Saint-Louis", "date_signature": "2024-02-05", "liste_geo": "Saint-Louis (97414)" }, "geometry": { "type": "Point", "coordinates": [ 55.421591488611199, -21.233644383490123 ] } },
+{ "type": "Feature", "properties": { "id_territoire": "acv-231", "lib_territoire": "Brétigny-sur-Orge", "date_signature": "2024-02-05", "liste_geo": "Brétigny-sur-Orge (91103)" }, "geometry": { "type": "Point", "coordinates": [ 2.302381309102508, 48.603333951794689 ] } }
 ]
 }

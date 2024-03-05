@@ -27,7 +27,7 @@ va_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/village
 
 
 #ACV
-acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville/liste-acv-com2023-20230802.csv", fileEncoding ="utf-8" )
+acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville/liste-acv-com2023-20240205.csv", fileEncoding ="utf-8" )
 
 #ACV2
 acv2_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville-2/liste-acv2-com2023-20230922.csv", fileEncoding ="utf-8" )
@@ -121,9 +121,6 @@ ma_fonction<- function(data_init, type){
   fichier_4326<- st_transform(fichier, crs= 4326)
   return(fichier_4326)
 }
-
-
-
 
 
 
@@ -246,32 +243,42 @@ crte_geom <- crte_geom%>%
 
 
 #cité de l'emploi 
-cde_list_qp <- cde_list_init%>%
-  group_by(id_cde, lib_cde)%>%
-  summarise(liste_geo = paste0(unique(lib_qp),' (', id_qp, ')', collapse = '; '))
+# cde_list_qp <- cde_list_init%>%
+#   group_by(id_cde, lib_cde)%>%
+#   summarise(liste_geo = paste0(unique(lib_qp),' (', id_qp, ')', collapse = '; '))
+# 
+# cde_geom<-ma_fonction(cde_data, type="polygon")%>%
+#   separate_rows(id_cde, sep = " ; ")%>%
+#   rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cde", "lib_territoire"="lib_cde")%>%
+#   group_by(id_territoire)%>%
+#   summarise()%>%
+#   st_centroid()%>%
+#   left_join(cde_list_qp, by=c("id_territoire"="id_cde"))%>%
+#   rename("lib_territoire"="lib_cde")
 
-cde_geom<-ma_fonction(cde_data, type="polygon")%>%
-  separate_rows(id_cde, sep = " ; ")%>%
+cde_geom <- ma_fonction(cde_data, type="ctr")%>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cde", "lib_territoire"="lib_cde")%>%
-  group_by(id_territoire)%>%
-  summarise()%>%
-  st_centroid()%>%
-  left_join(cde_list_qp, by=c("id_territoire"="id_cde"))%>%
-  rename("lib_territoire"="lib_cde")
+  group_by(id_territoire, lib_territoire)%>%
+  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+
 
 #cité éducative 
-citeduc_gpt_data <- citeduc_groupement%>%
-  group_by(id_cite, lib_cite)%>%
-  summarise(liste_geo = paste0(unique(lib_qp),' (', id_qp, ')', collapse = '; '))
 
-citeduc_geom<-ma_fonction(citeduc_init, type="polygon")%>%
-  separate_rows(id_cite, sep = " ; ")%>%
+citeduc_geom<-ma_fonction(citeduc_init, type="ctr")%>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cite", "lib_territoire"="lib_cite")%>%
-  group_by(id_territoire)%>%
-  summarise()%>%
-  st_centroid()%>%
-  left_join(citeduc_gpt_data, by=c("id_territoire"="id_cite"))%>%
-  rename("lib_territoire"="lib_cite")
+  group_by(id_territoire, lib_territoire)%>%
+  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+
+
+
+#ACV
+acv_geom<-ma_fonction(acv_init, type="ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_acv", "lib_territoire"="lib_acv")%>% 
+  select(id_geo, lib_geo, id_territoire, lib_territoire, date_signature)%>%
+  group_by(id_territoire, lib_territoire, date_signature)%>%
+  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+
+
 
 #Fabriques prospetives
 fabp_gpt_data <- fabp_groupement %>%
