@@ -42,6 +42,8 @@ function getColor(layerType) {
     return "#FF7D00";
   } else if (layerType === 'fabt') {
     return "#793186";
+  } else if (layerType === 'manuprox') {
+    return "#05b497";
   }
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
@@ -98,6 +100,7 @@ function onEachFeatureMarker(feature, layer) {
 
   layer.on('click', () => {
     getInfo(feature, type);
+    console.log(type)
 
     clicFeatureLayer.clearLayers();
     const markerTemp = L.geoJSON(feature, {
@@ -466,7 +469,6 @@ function resetDepStyles(depLayerResetStyle) {
 /* -------------------------------------------------------------------------- */
 
 // Charger les données
-
 // Marker
 const acvInit = loadData("data/geom/geojsonV2/acv_geom.geojson");
 const acv2Init = loadData("data/geom/geojsonV2/acv2_geom.geojson");
@@ -476,6 +478,7 @@ const fsInit = loadData("data/geom/geojsonV2/fs_geom.geojson");
 const cdeInit = loadData("data/geom/geojsonV2/cde_geom.geojson");
 const citeInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
 const fabtInit = loadData("data/geom/geojsonV2/fabt_geom.geojson");
+const manuproxInit = loadData("data/geom/geojsonV2/manuprox_geom.geojson");
 
 
 // Polygon
@@ -590,7 +593,7 @@ Promise.all([regionInit, departementInit, epciInit]).then(([regPolygon, depPolyg
 });
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit,manuproxInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer, manuproxLayer])=>{
   
   //Création des couches
   //POLYGON
@@ -609,6 +612,9 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const cdeMarkerLayer=  createGeoJSONMarker(cdeLayer,  1, 3,'cde', 2000);
   const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 1, 3,'cite', 2000);
   const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer,  1, 3,'fabt', 2000);
+  const manuproxMarkerLayer=  createGeoJSONMarker(manuproxLayer,  1, 3,'manuprox', 2000);
+
+  
 
 //Suppression des couches 
   map.removeLayer(tiPolygonLayer);
@@ -625,6 +631,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(cdeMarkerLayer);
   map.removeLayer(citeMarkerLayer);
   map.removeLayer(fabtMarkerLayer);
+  map.removeLayer(manuproxMarkerLayer);
 
   // Appeler la fonction pour mettre à jour la légende
   updateLegend();
@@ -645,6 +652,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const cdeData = document.getElementById('cde-marker-checkbox');
   const citeData = document.getElementById('cite-marker-checkbox');
   const fabtData = document.getElementById('fabt-marker-checkbox');
+  const manuproxData = document.getElementById('manuprox-marker-checkbox');
 
   //Appel à la fonction pour activier et désactiver les couches
   toggleLayer(tiPolygonLayer, tiData);
@@ -661,6 +669,7 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   toggleLayer(cdeMarkerLayer, cdeData);
   toggleLayer(citeMarkerLayer, citeData);
   toggleLayer(fabtMarkerLayer, fabtData);
+  toggleLayer(manuproxMarkerLayer, manuproxData);
 
 });
 

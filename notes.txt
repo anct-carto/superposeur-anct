@@ -6,7 +6,8 @@ N:\DST\Carto\ORGANISATION_CELLULECARTO\OUTILS\GABARITS CHARTE\GABARIT_CARTO\char
 
 Remarques superposeur après Salon des maires;
 
-Fait :
+FAIT---
+
 Modif V1 :
 - faire la recherche d'un département qui remplace le zoom vers les DROM
 - corriger PVD (mal écrit) et MAJ 
@@ -29,26 +30,29 @@ Modif V1 :
 Modif modif v1:
 - enlever les communes contours
 - preciser: les donnes sont a l'echelle des communes sauf fs --> finalemen tles données sont agrégées 
-- ajouter VA onglet 2
+- ajouter VA onglet 
+- améliorer la visualisation : -cite emploi --> jaune  + les CRTE en clair
 
 
-A faire : 
-- ajouter frla et commerce ruraux
-- deplacement point qui se superposent (pas sure)
+
+A FAIRE : 
+
+DATA:
+- ajouter frla et commerce ruraux + territoire engagement + manufacture de proximité
+
+TEXTE:
 - pour les cites emploi et educative preciser que cest les qp 2015 + les afficher en deux points plutot que centroide
-- en attente des contrats de ville
--beug au zoom ; fonction mouse over et clic semblent pas bien fonctionner
-- améliorer la visualisation :
-	-cite emploi --> jaune
-- tester les hachure pour avenir montagne
-	- contours pour les CRTE ou plus clair
+- "en attente des contrats de ville"
 
 
+LISIBILITE :
+- deplacement point qui se superposent --> idée de la librairie markerCluster testé, fonctionne mais fait beuguer les autre fonctions donc à voir + changer le style
 - afficher les petits polygons sur les grands
+- tester les hachure pour avenir montagne
+- beug au zoom ; fonction mouseover et clic semblent pas bien fonctionner
 
 
-
-
+AUTRE MOINS IMPORTANT:
 - ajouter info dans la card sur les programmes
 - définir le public visé
 - voir ADE pour hébergement de la carte : héberger à l'ANCT mais rester en opendata

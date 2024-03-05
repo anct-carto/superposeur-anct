@@ -43,8 +43,8 @@ ti_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/te
 
 
 #France service
-fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-20231106.csv", fileEncoding ="utf-8")
-fs_com_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2023-20231106.csv", fileEncoding ="utf-8")
+fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-20240124.csv", fileEncoding ="utf-8")
+fs_com_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2023-20240124.csv", fileEncoding ="utf-8")
 
 
 
@@ -97,6 +97,13 @@ fabt_init<- read_excel("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/FABR
 # %>%
 #   st_drop_geometry()%>%
 #   select(-geom)
+
+#Manufacture de proximité 
+manuprox_init<- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/MANUFACTURES_PROXIMITE/CROISEMENTS/manufactures_TI/data/geom/manufacture_proximite_01_22.gpkg") %>% 
+  st_drop_geometry() %>% 
+  mutate(lib_com = ifelse(is.na(lib_com) | lib_com == "",gsub(" .*", "", as.character(lib_arm)),lib_com),
+         insee_com = ifelse(is.na(insee_com) | insee_com == "",ifelse(lib_com == "Marseille", "13055",ifelse(lib_com == "Lyon", "69123", ifelse(lib_com == "Paris", "75056", insee_com))),insee_com))
+
 
 #TRANSFORMER LES DONNEES - creation d'une fonction-------------------------------------------------------
 ma_fonction<- function(data_init, type){
@@ -299,6 +306,23 @@ fabt_geom <- ma_fonction(fabt_data, type="ctr")%>%
             lib_territoire= paste0(unique(lib_territoire), collapse = '; '))
 
 
+#Manufactures de proximité
+manuprox_data <- manuprox_init %>% 
+  arrange(vague) %>% 
+  mutate(id_geo= ifelse(!is.na(insee_com), insee_com, insee_arm),
+         lib_geo= ifelse(!is.na(lib_com), lib_com, lib_arm),
+         id_territoire= paste0("manuprox-",vague,"-",as.character((seq(1:nrow(manuprox_data))))))
+
+  
+manuprox_geom <-ma_fonction(manuprox_data, type="ctr")%>%
+  rename("lib_territoire"="nom_projet")%>%
+  select(id_geo, lib_geo,id_territoire, lib_territoire) %>% 
+  group_by(id_geo)%>%
+  summarise(lib_geo= paste0(unique(lib_geo)),
+            id_territoire= paste0(unique(id_territoire), collapse = '; '),
+            liste_geo= paste0(lib_geo, ' (', id_geo[1], ')'),
+            lib_territoire= paste0(unique(lib_territoire), collapse = '; '))
+  
 
 
 
@@ -345,5 +369,8 @@ st_write(obj = fabt_geom,
          dsn = here(paste0("geom/geojsonV2/fabt_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
+st_write(obj = manuprox_geom,
+         dsn = here(paste0("geom/geojsonV2/manuprox_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
 
 
