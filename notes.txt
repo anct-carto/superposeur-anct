@@ -4,7 +4,8 @@ https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/bouton
 Charte de la carte interactive: 
 N:\DST\Carto\ORGANISATION_CELLULECARTO\OUTILS\GABARITS CHARTE\GABARIT_CARTO\charte_superposeur.ai
 
-Remarques superposeur après Salon des maires;
+
+
 
 FAIT---
 
@@ -27,16 +28,18 @@ Modif V1 :
 - remplacer la photo satellite par un fond plus simple
 - définir un zoom limite 
 
-Modif modif v1:
+
+Modif v2:
 - enlever les communes contours
-- preciser: les donnees sont a l'echelle des communes sauf fs --> finalemen tles données sont agrégées 
-- améliorer la visualisation : -cite emploi --> jaune  + les CRTE en clair
+- preciser: les donnees sont a l'echelle des communes sauf fs --> finalement les données sont agrégées 
+- améliorer la visualisation : cite emploi --> jaune  + les CRTE en vert clair
 
 DATA:
 - cite emploi et cite educative : dupliquer les points plutot que centroide
+- ajout des manufactures de proximité
 
 TEXTE:
-- pour les cites emploi et educative preciser que cest les qp 2015 + 
+- pour les cites emploi et educative preciser que cest les qp 2015 
 - "en attente des contrats de ville"
 - ajouter VA onglet2 vers liens ANCT
 
@@ -46,14 +49,18 @@ TEXTE:
 A FAIRE ---
 
 DATA:
-- ajouter frla et commerce ruraux + territoire engagement + manufacture de proximité(agrégés à la com et arr)
-
+- ajouter frla et commerce ruraux + PAO + territoire engagement ? 
 
 LISIBILITE :
 - deplacement point qui se superposent --> idée de la librairie markerCluster testé, fonctionne mais fait beuguer les autre fonctions donc à voir + changer le style
 - afficher les petits polygons sur les grands
 - tester les hachure pour avenir montagne
 - beug au zoom ; fonction mouseover et clic semblent pas bien fonctionner
+- voir zoom vers outre mer
+
+TEXTE: 
+- préciser le texte vers lien de cartothèque / data.gouv et déplacer vers onglet N2
+
 
 
 AUTRE MOINS IMPORTANT:

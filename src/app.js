@@ -44,7 +44,12 @@ function getColor(layerType) {
     return "#793186";
   } else if (layerType === 'manuprox') {
     return "#05b497";
+  } else if (layerType === 'frla') {
+    return "#363636";
+  } else if (layerType === 'pao') {
+    return "#38853c";
   }
+  
   
   // Par défaut, retournez une couleur par défaut si nécessaire.
   return "#000000";
@@ -141,7 +146,7 @@ function onEachFeaturePolygon(feature, layer) {
 };
 
 
-//Automatiser la création de geojson : marker
+//Automatiser la création de geojson : marker eindezx marque la priorité de la couche pour point sur polygone
 function createGeoJSONMarker(data, weight, radius, type, zIndex) {
   const layer = new L.geoJSON(data, {
     pointToLayer: function (feature, latlng) {
@@ -478,6 +483,8 @@ const cdeInit = loadData("data/geom/geojsonV2/cde_geom.geojson");
 const citeInit = loadData("data/geom/geojsonV2/citeduc_geom.geojson");
 const fabtInit = loadData("data/geom/geojsonV2/fabt_geom.geojson");
 const manuproxInit = loadData("data/geom/geojsonV2/manuprox_geom.geojson");
+const frlaInit = loadData("data/geom/geojsonV2/frla_geom.geojson");
+const paoInit = loadData("data/geom/geojsonV2/pao_geom.geojson");
 
 
 // Polygon
@@ -592,7 +599,7 @@ Promise.all([regionInit, departementInit, epciInit]).then(([regPolygon, depPolyg
 });
 
 //Données des programmes ANCT
-Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit,manuproxInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer, manuproxLayer])=>{
+Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pvdInit, vaInit, fsInit, cdeInit, citeInit, fabtInit,manuproxInit, frlaInit, paoInit]).then(([tiLayer, crteLayer, amiLayer, ammLayer, fabpLayer, acvLayer, acv2Layer, pvdLayer, vaLayer, fsLayer, cdeLayer, citeLayer, fabtLayer, manuproxLayer, frlaLayer, paoLayer])=>{
   
   //Création des couches
   //POLYGON
@@ -612,8 +619,10 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const citeMarkerLayer=  createGeoJSONMarker(citeLayer, 1, 3,'cite', 2000);
   const fabtMarkerLayer=  createGeoJSONMarker(fabtLayer,  1, 3,'fabt', 2000);
   const manuproxMarkerLayer=  createGeoJSONMarker(manuproxLayer,  1, 3,'manuprox', 2000);
+  const frlaMarkerLayer=  createGeoJSONMarker(frlaLayer,  1, 3,'frla', 2000);
+  const paoMarkerLayer=  createGeoJSONMarker(paoLayer,  1, 3,'pao', 2000);
 
-  
+
 
 //Suppression des couches 
   map.removeLayer(tiPolygonLayer);
@@ -631,6 +640,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   map.removeLayer(citeMarkerLayer);
   map.removeLayer(fabtMarkerLayer);
   map.removeLayer(manuproxMarkerLayer);
+  map.removeLayer(frlaMarkerLayer);
+  map.removeLayer(paoMarkerLayer);
 
   // Appeler la fonction pour mettre à jour la légende
   updateLegend();
@@ -652,6 +663,10 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   const citeData = document.getElementById('cite-marker-checkbox');
   const fabtData = document.getElementById('fabt-marker-checkbox');
   const manuproxData = document.getElementById('manuprox-marker-checkbox');
+  const frlaData = document.getElementById('frla-marker-checkbox');
+  const paoData = document.getElementById('pao-marker-checkbox');
+
+
 
   //Appel à la fonction pour activier et désactiver les couches
   toggleLayer(tiPolygonLayer, tiData);
@@ -669,6 +684,8 @@ Promise.all([tiInit, crteInit, amiInit, ammInit, fabpInit, acvInit, acv2Init, pv
   toggleLayer(citeMarkerLayer, citeData);
   toggleLayer(fabtMarkerLayer, fabtData);
   toggleLayer(manuproxMarkerLayer, manuproxData);
+  toggleLayer(frlaMarkerLayer, frlaData);
+  toggleLayer(paoMarkerLayer,paoData );
 
 });
 
@@ -716,30 +733,3 @@ var browserControl = L.control.browserPrint({
 //modifier le style et le position de la légende
 
 
-/* -------------------------------------------------------------------------- */
-/*                                ZOOM DROM                                   */
-/* -------------------------------------------------------------------------- */
-
-// let liste_drom = document.getElementById("goTo");
-
-
-// liste_drom.addEventListener('change', (e) => {
-//   option = e.target.selectedOptions[0];
-//   switch (option.value) {
-//     case "met":
-//       return map.flyTo([46.5, -3.55], 5.5555, { animation: true, duration: 1 });     
-
-//     case "glp":
-//       return map.setView([16.25, -61.706], 10, { animation: true });
-//     case "mtq":
-//       return map.setView([14.68, -61.2], 10, { animation: true });
-//     case "guf":
-//       return map.setView([3.92, -54.5], 7.855, { animation: true });
-//     case "reu":
-//       return map.setView([-21.11, 55.28], 10, { animation: true });
-//     case "myt":
-//       return map.setView([-12.81, 45.06], 11, { animation: true });
-//     default:
-//       return map.setView([46.5, 0], 5.5555, { animation: true })
-//   }
-// });

@@ -59,8 +59,6 @@ st_write(obj = epci_geom_4326,
 
 
 
-
-
 #COMMUNES
 
 com_geom_4326<- st_transform(com_geom, crs= 4326)

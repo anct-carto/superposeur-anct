@@ -94,15 +94,39 @@ citeduc_groupement<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/AN
 
 #Fabriques de territoire
 fabt_init<- read_excel("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/FABRIQUE_TERRITOIRE/2E_VAGUE/DATA/tabs/data_fabrique_territoires_01_24.xlsx")
-# %>%
-#   st_drop_geometry()%>%
-#   select(-geom)
 
 #Manufacture de proximité 
 manuprox_init<- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/MANUFACTURES_PROXIMITE/CROISEMENTS/manufactures_TI/data/geom/manufacture_proximite_01_22.gpkg") %>% 
   st_drop_geometry() %>% 
   mutate(lib_com = ifelse(is.na(lib_com) | lib_com == "",gsub(" .*", "", as.character(lib_arm)),lib_com),
          insee_com = ifelse(is.na(insee_com) | insee_com == "",ifelse(lib_com == "Marseille", "13055",ifelse(lib_com == "Lyon", "69123", ifelse(lib_com == "Paris", "75056", insee_com))),insee_com))
+
+
+#FRLA
+frla1_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla1.gpkg") %>% 
+  st_drop_geometry() %>% 
+  mutate(phase="1")
+
+frla2_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla2.gpkg") %>% 
+  st_drop_geometry()%>% 
+  mutate(phase="2")
+
+frla_init <- bind_rows(frla1_init,frla2_init) %>%
+  mutate(id_territoire= paste0("frla-",phase,"-",insee_dep, "-",as.character((seq(1:nrow(frla_init))))))
+
+#Fonds commerce 
+comru_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/com_ruraux.gpkg") %>% 
+  st_drop_geometry()%>%
+  rename("numero"="N.") %>% 
+  mutate(type=str_split(service, "-", simplify = TRUE)[, 2]) %>% 
+  mutate(id_territoire= paste0("comru-",numero,"-",type, "-",as.character((seq(1:nrow(comru_init))))))
+
+
+#PAO
+pao_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/PAO/DATA/geom/donnees_pao.gpkg") %>% 
+  st_drop_geometry()%>%
+  mutate(id_territoire= paste0("pao-",numero,"-",type,"-",as.character((seq(1:nrow(pao_init))))))
+
 
 
 #TRANSFORMER LES DONNEES - creation d'une fonction-------------------------------------------------------
@@ -242,19 +266,6 @@ crte_geom <- crte_geom%>%
   filter(id_territoire != 'crte-94-2B-4', id_territoire != 'crte-03-973-03', id_territoire != 'crte-03-973-04', id_territoire != 'crte-32-60-20' , id_territoire != 'crte-28-76-9', id_territoire != 'crte-28-27-13')
 
 
-#cité de l'emploi 
-# cde_list_qp <- cde_list_init%>%
-#   group_by(id_cde, lib_cde)%>%
-#   summarise(liste_geo = paste0(unique(lib_qp),' (', id_qp, ')', collapse = '; '))
-# 
-# cde_geom<-ma_fonction(cde_data, type="polygon")%>%
-#   separate_rows(id_cde, sep = " ; ")%>%
-#   rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cde", "lib_territoire"="lib_cde")%>%
-#   group_by(id_territoire)%>%
-#   summarise()%>%
-#   st_centroid()%>%
-#   left_join(cde_list_qp, by=c("id_territoire"="id_cde"))%>%
-#   rename("lib_territoire"="lib_cde")
 
 cde_geom <- ma_fonction(cde_data, type="ctr")%>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_cde", "lib_territoire"="lib_cde")%>%
@@ -330,6 +341,30 @@ manuprox_geom <-ma_fonction(manuprox_data, type="ctr")%>%
             liste_geo= paste0(lib_geo, ' (', id_geo[1], ')'),
             lib_territoire= paste0(unique(lib_territoire), collapse = '; '))
   
+#FRLA
+frla_geom <-ma_fonction(frla_init, type="ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"lib_territoire"="PERIMETRE")%>%
+  distinct(id_geo, lib_geo, lib_territoire, .keep_all = TRUE) %>%
+  group_by(id_geo, lib_geo, lib_territoire, id_territoire) %>% 
+  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+
+#Commerces ruraux
+
+comru_geom <- ma_fonction(comru_init,type="ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"lib_territoire"="lib_com.x")
+
+test <- comru_geom %>% 
+  select(Commune.du.Projet, lib_com_carto.x, insee_dep.x)
+#PROBLEME DANS LES DONNEES : leur libelle de commune different des notres, affaire à suivre
+
+#PAO
+pao_geom<-ma_fonction(pao_init, type="ctr")%>%
+  rename("id_geo"="insee_com", "lib_geo"="lib_com.x" , "lib_territoire"="lib_com.y")%>% 
+  select(id_geo,lib_geo,lib_territoire, id_territoire) %>% 
+  group_by(id_territoire,lib_geo, lib_territoire)%>%
+  summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
+
+
 
 
 
@@ -379,5 +414,19 @@ st_write(obj = fabt_geom,
 st_write(obj = manuprox_geom,
          dsn = here(paste0("geom/geojsonV2/manuprox_geom.geojson")),
          driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+st_write(obj = frla_geom,
+         dsn = here(paste0("geom/geojsonV2/frla_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+st_write(obj = pao_geom,
+         dsn = here(paste0("geom/geojsonV2/pao_geom.geojson")),
+         driver = "GeoJSON", delete_layer = TRUE, append = FALSE)
+
+
+
+
+
+
 
 
