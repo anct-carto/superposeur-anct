@@ -47,6 +47,7 @@ Contrats pour la réussite de la transition écologique : https://agence-cohesio
 Avenir Montagne Ingénierie : https://agence-cohesion-territoires.gouv.fr/avenir-montagnes-ingenierie <br>
 Avenir Montagne Mobilité : https://agence-cohesion-territoires.gouv.fr/avenir-montagnes-mobilites-629<br> 
 Fabriques prospectives : https://agence-cohesion-territoires.gouv.fr/les-fabriques-prospectives-accompagner-les-territoires-dans-les-transitions-211 <br>
-
+Projet et appui opértionnel : https://agence-cohesion-territoires.gouv.fr/lanct-intervient-en-complement-de-lingenierie-locale-274 <br>
+Fonds de restructuration des locaux d’activité : https://agence-cohesion-territoires.gouv.fr/fonds-de-restructuration-des-locaux-dactivite-415 
 
 
