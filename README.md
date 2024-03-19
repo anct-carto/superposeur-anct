@@ -1,6 +1,6 @@
 ## Carte interactive qui croise les programmes de l'ANCT
 
-![alt text](img/image_previewv2.PNG)
+![alt text](img/image_previewv3)
 
 Lien direct : https://carto.pages.sit.incubateur.tech/superposeur-anct/
 
