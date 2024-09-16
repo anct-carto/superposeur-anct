@@ -23,28 +23,28 @@ geom_com_polygon <- st_read("N://Transverse/Donnees_Obs/Donnees_SIG/ADMIN_STAT/m
 #LIRE LES DONNEES -------------------------------------------------------------
 
 #Villages d'avenir
-va_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/villages-davenir/liste-va-com2023-20240112.csv", fileEncoding ="utf-8")
+va_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/villages-davenir/liste-va-com2024-20240905.csv", fileEncoding ="utf-8")
 
 
 #ACV
-acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville/liste-acv-com2023-20240205.csv", fileEncoding ="utf-8" )
+acv_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville/liste-acv-com2024-20240905.csv", fileEncoding ="utf-8" )
 
 #ACV2
 acv2_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/action-coeur-de-ville-2/liste-acv2-com2023-20230922.csv", fileEncoding ="utf-8" )
 
 #PVD
-pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petites-villes-de-demain/liste-pvd-com2023-20240102.csv", fileEncoding ="utf-8")
+pvd_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/petites-villes-de-demain/liste-pvd-com2023-20240807.csv", fileEncoding ="utf-8")
 
 
 #TI
-ti_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-com2023-20231114.csv", fileEncoding ="utf-8")
-ti_groupement <-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-grpt2023-20231114.csv", fileEncoding ="utf-8")
-ti_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-20231114.csv", fileEncoding ="utf-8")
+ti_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-com2023-20240704.csv", fileEncoding ="utf-8")
+ti_groupement <-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-grpt2023-20240704.csv", fileEncoding ="utf-8")
+ti_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/territoires-industrie/liste-ti-20240704.csv", fileEncoding ="utf-8")
 
 
 #France service
-fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-20240124.csv", fileEncoding ="utf-8")
-fs_com_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2023-20240124.csv", fileEncoding ="utf-8")
+fs_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-20240910.csv", fileEncoding ="utf-8")
+fs_com_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/france_services/liste-fs-com2024-20240910.csv", fileEncoding ="utf-8")
 
 
 
@@ -54,11 +54,11 @@ cite_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites
 
 
 #FABRIQUE PROSPECTIVES
-fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2023-20240108.csv", fileEncoding ="utf-8", colClasses = c("insee_com"="character"))
+fabp_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-com2024-20240909.csv", fileEncoding ="utf-8", colClasses = c("insee_com"="character"))
 glimpse(fabp_init)
 
-fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20240108.csv", fileEncoding ="utf-8")
-fabp_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-grpt2023-20240108.csv", fileEncoding ="utf-8")
+fabp_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-20240909.csv", fileEncoding ="utf-8")
+fabp_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/fabriques-prospectives/liste-fabp-grpt2024-20240909.csv", fileEncoding ="utf-8")
 
 
 #Avenir montagne mobilité
@@ -67,9 +67,9 @@ amm_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/a
 amm_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-mobilites/liste-amm-grpt2023-20230810.csv", fileEncoding ="utf-8")
 
 #Avenir montagne ingénierie
-ami_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-ingenierie/liste-ami-com2023-20230830.csv", fileEncoding ="utf-8")
-ami_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-ingenierie/liste-ami-20230830.csv", fileEncoding ="utf-8")
-ami_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-ingenierie/liste-ami-grpt2023-20230830.csv", fileEncoding ="utf-8")
+ami_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-ingenierie/liste-ami-com2023-20230830.csv", fileEncoding ="utf-8", sep=" , ")
+ami_init_list <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-ingenierie/liste-ami-20230830.csv", fileEncoding ="utf-8", sep=",")
+ami_groupement <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/avenir-montagnes-ingenierie/liste-ami-grpt2023-20230830.csv", fileEncoding ="utf-8", sep=",")
 
 
 #CRTE
@@ -79,8 +79,8 @@ crte_groupement<-read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/c
 
   
 #Cité de l'emploi
-cde_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/liste-cde-com2023-20231108.csv", fileEncoding ="utf-8")
-cde_list_init<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/liste-cde-qp2023-20231108.csv", fileEncoding ="utf-8")
+cde_init <- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/old/liste-cde-com2023-20231108.csv", fileEncoding ="utf-8")
+cde_list_init<- read.csv("N:/Transverse/Donnees_Obs/Donnees_Statistiques/ANCT/cites-emploi/old/liste-cde-qp2023-20231108.csv", fileEncoding ="utf-8")
 
 cde_data<- cde_init%>%
   mutate(insee_com = ifelse(nchar(insee_com) == 4, paste0("0", insee_com), insee_com))
@@ -103,16 +103,20 @@ manuprox_init<- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/MUTECO_INNOVATION/MAN
 
 
 #FRLA
-frla1_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla1.gpkg") %>% 
-  st_drop_geometry() %>% 
-  mutate(phase="1")
+# frla1_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla1.gpkg") %>% 
+#   st_drop_geometry() %>% 
+#   mutate(phase="1")
+# 
+# frla2_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla2.gpkg") %>% 
+#   st_drop_geometry()%>% 
+#   mutate(phase="2")
+# frla_init <- bind_rows(frla1_init,frla2_init) %>%
+# mutate(id_territoire= paste0("frla-",phase,"-",insee_dep, "-",as.character((seq(1:nrow(frla_init))))))
 
-frla2_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla2.gpkg") %>% 
-  st_drop_geometry()%>% 
-  mutate(phase="2")
-
-frla_init <- bind_rows(frla1_init,frla2_init) %>%
-  mutate(id_territoire= paste0("frla-",phase,"-",insee_dep, "-",as.character((seq(1:nrow(frla_init))))))
+frla_init<-st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/frla_2024.gpkg")%>% 
+  st_drop_geometry()%>%
+  rename("numero"="N.") %>% 
+  rename("id_territoire"="N.OP")
 
 #Fonds commerce 
 comru_init <- st_read("N:/DST/Carto/APPROCHE SECTORIELLE/FONCIER/FRLA_commerces ruraux/DATA/geom/com_ruraux.gpkg") %>% 
@@ -153,8 +157,8 @@ ma_fonction<- function(data_init, type){
 #VA
 va_geom <- ma_fonction(va_init, type = "ctr")%>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.x" ,"id_territoire"="id_va", "lib_territoire"="lib_com.y")%>% 
-  select(id_geo, lib_geo, id_territoire, lib_territoire, date_signature)%>%
-  group_by(id_territoire, lib_territoire, date_signature)%>%
+  select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
+  group_by(id_territoire, lib_territoire)%>%
   summarise(liste_geo= paste0(unique(lib_geo),' (', id_geo, ')', collapse = '; '))
 
 #ACV
@@ -180,7 +184,7 @@ pvd_geom<-ma_fonction(pvd_init, type="ctr")%>%
 
 
 #FS
-fs_geom<-filter(fs_init,format_fs=='Site principal')%>%
+fs_geom<-filter(fs_init,type_fs=='Principal')%>%
   ma_fonction(., type="ctr")%>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_fs", "lib_territoire"="lib_fs")%>% 
   select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
@@ -195,6 +199,8 @@ fs_geom<-filter(fs_init,format_fs=='Site principal')%>%
 
 #TI
 ti_gpt_data <- ti_groupement %>%
+  # rename("lib_groupement"="lib_epci")%>%
+  # rename("siren_groupement"="siren_epci")%>%
   group_by(id_ti)%>%
   summarise(liste_geo= paste0(unique(lib_groupement),' (', siren_groupement, ')', collapse = '; '))
 
@@ -234,7 +240,7 @@ ami_gpt_data <- ami_groupement %>%
   )
 
 ami_geom<-ma_fonction(ami_init, type="polygon")%>% 
-  separate_rows(id_ami, sep = " ; ") %>%
+  separate_rows(id_ami, sep = ",") %>%
   rename("id_geo"="insee_com", "lib_geo"="lib_com.y" ,"id_territoire"="id_ami", "lib_territoire"="lib_ami")%>% 
   select(id_geo, lib_geo, id_territoire, lib_territoire)%>%
   group_by(id_territoire)%>%
@@ -326,7 +332,7 @@ fabt_geom <- ma_fonction(fabt_data, type="ctr")%>%
 
 #Manufactures de proximité
 manuprox_data <- manuprox_init %>% 
-  arrange(vague) %>% 
+  arrange(vague)%>%
   mutate(id_geo= ifelse(!is.na(insee_com), insee_com, insee_arm),
          lib_geo= ifelse(!is.na(lib_com), lib_com, lib_arm),
          id_territoire= paste0("manuprox-",vague,"-",as.character((seq(1:nrow(manuprox_data))))))
